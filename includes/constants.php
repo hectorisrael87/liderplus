@@ -6,7 +6,7 @@ date_default_timezone_set("America/Caracas");
 define("HOST", "localhost");
 define("USER", "root");
 define("PASSWORD", "root");
-define("DB", "sisco");
+define("DB", "liderplus");
 // </editor-fold>
 //<editor-fold defaultstate="collapsed" desc="configuracion de ficheros del sistema">
 define("SISTEMA", "/liderplus/");
@@ -50,7 +50,7 @@ $twig->addExtension(new Twig_Extension_Debug());
 function __autoload($clase) {
     include_once SERVER_ROOT . "/includes/" . $clase . ".php";
 }
-
+spl_autoload_register("__autoload",false);
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="cerrar sesión">
 if (isset($_GET['logout']) && $_GET['logout'] == 1) {

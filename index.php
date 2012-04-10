@@ -1,4 +1,12 @@
 <?php
+
 include_once 'includes/constants.php';
-echo $twig->render('index.html.twig');
+$db = new db();
+
+
+echo $twig->render('index.html.twig', array(
+    'session' => array(
+        "usuario" => array(
+            "Nombre" => "Anyul",
+            "Apellido" => "Rivas"))));
 ?>
