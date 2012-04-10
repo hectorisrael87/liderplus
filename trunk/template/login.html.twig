@@ -1,0 +1,29 @@
+{# formulario de logueo #}
+{% extends 'layout/base.html.twig'%}
+{% block titulo 'Iniciar sesion'%}
+{% block contenido %}
+<div class="row">
+    <div class="span6 offset3">
+        <form method="post" class="form-horizontal" action="">
+            <fieldset>
+                <div class="control-group">
+                    <legend>Ingrese sus datos</legend>
+                    <label class="control-label">Login</label>
+                    <div class="controls">
+                        <input type="text" name="login" id="login"/>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Password</label>
+                    <div class="controls">
+                        <input type="password" name="password" id="password"/>
+                    </div>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <input type="submit" name="submit" value="Login" class="btn"/>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

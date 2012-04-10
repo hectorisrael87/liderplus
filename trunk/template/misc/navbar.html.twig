@@ -13,8 +13,22 @@
                     <li class="active"><a href="#">Inicio</a></li>
                     <li><a href="#about">Acerca</a></li>
                     <li><a href="#contact">Contacto</a></li>
+                    </li>
                 </ul>
             </div><!--/.nav-collapse -->
+            {% if session.usuario is not defined %}
+            <form class="navbar-form pull-right" method="post" action="{{ constant('ROOT')}}/login.php">
+                <input name="login" type="text" class="input-small" placeholder="Login"/>
+                <input name="password" type="password" class="input-small" placeholder="Password"/>
+                <input name="submit" type="submit" class="btn" value="Login"/>
+            </form>
+            {% else %}
+            <div class="pull-right">
+                <span class="navbar-text"> Bienvenido(a) <a href="sistema/usuario">{{ session.usuario.Nombre|title ~' '~ session.usuario.Apellido|title }}</a></span>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
+
+

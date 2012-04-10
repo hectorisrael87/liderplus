@@ -3,12 +3,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>{% block titulo 'LiderPlus' %}</title>
+    <title>{%block titulo '' %} &raquo; LiderPlus</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Le styles -->
     <link href="{{ constant('ROOT')}}css/bootstrap.css" rel="stylesheet">
+    <link href="{{ constant('ROOT')}}css/style.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -25,7 +26,7 @@
     {% endblock %}
   </head>
   <body>
-    {% include 'layout/navbar.html.twig' %}
+    {% include 'misc/navbar.html.twig' %}
     <div class="container">
         {% block contenido %}
       <!-- Main hero unit for a primary marketing message or call to action -->

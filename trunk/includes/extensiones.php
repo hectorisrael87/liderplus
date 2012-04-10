@@ -19,7 +19,7 @@ class extensiones extends Twig_Extension {
         return misc::trim_text($input, $length);
     }
 
-    public static function url_sortable($campo, $direccion) {
+    public static function url_sortable($campo="id", $direccion="desc") {
         return misc::url_sortable($campo, $direccion);
     }
 

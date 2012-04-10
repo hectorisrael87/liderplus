@@ -1,0 +1,23 @@
+{# Barra lateral #}
+{% if session is not defined%}
+<form class="well">
+    <label for="login">Login</label>
+    <input name="login" id="login" type="text" class="input-medium"/>
+    <label for="password">Password</label>
+    <input name="password" id="password" type="password" class="input-medium"/>
+    <input type="submit" class="btn" value="Entrar"/>
+</form>
+{%else %}
+<div class="well">
+    <h3>Hola, {{ session.usuario.Nombre|title~' '~session.usuario.Apellido }}</h3>
+</div>
+{% endif %}
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Modulos</li>
+        <li class="active"><a href="#">Realizar Pedido</a></li>
+        <li><a href="#">Revisar Pedido</a></li>
+        <li><a href="#">Facturar</a></li>
+        <li><a href="#">Transporte</a></li>
+    </ul>
+</div><!--/.well -->

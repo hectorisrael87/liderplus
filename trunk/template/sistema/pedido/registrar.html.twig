@@ -1,0 +1,91 @@
+{# empty Twig template #}
+{% extends 'layout/fluid.html.twig'%}
+{%block titulo 'Registrar Pedido' %}
+{% block contenido %}
+<div class="page-header">
+    <h1>Registrar Pedido</h1>
+</div>
+<div class="well">
+    <form method="post" class="form-horizontal">
+        <fieldset>
+            <legend>Seleccione el cliente</legend>
+            <div class="control-group">
+                <label for="cliente_id">Cliente</label>
+                <div class="controls">
+                    <select name="cliente_id" class="required">
+                        {% for cliente in clientes.data%}
+                            <option value="{{ cliente.id }}">{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Seleccione el producto</legend>
+            <div class="control-group">
+                <label class="control-label">Producto</label>
+                <div class="controls">
+                    <select name="producto_id" id="producto_id">
+                        {% for producto in productos.data %}
+                            <option value="{{ producto.id}}">{{ producto.descripcion }} - {{producto.precio}} Bsf.</option>
+                        {% endfor %}
+                    </select>
+                    <label class="help-inline">cantidad</label>
+                    <input type="text" name="cantidad" class="input-mini"/>
+                    <input type="button" name="agregar" value="Agregar" class="btn"/>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="well-small">
+        <form>
+            <fieldset>
+                <legend>Productos</legend>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Coche</td>
+                            <td><span class="pull-right">2</span></td>
+                            <td><span class="pull-right">1200 Bf.</span></td>
+                            <td><span class="pull-right">2400 Bsf.</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mecedora</td>
+                            <td><span class="pull-right">1</span></td>
+                            <td><span class="pull-right">800 Bf.</span></td>
+                            <td><span class="pull-right">800 Bsf.</span></td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><b>Total productos</b></td>
+                            <td><span class="pull-right">3</span></td>
+                            <td><span class="pull-right"><b>Subtotal</b></span></td>
+                            <td><span class="pull-right">3200 Bsf.</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><span class="pull-right"><b>IVA</b></span></td>
+                            <td><span class="pull-right">320 Bsf.</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
+                            <td><span class="pull-right">3520 Bsf</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="form-actions">
+                    <input name="" value="Procesar" type="submit" class="btn btn-primary"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock%}
