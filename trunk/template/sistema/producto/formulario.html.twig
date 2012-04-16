@@ -3,8 +3,8 @@
 {% block titulo accion|title ~ ' Producto' %}
 
 {# JAVASCRIPT #}
-{% block include%}
-<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-1.7.1.min.js"></script>
+{% block include %}
+{{ parent() }}
 <script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/jquery.validate.js"></script>
 <script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/localization/messages_es.js"></script>
 <script type="text/javascript" src="{{constant('ROOT')}}/js/formularios.js"></script>
