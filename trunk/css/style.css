@@ -9,4 +9,9 @@
 footer{
     text-align: center;
 }
-
+label{
+    text-transform: capitalize;
+}
+.table thead th{
+    text-transform: capitalize;
+}
