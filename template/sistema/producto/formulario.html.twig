@@ -1,0 +1,60 @@
+{% extends 'layout/fluid.html.twig' %}
+{# TITULO #}
+{% block titulo accion|title ~ ' Producto' %}
+
+{# JAVASCRIPT #}
+{% block include%}
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/localization/messages_es.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/formularios.js"></script>
+{% endblock %}
+
+{# CONTENIDO #}
+{% block contenido %}
+<div class="page-header">
+    <h1>{{ accion|title }} Producto</h1>
+</div>
+<ul class="breadcrumb">
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/producto/listar">Producto</a><span class="divider">&raquo;</span></li>
+    <li>{{ accion|title }}</li>
+</ul>
+{% if resultado is defined %}
+    {% include 'misc/resultado.html.twig' %}
+<div>
+    <a class="btn" href="{{ constant("URL_SISTEMA")}}/producto">Volver al listado</a>
+</div>
+{% else %}
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/producto/guardar" class="well-small">
+    <input type="hidden" name="id" value="{{ producto.id }}"/>
+    <fieldset>
+        <legend>Datos del Producto</legend>
+        <div class="control-group">
+            <label for="codigo">Codigo</label>
+            <div class="controls">
+                {{ form.input('text','required','codigo','codigo', producto.codigo, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="descripcion">descripcion</label>
+            <div class="controls">
+                {{ form.input('text','required','descripcion','descripcion', producto.descripcion, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="precio">precio</label>
+            <div class="controls">
+                {{ form.input('text','required digits','precio','precio', producto.precio, modoLectura)}}
+            </div>
+        </div>
+    </fieldset>
+    {% if accion is defined %}
+    <div class="form-actions">
+        <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+    </div>
+    {% endif %}
+</form>
+{% endif %}
+{% endblock %}

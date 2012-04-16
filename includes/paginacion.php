@@ -9,7 +9,15 @@ require_once 'db.php';
 class paginacion extends Misc {
 
     public $maxRows;
+    /**
+     * consulta sql
+     * @var String
+     */
     public $query;
+    /**
+     * Registros paginados
+     * @var mixed
+     */
     public $registros;
     public $totalRows;
     public $currentPage;
@@ -177,7 +185,7 @@ class paginacion extends Misc {
         // </editor-fold>
 
         if (count($this->registros) > 0) {
-            echo $html;
+            return $html;
         }
     }
 

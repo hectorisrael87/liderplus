@@ -21,6 +21,7 @@ define("TITULO", "LiderPlus - Sistema para el control de pedidos");
  * para las urls
  */
 define("ROOT", 'http://' . $_SERVER['SERVER_NAME'] . SISTEMA);
+define("URL_SISTEMA",ROOT."sistema");
 /**
  * para los includes
  */

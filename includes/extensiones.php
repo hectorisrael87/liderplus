@@ -22,9 +22,13 @@ class extensiones extends Twig_Extension {
     public static function url_sortable($campo="id", $direccion="desc") {
         return misc::url_sortable($campo, $direccion);
     }
+    public static function format_number($numero){
+        return misc::number_format($numero);
+    }
 
     public function getFunctions() {
         return array(
+            'format_number'=>new Twig_Function_Method($this,'format_number'),
             'url_sortable' => new Twig_Function_Method($this, 'url_sortable'),
             'trim_text' => new Twig_Function_Method($this, 'trim_text')
         );

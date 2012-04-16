@@ -1,0 +1,7 @@
+ErrorDocument 404 /404.html
+
+Options +FollowSymLinks
+RewriteEngine on
+
+Rewriterule ^sistema/([A-Za-z\-]+)/([A-Za-z\-]+)$ sistema/$1/index.php?accion=$2 [L]
+Rewriterule ^sistema/([A-Za-z\-]+)/([A-Za-z\-]+)/([0-9]{1,5})$ sistema/$1/index.php?accion=$2&id=$3 [L]
