@@ -75,7 +75,7 @@ switch ($accion) {
         break;
     // </editor-fold>
     case "listar":
-        // <editor-fold defaultstate="collapsed" desc="lisstado">
+        // <editor-fold defaultstate="collapsed" desc="listado">
         $paginacion = new paginacion();
         $paginacion->paginar("select * from producto");
         echo $twig->render('sistema/producto/paginacion.html.twig', array(

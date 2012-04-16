@@ -1,7 +1,7 @@
 {# Pantilla para mostrar resultados de operaciones #}
 {%if resultado%}
 <div class="alert alert-{{ (resultado.suceed==true)?'success':'error' }}">
-    <a class="close" data-dismiss="alert">&times;</a>
+    <a data-dismiss="alert" class="close" data-dismiss="alert">&times;</a>
     <p>{{ resultado.mensaje|capitalize }}</p>
     {% if constant('DEBUG')%}
     <pre>

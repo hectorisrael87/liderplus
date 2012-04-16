@@ -1,4 +1,5 @@
 $(document).ready(function(){
+    $.getScript("comun.js");
     $("#formulario").validate({
         errorClass:"help-inline",
         validClass:"help-inline",

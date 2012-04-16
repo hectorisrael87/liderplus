@@ -1,6 +1,14 @@
 {# empty Twig template #}
 {% extends 'layout/fluid.html.twig'%}
 {%block titulo 'Registrar Pedido' %}
+{% block include%}
+{{ parent() }}
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".tabbable").tab();
+    });
+</script>
+{% endblock %}
 {% block contenido %}
 <div class="page-header">
     <h1>{{ accion|title }} Pedido</h1>
@@ -10,30 +18,37 @@
     <li><a href="{{constant('URL_SISTEMA')}}/pedido/listar">Pedido</a><span class="divider">&raquo;</span></li>
     <li>{{ accion|title }}</li>
 </ul>
-<div>
-    <form method="post" class="form-horizontal well">
-        <fieldset>
-            <legend>Seleccione el cliente</legend>
-            <div class="control-group">
-                <label for="cliente_id" class="control-label">Cliente</label>
-                <div class="controls">
-                    <select name="cliente_id" class="required">
-                        {% for cliente in clientes.data%}
-                            <option value="{{ cliente.id }}">{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
-                        {% endfor %}
-                        </select>
+<div class="tabbable">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#cliente" data-toggle="tab">Cliente</a></li>
+        <li><a href="#productos" data-toggle="tab">Productos</a></li>
+        <li><a href="#procesar" data-toggle="tab">Procesar</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="cliente" class="tab-pane active">
+            <form method="post" class="form-horizontal well">
+                <fieldset>
+                    <legend>Seleccione el cliente</legend>
+                    <div class="control-group">
+                        <label for="cliente_id" class="control-label">Cliente</label>
+                        <div class="controls">
+                            <select name="cliente_id" class="required">
+                                {% for cliente in clientes.data%}
+                                    <option value="{{ cliente.id }}">{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <legend>Seleccione el producto</legend>
-                <div class="control-group">
-                    <label class="control-label">Producto</label>
-                    <div class="controls">
-                        <select name="producto_id" id="producto_id">
-                        {% for producto in productos.data %}
-                                <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
-                        {% endfor %}
+                </fieldset>
+                <fieldset>
+                    <legend>Seleccione el producto</legend>
+                    <div class="control-group">
+                        <label class="control-label">Producto</label>
+                        <div class="controls">
+                            <select name="producto_id" id="producto_id">
+                                {% for producto in productos.data %}
+                                    <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
+                                {% endfor %}
                             </select>
                             <label class="help-inline">cantidad</label>
                             <input type="text" name="cantidad" class="input-mini"/>
@@ -43,7 +58,8 @@
                 </fieldset>
             </form>
         </div>
-        <div class="well-small">
+        <div id="productos" class="tab-pane">
+            <div class="well-small">
             <form>
                 <fieldset>
                     <legend>Productos</legend>
@@ -93,4 +109,17 @@
                 </fieldset>
             </form>
         </div>
+        </div>
+        <div id="procesar" class="tab-pane">
+            <div class="well">
+                <div class="alert alert-info">
+                    <a href="#" data-dismiss="alert" class="close">&times;</a>
+                    <p>Confirmar Pedido</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+       
 {% endblock%}
