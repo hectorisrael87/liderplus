@@ -1,6 +1,6 @@
 {% extends 'layout/fluid.html.twig' %}
 {# TITULO#}
-{% block titulo 'Listar Clientes' %}
+{% block titulo 'Listar usuarios' %}
 
 {# JAVASCRIPT #}
 {% block include%}
@@ -11,11 +11,11 @@
 {# CONTENIDO#}
 {% block contenido %}
 <div class="page-header">
-    <h1>{{ accion|title }} Cliente</h1>
+    <h1>{{ accion|title }} usuario</h1>
 </div>
 <ul class="breadcrumb">
     <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
-    <li><a href="{{constant('URL_SISTEMA')}}/cliente/listar">Cliente</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario/listar">usuario</a><span class="divider">&raquo;</span></li>
     <li>{{ accion|title }}</li>
 </ul>
 {%if mensaje is defined%}
@@ -30,24 +30,24 @@
         <thead>
             <tr>
                 <th>id</th>
-                <th>Nombre</th>
-                <th>Cedula</th>
-                <th>Status</th>
+                <th>login</th>
+                <th>password</th>
+                <th>email</th>
                 <th>acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for cliente in registros %}
+            {% for usuario in registros %}
                 <tr>
-                    <td>{{ cliente.id}}</td>
-                    <td>{{ cliente.nombres ~ ' ' ~ cliente.apellidos }}</td>
-                    <td>{{ cliente.tipo_documento ~ ' ' ~ cliente.numero_documento }}</td>
-                    <td>{{ cliente.status }} </td>
+                    <td>{{ usuario.id}}</td>
+                    <td>{{ usuario.login }}</td>
+                    <td>{{ usuario.password}}</td>
+                    <td>{{ usuario.email }} </td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{constant('URL_SISTEMA')}}/cliente/consultar/{{ cliente.id }}" class="btn">Consultar</a>
-                            <a href="{{constant('URL_SISTEMA')}}/cliente/editar/{{ cliente.id }}" class="btn btn-info">Editar</a>
-                            <a href="{{constant('URL_SISTEMA')}}/cliente/borrar/{{ cliente.id }}" class="btn btn-danger">Borrar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/usuario/consultar/{{ usuario.id }}" class="btn">Consultar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/usuario/editar/{{ usuario.id }}" class="btn btn-info">Editar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/usuario/borrar/{{ usuario.id }}" class="btn btn-danger">Borrar</a>
                         </div>
                     </td>
                 </tr>
@@ -62,7 +62,7 @@
         {{ paginacion|raw }}
             </div>
         <div>
-            <a href="{{constant('URL_SISTEMA')}}/cliente/crear" class="btn btn-primary">Crear Cliente</a>
+            <a href="{{constant('URL_SISTEMA')}}/usuario/crear" class="btn btn-primary">Crear usuario</a>
         </div>
     </div>
 {% endblock %}

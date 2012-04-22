@@ -8,9 +8,19 @@
         <p>Ultimo acceso el d&iacute;a 07/04/2012.</p>
         <p><a class="btn btn-primary btn-large">Modificar Perfil</a></p>
     </div>
+    <div class="row">
         <div class="well-small">
-        <h1>Modulos Disponibles</h1>
-        <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
+            <h1>Modulos Disponibles</h1>
+            {%if session is not defined %}
+            <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
+        {% else %}
+            <div class="span3">
+                <h2>Cliente</h2>
+                <p>Administrar clientes</p>
+                <a href="" class="btn">Entrar</a>
+            </div>
+        {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -1,15 +1,15 @@
 {# Barra lateral #}
 {% if session is not defined%}
-<form class="well">
+<form class="well" method="post" action="{{ constant('ROOT')}}login.php">
     <label for="login">Login</label>
     <input name="login" id="login" type="text" class="input-medium"/>
     <label for="password">Password</label>
-    <input name="password" id="password" type="password" class="input-medium"/>
+    <input name="password" type="password" class="input-medium"/>
     <input type="submit" class="btn" value="Entrar"/>
 </form>
 {%else %}
 <div class="well">
-    <h3>Hola, {{ session.usuario.Nombre|title~' '~session.usuario.Apellido }}</h3>
+    <h3>Hola, {{ session.usuario.login }}</h3>
 </div>
 {% endif %}
 <div class="well sidebar-nav">
@@ -17,5 +17,11 @@
         <li class="nav-header">Producto</li>
         <li><a href="{{ constant("URL_SISTEMA")}}/producto/listar">Listar</a></li>
         <li><a href="{{ constant("URL_SISTEMA")}}/producto/crear">Crear</a></li>
+        <li class="nav-header">Cliente</li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/cliente/listar">Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/cliente/crear">Crear</a></li>
+        <li class="nav-header">Usuario</li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/usuario/listar">Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/usuario/crear">Crear</a></li>
     </ul>
 </div><!--/.well -->

@@ -17,14 +17,14 @@
                 </ul>
             </div><!--/.nav-collapse -->
             {% if session.usuario is not defined %}
-            <form class="navbar-form pull-right" method="post" action="{{ constant('ROOT')}}/login.php">
+            <form class="navbar-form pull-right" method="post" action="{{ constant('ROOT')}}login.php">
                 <input name="login" type="text" class="input-small" placeholder="Login"/>
                 <input name="password" type="password" class="input-small" placeholder="Password"/>
                 <input name="submit" type="submit" class="btn" value="Login"/>
             </form>
             {% else %}
             <div class="pull-right">
-                <span class="navbar-text"> Bienvenido(a) <a href="sistema/usuario">{{ session.usuario.Nombre|title ~' '~ session.usuario.Apellido|title }}</a></span>
+                <span class="navbar-text"> Bienvenido(a) <a href="{{constant('URL_SISTEMA')}}/usuario">{{ session.usuario.login }}</a></span>
             </div>
             {% endif %}
         </div>

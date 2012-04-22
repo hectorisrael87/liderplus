@@ -1,0 +1,97 @@
+{% extends 'layout/fluid.html.twig' %}
+{# TITULO #}
+{% block titulo accion|title ~ ' Pedido' %}
+
+{# JAVASCRIPT #}
+{% block include %}
+{{ parent() }}
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/localization/messages_es.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/formularios.js"></script>
+{% endblock %}
+
+{# CONTENIDO #}
+{% block contenido %}
+<div class="page-header">
+    <h1>{{ accion|title }} Pedido</h1>
+</div>
+<ul class="breadcrumb">
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/pedido/listar">Pedido</a><span class="divider">&raquo;</span></li>
+    <li>{{ accion|title }}</li>
+</ul>
+{% if resultado is defined %}
+    {% include 'misc/resultado.html.twig' %}
+<div>
+    <a class="btn" href="{{ constant("URL_SISTEMA")}}/Pedido">Volver al listado</a>
+</div>
+{% else %}
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/Pedido/guardar" class="well-small form-horizontal">
+    <input type="hidden" name="id" value="{{ Pedido.id }}"/>
+    <fieldset>
+        <legend>Datos del Pedido</legend>
+        <div class="control-group">
+            <label for="numero" class="control-label">n&uacute;mero</label>
+            <div class="controls">
+                {{ form.input('text','required','codigo','codigo', pedido.numero, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="cliente" class="control-label">cliente</label>
+            <div class="controls">
+                {{ form.input('text','required','cliente','cliente', pedido.cliente, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="fecha" class="control-label">fecha</label>
+            <div class="controls">
+                {{ form.input('text','required','fecha','fecha', format_date(pedido.fecha), modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="status_pedido" class="control-label">Status</label>
+            <div class="controls">
+                {{ form.input('text','required','status_pedido','status_pedido', pedido.estatus_pedido, modoLectura)}}
+            </div>
+        </div>
+    </fieldset>
+        <h3>Productos</h3>
+        <div class="well-small">
+            <table class="table table-bordered table-condensed table-striped">
+                <thead>
+                    <tr>
+                        <th>codigo</th>
+                        <th>descripcion</th>
+                        <th>cantidad pedido</th>
+                        <th>cantidad despacho</th>
+                        <th>precio</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for producto in productos %}
+                    <tr>
+                        <td>{{ producto.codigo }}</td>
+                        <td>{{ producto.descripcion }}</td>
+                        <td><span class="pull-right">{{ producto.cantidad_pedido }}</span></td>
+                        <td><span class="pull-right">{{ producto.cantidad_despacho }}</span></td>
+                        <td><span class="pull-right">{{ format_number(producto.precio) }} Bsf.</span></td>
+                        <td>{{ producto.estatus_pedido }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6">no hay productos registrados</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% if accion is defined %}
+    <div class="form-actions">
+        <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+    </div>
+    {% endif %}
+</form>
+{% endif %}
+{% endblock %}
