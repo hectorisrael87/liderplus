@@ -26,24 +26,24 @@
     <a class="btn" href="{{ constant("URL_SISTEMA")}}/producto">Volver al listado</a>
 </div>
 {% else %}
-    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/producto/guardar" class="well-small">
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/producto/guardar" class="well-small form-horizontal">
     <input type="hidden" name="id" value="{{ producto.id }}"/>
     <fieldset>
         <legend>Datos del Producto</legend>
         <div class="control-group">
-            <label for="codigo">Codigo</label>
+            <label for="codigo" class="control-label">Codigo</label>
             <div class="controls">
                 {{ form.input('text','required','codigo','codigo', producto.codigo, modoLectura) }}
             </div>
         </div>
         <div class="control-group">
-            <label for="descripcion">descripcion</label>
+            <label for="descripcion" class="control-label">descripcion</label>
             <div class="controls">
                 {{ form.input('text','required','descripcion','descripcion', producto.descripcion, modoLectura) }}
             </div>
         </div>
         <div class="control-group">
-            <label for="precio">precio</label>
+            <label for="precio" class="control-label">precio</label>
             <div class="controls">
                 {{ form.input('text','required digits','precio','precio', producto.precio, modoLectura)}}
             </div>

@@ -1,0 +1,78 @@
+{% extends 'layout/fluid.html.twig' %}
+{# TITULO #}
+{% block titulo accion|title ~ ' usuario' %}
+
+{# JAVASCRIPT #}
+{% block include %}
+{{ parent() }}
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/localization/messages_es.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/formularios.js"></script>
+{%if accion == 'crear' %}
+<script type="text/javascript">
+    $("#password2").rules('add',{
+        equalTo:"#password",
+            messsages:{
+                equalTo:"La contraseña no coincide"
+            }
+    });
+</script>
+{% endif %}
+{% endblock %}
+
+{# CONTENIDO #}
+{% block contenido %}
+<div class="page-header">
+    <h1>{{ accion|title }} usuario</h1>
+</div>
+<ul class="breadcrumb">
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario/listar">usuario</a><span class="divider">&raquo;</span></li>
+    <li>{{ accion|title }}</li>
+</ul>
+{% if resultado is defined %}
+    {% include 'misc/resultado.html.twig' %}
+<div>
+    <a class="btn" href="{{ constant("URL_SISTEMA")}}/usuario">Volver al listado</a>
+</div>
+{% else %}
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/usuario/guardar" class="well-small form-horizontal">
+    <input type="hidden" name="id" value="{{ usuario.id }}"/>
+    <fieldset>
+        <legend>Datos del usuario</legend>
+        <div class="control-group">
+            <label for="login" class="control-label">login</label>
+            <div class="controls">
+                {{ form.input('text','required','login','login', usuario.login, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="password" class="control-label">password</label>
+            <div class="controls">
+                {{ form.input('password','required','password','password', usuario.password, modoLectura) }}
+            </div>
+        </div>
+        {%if accion == 'crear' %}
+        <div class="control-group">
+            <label for="password2" class="control-label">Confirme su password</label>
+            <div class="controls">
+                {{ form.input('password','required','password2','password2', usuario.password, modoLectura) }}
+            </div>
+        </div>
+        {% endif %}
+        <div class="control-group">
+            <label for="email" class="control-label">email</label>
+            <div class="controls">
+                {{ form.input('text','required email','email','email', usuario.email, modoLectura)}}
+            </div>
+        </div>
+    </fieldset>
+    {% if accion is defined %}
+    <div class="form-actions">
+        <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+    </div>
+    {% endif %}
+</form>
+{% endif %}
+{% endblock %}

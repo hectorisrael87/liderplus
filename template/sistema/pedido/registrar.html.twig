@@ -26,7 +26,7 @@
     </ul>
     <div class="tab-content">
         <div id="cliente" class="tab-pane active">
-            <form method="post" class="form-horizontal well">
+            <form method="post" class="form-horizontal well-small">
                 <fieldset>
                     <legend>Seleccione el cliente</legend>
                     <div class="control-group">
@@ -40,26 +40,28 @@
                         </div>
                     </div>
                 </fieldset>
-                <fieldset>
-                    <legend>Seleccione el producto</legend>
-                    <div class="control-group">
-                        <label class="control-label">Producto</label>
-                        <div class="controls">
-                            <select name="producto_id" id="producto_id">
-                                {% for producto in productos.data %}
-                                    <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
-                                {% endfor %}
-                            </select>
-                            <label class="help-inline">cantidad</label>
-                            <input type="text" name="cantidad" class="input-mini"/>
-                            <input type="button" name="agregar" value="Agregar" class="btn"/>
-                        </div>
-                    </div>
-                </fieldset>
             </form>
         </div>
         <div id="productos" class="tab-pane">
             <div class="well-small">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <legend>Seleccione el producto</legend>
+                        <div class="control-group">
+                            <label class="control-label">Producto</label>
+                            <div class="controls">
+                                <select name="producto_id" id="producto_id">
+                                    {% for producto in productos.data %}
+                                        <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
+                                    {% endfor %}
+                                </select>
+                                <label class="help-inline">cantidad</label>
+                                <input type="text" name="cantidad" class="input-mini"/>
+                                <input type="button" name="agregar" value="Agregar" class="btn"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
             <form>
                 <fieldset>
                     <legend>Productos</legend>
@@ -108,18 +110,17 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
+            </div>
         </div>
         <div id="procesar" class="tab-pane">
-            <div class="well">
+            <div class="well-small">
                 <div class="alert alert-info">
                     <a href="#" data-dismiss="alert" class="close">&times;</a>
                     <p>Confirmar Pedido</p>
                 </div>
+                    <a href="{{ constant('URL_SISTEMA')}}/pedido/guardar" class="btn btn-primary">Procesar</a>
             </div>
         </div>
     </div>
-
 </div>
-       
 {% endblock%}

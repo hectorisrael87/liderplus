@@ -1,1 +1,100 @@
-{# empty Twig template #}
+{% extends 'layout/fluid.html.twig' %}
+{# TITULO #}
+{% block titulo accion|title ~ ' Cliente' %}
+
+{# JAVASCRIPT #}
+{% block include %}
+{{ parent() }}
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/localization/messages_es.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/formularios.js"></script>
+{% endblock %}
+
+{# CONTENIDO #}
+{% block contenido %}
+<div class="page-header">
+    <h1>{{ accion|title }} Cliente</h1>
+</div>
+<ul class="breadcrumb">
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/cliente/listar">Cliente</a><span class="divider">&raquo;</span></li>
+    <li>{{ accion|title }}</li>
+</ul>
+{% if resultado is defined %}
+    {% include 'misc/resultado.html.twig' %}
+<div>
+    <a class="btn" href="{{ constant("URL_SISTEMA")}}/cliente">Volver al listado</a>
+</div>
+{% else %}
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/cliente/guardar" class="well-small form-horizontal">
+    <input type="hidden" name="id" value="{{ cliente.id }}"/>
+    <fieldset>
+        <legend>Datos del cliente</legend>
+        <div class="control-group">
+            <label for="nombres" class="control-label">nombres</label>
+            <div class="controls">
+                {{ form.input('text','required','nombres','nombres', cliente.nombres, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="apellidos" class="control-label">apellidos</label>
+            <div class="controls">
+                {{ form.input('text','required','apellidos','apellidos', cliente.apellidos, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="tipo_documento_id" class="control-label">tipo documento</label>
+            <div class="controls">
+                <select class="required input-mini" name="tipo_documento_id" {{ modoLectura ? "disabled='disabled'" : "" }}>
+                {% for tipoDocumento in tipoDocumentos %}
+                        <option value="{{tipoDocumento.id}}" {{ cliente.tipo_documento_id == tipoDocumento.id ? "selected='selected'" : "" }} >{{ tipoDocumento.nombre }}</option>
+                {% endfor %}
+                </select>
+                    <label for="numero_documento" class="help-inline">Nro.</label>
+                {{ form.input('text','required number input-small','numero_documento','numero_documento', cliente.numero_documento, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="email" class="control-label">email</label>
+            <div class="controls">
+                {{ form.input('text','required email','email','email', cliente.email, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="numero_local" class="control-label">numero local</label>
+            <div class="controls">
+                {{ form.input('text','required number','numero_local','numero_local', cliente.numero_local, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="numero_celular" class="control-label">numero celular</label>
+            <div class="controls">
+                {{ form.input('text','required number','numero_celular','numero_celular', cliente.numero_celular, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="direccion" class="control-label">direccion</label>
+            <div class="controls">
+                <textarea {{ modoLectura ? "disabled='disabled'" : "" }} name="direccion" class="required">{{ cliente.direccion}}</textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="status_cliente_id" class="control-label">Status</label>
+            <div class="controls">
+                <select name="status_cliente_id" class="required" {{ modoLectura ? "disabled='disabled'" : "" }} >
+                {% for status in statusCliente %}
+                        <option value="{{status.id}}" {{ cliente.status_cliente_id == status.id ? "selected='selected'" : "" }}>{{ status.nombre }}</option>
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    {% if accion is defined %}
+    <div class="form-actions">
+        <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+    </div>
+    {% endif %}
+</form>
+{% endif %}
+{% endblock %}
