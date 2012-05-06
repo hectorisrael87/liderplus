@@ -76,7 +76,7 @@ class usuario extends db implements crud {
     public function confirmar_miembro() {
         session_start();
         if (!isset($_SESSION['status']) || $_SESSION['status'] != 'logueado' || !isset($_SESSION['usuario']))
-            header("location:" . ROOT . "/login.php");
+            header("location:" . ROOT . "login.php");
     }
 
     /**
@@ -92,7 +92,7 @@ class usuario extends db implements crud {
 
             if (isset($_COOKIE[session_name()]))
                 setcookie(session_name(), '', time() - 1000);
-            header("location:" . ROOT . "/login.php");
+            header("location:" . ROOT . "login.php");
         }
     }
 

@@ -28,9 +28,11 @@
         {% block include %}
         <script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="{{ constant('ROOT')}}/js/bootstrap.js"></script>
+        <script type="text/javascript" src="{{ constant('ROOT')}}/js/comun.js"></script>
         {% endblock %}
     </head>
     <body>
+        {% include 'misc/procesando.html.twig' %}
         {% include 'misc/navbar.html.twig' %}
         <div class="container-fluid">
             <div class="row-fluid">

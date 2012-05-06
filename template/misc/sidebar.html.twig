@@ -10,6 +10,7 @@
 {%else %}
 <div class="well">
     <h3>Hola, {{ session.usuario.login }}</h3>
+    <a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true">Cerrar sesion</a>
 </div>
 {% endif %}
 <div class="well sidebar-nav">
@@ -23,5 +24,8 @@
         <li class="nav-header">Usuario</li>
         <li><a href="{{ constant("URL_SISTEMA")}}/usuario/listar">Listar</a></li>
         <li><a href="{{ constant("URL_SISTEMA")}}/usuario/crear">Crear</a></li>
+        <li class="nav-header">Pedido</li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/pedido/listar">Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/pedido/crear">Crear</a></li>
     </ul>
 </div><!--/.well -->

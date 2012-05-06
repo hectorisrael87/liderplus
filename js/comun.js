@@ -2,34 +2,34 @@ function eventosGlobales(){
     /* Configuración Global para peticiones ajax y envío de formularios*/
     $("body").ajaxStart(function(){
         setTimeout(function(){
-            $.fancybox('<h3>Cargando...</h3>',{
-                modal:true,
-                centerOnScroll:true,
-                transitionIn:'none'
-            })
+            $('#myModal').modal('show');
         }, 500);
     });
     $("body").ajaxSuccess(function(){
         setTimeout(function(){
-            $.fancybox.close();
+            $('#myModal').modal('hide');
         }, 500);
     });
     $("body").ajaxError(function(){
         setTimeout(function(){
-            $.fancybox.close();
+            $('#myModal').modal('hide');
         }, 250);
     });
     $("form").bind("submit",function(){
-        $.fancybox('<h4>Procesando, por favor espere...</h4>',{
-            modal:true,
-            centerOnScroll:true,
-            transitionIn:'none'
-        });
-        setTimeout(function(){
-            $.fancybox.close();
-        }, 250);
+        $('#myModal').modal('show');
     });
 }
+Number.prototype.format = function(){
+var number = new String(this);
+var result = '';
+while( number.length > 3 )
+{
+ result = '.' + number.substr(number.length - 3) + result;
+ number = number.substring(0, number.length - 3);
+}
+result = number + result;
+return result;
+};
 $(document).ready(function(){
     $(".alert").alert();
     eventosGlobales();

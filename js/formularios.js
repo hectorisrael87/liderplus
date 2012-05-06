@@ -1,14 +1,24 @@
 $(document).ready(function(){
-    $.getScript("comun.js");
-    $("#formulario").validate({
-        errorClass:"help-inline",
-        validClass:"help-inline",
-        highlight:function(element){
+    $.validator.setDefaults({
+        errorClass: "help-inline",
+        validClass: "help-inline",
+        highlight: function(element){
             $(element).parents(".control-group:eq(0)").removeClass("success").addClass("error");
         },
-        unhighlight:function(element){
+        unhighlight: function(element){
             $(element).parents(".control-group:eq(0)").removeClass("error").addClass("success");
         }
+    });
+
+    $(".row-fluid div:eq(2) form").each(function(){
+        $(this).validate({
+            showErrors: function(errorMap, errorList){
+                $(".alert").html("No se puede procesar este formulario porque tiene "
+                    + this.numberOfInvalids() 
+                    + " errores.");
+                this.defaultShowErrors();
+            }
+        });
     });
     
     $("input[type='submit']").click(function() {

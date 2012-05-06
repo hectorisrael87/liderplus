@@ -3,124 +3,105 @@
 {%block titulo 'Registrar Pedido' %}
 {% block include%}
 {{ parent() }}
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".tabbable").tab();
-    });
-</script>
+<script src="{{ constant('ROOT') }}js/formularios.js"></script>
+<script src="{{ constant('ROOT') }}js/jquery-validate/jquery.validate.js"></script>
+<script src="{{ constant('ROOT') }}js/jquery-validate/localization/messages_es.js"></script>
+<script src="{{ constant('ROOT') }}js/registrar-pedido.js"></script>
 {% endblock %}
 {% block contenido %}
-<div class="page-header">
-    <h1>{{ accion|title }} Pedido</h1>
-</div>
-<ul class="breadcrumb">
-    <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
-    <li><a href="{{constant('URL_SISTEMA')}}/pedido/listar">Pedido</a><span class="divider">&raquo;</span></li>
-    <li>{{ accion|title }}</li>
-</ul>
-<div class="tabbable">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#cliente" data-toggle="tab">Cliente</a></li>
-        <li><a href="#productos" data-toggle="tab">Productos</a></li>
-        <li><a href="#procesar" data-toggle="tab">Procesar</a></li>
+    <div class="page-header">
+        <h1>{{ accion|title }} Pedido</h1>
+    </div>
+    <ul class="breadcrumb">
+        <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+        <li><a href="{{constant('URL_SISTEMA')}}/pedido/listar">Pedido</a><span class="divider">&raquo;</span></li>
+        <li>{{ accion|title }}</li>
     </ul>
-    <div class="tab-content">
-        <div id="cliente" class="tab-pane active">
-            <form method="post" class="form-horizontal well-small">
+    <div class="modal" id="agregarProductoModal">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Agregar Producto</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal well-small" id="buscarProducto" name="buscarProducto">
                 <fieldset>
-                    <legend>Seleccione el cliente</legend>
+                    <legend>Seleccione el producto</legend>
                     <div class="control-group">
-                        <label for="cliente_id" class="control-label">Cliente</label>
+                        <label class="control-label">Producto</label>
                         <div class="controls">
-                            <select name="cliente_id" class="required">
+                            <select name="producto_id" id="producto_id" class="required">
+                                {% for producto in productos.data %}
+                                    <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
+                                {% endfor %}
+                            </select>
+                            <label class="help-inline">cantidad</label>
+                            <input type="text" name="cantidad" class="input-mini required number" id="cantidad"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger">Cerrar</a>
+            <a id="agregar" href="#" class="btn btn-primary">Agregar</a>
+        </div>
+    </div>
+    <div class="well-small">
+        <form name="productos_form" id="productos_form" method="post" action="{{ constant('URL_SISTEMA')}}/pedido/guardar">
+            <fieldset>
+                <legend>Seleccione el cliente</legend>
+                <div class="control-group">
+                    <label for="cliente" class="control-label">Cliente</label>
+                        <div class="controls">
+                            <select id="cliente_id" name="cliente_id" class="required">
+                                <option value="">Seleccione</option>
                                 {% for cliente in clientes.data%}
                                     <option value="{{ cliente.id }}">{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
                                 {% endfor %}
                             </select>
                         </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        <div id="productos" class="tab-pane">
-            <div class="well-small">
-                <form class="form-horizontal">
-                    <fieldset>
-                        <legend>Seleccione el producto</legend>
-                        <div class="control-group">
-                            <label class="control-label">Producto</label>
-                            <div class="controls">
-                                <select name="producto_id" id="producto_id">
-                                    {% for producto in productos.data %}
-                                        <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
-                                    {% endfor %}
-                                </select>
-                                <label class="help-inline">cantidad</label>
-                                <input type="text" name="cantidad" class="input-mini"/>
-                                <input type="button" name="agregar" value="Agregar" class="btn"/>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-            <form>
-                <fieldset>
-                    <legend>Productos</legend>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Coche</td>
-                                <td><span class="pull-right">2</span></td>
-                                <td><span class="pull-right">1.200 Bf.</span></td>
-                                <td><span class="pull-right">2.400 Bsf.</span></td>
-                            </tr>
-                            <tr>
-                                <td>Mecedora</td>
-                                <td><span class="pull-right">1</span></td>
-                                <td><span class="pull-right">800 Bf.</span></td>
-                                <td><span class="pull-right">800 Bsf.</span></td>
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td><b>Total productos</b></td>
-                                <td><span class="pull-right">3</span></td>
-                                <td><span class="pull-right"><b>Subtotal</b></span></td>
-                                <td><span class="pull-right">3.200 Bsf.</span></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><span class="pull-right"><b>IVA</b></span></td>
-                                <td><span class="pull-right">320 Bsf.</span></td>
-                            </tr>
-                            <tr>
-                                <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
-                                <td><span class="pull-right">3.520 Bsf</span></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                    <div class="form-actions">
-                        <input name="" value="Procesar" type="submit" class="btn btn-primary"/>
-                    </div>
-                </fieldset>
-            </form>
-            </div>
-        </div>
-        <div id="procesar" class="tab-pane">
-            <div class="well-small">
-                <div class="alert alert-info">
-                    <a href="#" data-dismiss="alert" class="close">&times;</a>
-                    <p>Confirmar Pedido</p>
                 </div>
-                    <a href="{{ constant('URL_SISTEMA')}}/pedido/guardar" class="btn btn-primary">Procesar</a>
+            </fieldset>
+            <fieldset>
+                <legend>Productos</legend>
+                <div class="well-large">
+                    <table class="table table-bordered table-striped" id="productos">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>
+                                <b>Total productos</b>
+                                <input id="valor" type="hidden" name="valor" value=""/>
+                            </td>
+                            <td><span class="pull-right" id="total_productos">0</span></td>
+                            <td><span class="pull-right"><b>Subtotal</b></span></td>
+                            <td><span class="pull-right" id="subtototal">0 Bsf.</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><span class="pull-right"><b>IVA</b></span></td>
+                            <td><span class="pull-right" id="iva">0 Bsf.</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
+                            <td><span class="pull-right" id="total">0 Bsf</span></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <a id="agregarProductoBtn" href="#" class="btn btn-info">Agregar Producto</a>
+                <input type="submit" class="btn btn-primary" name="crear" value="Procesar"/>
             </div>
-        </div>
+        </form>
     </div>
-</div>
 {% endblock%}

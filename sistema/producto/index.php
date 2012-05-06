@@ -2,6 +2,8 @@
 
 include '../../includes/constants.php';
 $producto = new producto();
+$usuario = new usuario();
+$usuario->confirmar_miembro();
 $accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
 
 switch ($accion) {
@@ -9,6 +11,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar']);
+        //TODO esto deberia manejarlo el modelo
         if ($_POST['id'] == '') {
             unset($data['id']);
             $exito = $producto->insertar($data);

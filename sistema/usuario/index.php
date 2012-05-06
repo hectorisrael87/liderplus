@@ -5,11 +5,20 @@ $usuario = new usuario();
 $usuario->confirmar_miembro();
 $accion = isset($_GET['accion']) ? $_GET['accion'] : "index";
 $session = $_SESSION;
+$id = 0;
+if (isset($_GET['id'])) {
+    $id = $session['usuario']['id'];
+} else {
+    $id = $session['usuario']['id'];
+}
 
 switch ($accion) {
     case "index":
-        echo $twig->render('index.html.twig', array("session" => $session));
-        break;
+        // <editor-fold defaultstate="collapsed" desc="index">
+        echo $twig->render('index.html.twig', array(
+            "session" => $session));
+        break; 
+    // </editor-fold>
     case "guardar":
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
@@ -44,7 +53,7 @@ switch ($accion) {
     case "consultar":
     case "ver":
         // <editor-fold defaultstate="collapsed" desc="ver">
-        $dato = $usuario->ver($_GET['id']);
+        $dato = $usuario->ver($id);
         echo $twig->render('sistema/usuario/formulario.html.twig', array(
             "session" => $session,
             "usuario" => $dato['data'][0],
@@ -55,7 +64,7 @@ switch ($accion) {
     case "editar":
     case "modificar":
         // <editor-fold defaultstate="collapsed" desc="modificar">
-        $dato = $usuario->ver($_GET['id']);
+        $dato = $usuario->ver($id);
         echo $twig->render('sistema/usuario/formulario.html.twig', array(
             "session" => $session,
             "usuario" => $dato['data'][0],
@@ -65,7 +74,7 @@ switch ($accion) {
     // </editor-fold>
     case "borrar":
         // <editor-fold defaultstate="collapsed" desc="borrar">
-        $exito = $usuario->borrar($_GET['id']);
+        $exito = $usuario->borrar($id);
         if ($exito['suceed']) {
             $tipoMensaje = "success";
             $mensaje = "usuario borrado con exito";
