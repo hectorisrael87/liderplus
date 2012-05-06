@@ -25,6 +25,7 @@
             {% else %}
             <div class="pull-right">
                 <span class="navbar-text"> Bienvenido(a) <a href="{{constant('URL_SISTEMA')}}/usuario">{{ session.usuario.login }}</a></span>
+                | <span class="navbar-text"><a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true">Cerrar Sesion</a></span>
             </div>
             {% endif %}
         </div>

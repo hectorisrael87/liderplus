@@ -1,24 +1,42 @@
 <?php
 
 include '../../includes/constants.php';
-$producto = new pedido();
+$pedido = new pedido();
+$usuario = new usuario();
+$producto = new producto();
+$usuario->confirmar_miembro();
 $accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
 
 switch ($accion) {
+    case "guardar":
+        // <editor-fold defaultstate="collapsed" desc="guardar">
+        $data = $_POST;
+        unset($data['crear'], $data['modificar'], $data['editar'], $data['valor']);
+        $exito = $pedido->insertar($data);
+        if ($exito['suceed']) {
+            $exito['mensaje'] = "pedido procesado con exito";
+        }
+        echo $twig->render('sistema/pedido/paginacion.html.twig', array(
+            "resultado" => $exito,
+            "accion" => "guardar"));
+        break; 
+        // </editor-fold>
     case "consultar":
     case "ver":
+        // <editor-fold defaultstate="collapsed" desc="ver">
         $pedido = new pedido();
         $dato = $pedido->ver($_GET['id']);
-        $productos = $pedido->ver_productos_pedido($_GET['id']);
+        $pedidos = $pedido->ver_pedidos_pedido($_GET['id']);
         echo $twig->render('sistema/pedido/formulario.html.twig', array(
             "pedido" => $dato['data'][0],
-            "productos" => $productos['data'],
+            "pedidos" => $pedidos['data'],
             'accion' => 'ver',
             "modoLectura" => true));
         break;
+    // </editor-fold>
     case "crear":
     case "registrar":
-        $producto = new producto();
+        // <editor-fold defaultstate="collapsed" desc="crear">
         $cliente = new cliente();
         $productos = $producto->listar();
         $clientes = $cliente->listar();
@@ -31,8 +49,10 @@ switch ($accion) {
         }
         echo $twig->render('sistema/pedido/registrar.html.twig', $variables);
         break;
+    // </editor-fold>
     case "listar":
     default :
+        // <editor-fold defaultstate="collapsed" desc="listar">
         $pag = new paginacion();
         // <editor-fold defaultstate="collapsed" desc="query">
         $pag->paginar("select pedido.id, pedido.numero, pedido.fecha,  
@@ -48,5 +68,6 @@ switch ($accion) {
             "registros" => $pag->registros,
             "accion" => "listar"));
         break;
+    // </editor-fold>
 }
 ?>

@@ -467,11 +467,11 @@ Class Misc {
         $html.= "<p><b> Línea: </b>" . $line . '</p>';
         if (isset($_GET) && sizeof($_GET) > 0) {
             $html.="<hr/>";
-            $html.= "<pre><b>Petición GET</b></pre><code>" . misc::dump($_GET) . "</code>";
+            $html.= "<pre><b>Petici&oacute;n GET</b></pre><code>" . misc::dump($_GET) . "</code>";
         }
         if (isset($_POST) && sizeof($_POST) > 0) {
             $html.="<hr/>";
-            $html.= "<pre><b>Petición POST</b></pre><code>" . misc::dump($_POST, 1) . "</code>";
+            $html.= "<pre><b>Petici&oacute;n POST</b></pre><code>" . misc::dump($_POST, 1) . "</code>";
         }
         if (isset($_FILES) && sizeof($_FILES) > 0) {
             $html.="<hr/>";
@@ -479,11 +479,23 @@ Class Misc {
         }
         if (isset($_SESSION) && sizeof($_SESSION) > 0) {
             $html.="<hr/>";
-            $html.= "<pre><b>Variables de Sesión</b></pre><code>" . misc::dump($_SESSION, 1) . "</code>";
+            $html.= "<pre><b>Variables de Sesi&oacute;n</b></pre><code>" . misc::dump($_SESSION, 1) . "</code>";
         }
 
         $html.="<hr/>";
-        $html.= "<pre><b>Server:</b></pre><code>" . misc::dump($_SERVER) . "</code>";
+        // <editor-fold defaultstate="collapsed" desc="variables de entorno">
+        $entorno = array();
+        $entorno['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $entorno['direccion_ip'] = $_SERVER['REMOTE_ADDR'];
+        $entorno['archivo'] = $_SERVER['SCRIPT_FILENAME'];
+        $entorno['script_name'] = $_SERVER['SCRIPT_NAME'];
+        $entorno['query_string'] = $_SERVER['QUERY_STRING'];
+        $entorno['request_uri'] = $_SERVER['REQUEST_URI'];
+        $entorno['php_self'] = $_SERVER['PHP_SELF'];
+        $entorno['url_completa'] = "http://" . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+        // </editor-fold>
+
+        $html.= "<pre><b>Server:</b></pre><code>" . misc::dump($entorno) . "</code>";
         $html.="</fieldset>";
         // </editor-fold>
         // <editor-fold defaultstate="collapsed" desc="comprobacion de errores">
@@ -680,7 +692,7 @@ Class Misc {
         if (count($params) > 0) {
             foreach ($params as $param) {
                 /* si no encuentro el campo ni la direccion en la url */
-                if (stristr($param, "order") === false&&stristr($param, $campo) === false && stristr($param, $direccion) === false) {
+                if (stristr($param, "order") === false && stristr($param, $campo) === false && stristr($param, $direccion) === false) {
                     array_push($newParams, $param);
                 }
             }

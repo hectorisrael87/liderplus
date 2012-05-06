@@ -2,6 +2,8 @@
 
 include '../../includes/constants.php';
 $cliente = new cliente();
+$usuario = new usuario();
+$usuario->confirmar_miembro();
 // <editor-fold defaultstate="collapsed" desc="query listado">
 $query_paginado = "select cliente.*, 
             status_cliente.nombre status,

@@ -5,22 +5,37 @@
 <div class="row">
     <div class="hero-unit">
         <h1>Bienvenido a LiderPlus</h1>
-        <p>Ultimo acceso el d&iacute;a 07/04/2012.</p>
-        <p><a class="btn btn-primary btn-large">Modificar Perfil</a></p>
+        <p class="hide">Ultimo acceso el d&iacute;a 07/04/2012.</p>
+        <p><a href="modificar" class="btn btn-primary btn-large">Modificar Perfil</a></p>
     </div>
-    <div class="row">
-        <div class="well-small">
-            <h1>Modulos Disponibles</h1>
-            {%if session is not defined %}
+</div>
+<div class="row">
+    <div class="well-small">
+        <h1>Modulos Disponibles</h1>
+        {%if session is not defined %}
             <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
         {% else %}
-            <div class="span3">
-                <h2>Cliente</h2>
-                <p>Administrar clientes</p>
-                <a href="" class="btn">Entrar</a>
-            </div>
-        {% endif %}
+        <div class="span2">
+            <h2> Cliente</h2>
+            <p>Administrar clientes</p>
+            <a href="{{constant('URL_SISTEMA')}}/cliente" class="btn btn-info">Entrar</a>
         </div>
+        <div class="span2">
+            <h2>Producto</h2>
+            <p>Administrar Productos</p>
+            <a href="{{constant('URL_SISTEMA')}}/producto" class="btn btn-info">Entrar</a>
+        </div>
+        <div class="span2">
+            <h2>Pedidos</h2>
+            <p>Administrar Pedidos</p>
+            <a href="{{constant('URL_SISTEMA')}}/pedido" class="btn btn-info">Entrar</a>
+        </div>
+        <div class="span2">
+            <h2>Usuarios</h2>
+            <p>Administrar Usuarios</p>
+            <a href="{{constant('URL_SISTEMA')}}/usuario/listar" class="btn btn-info">Entrar</a>
+        </div>
+    {% endif %}
     </div>
 </div>
 {% endblock %}

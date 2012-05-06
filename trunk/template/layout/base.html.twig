@@ -24,11 +24,13 @@
     {%block include%}
     <script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-1.7.1.min.js"></script>
     <script type="text/javascript" src="{{ constant('ROOT')}}/js/bootstrap.js"></script>
+    <script type="text/javascript" src="{{ constant('ROOT')}}/js/comun.js"></script>
     {# estilos y scripts #}
     {%endblock %}
   </head>
   <body>
-    {% include 'misc/navbar.html.twig'%}
+    {% include 'misc/procesando.html.twig' %}
+    {% include 'misc/navbar.html.twig' %}
     <div class="container">
     {% block contenido %}
       <h1>Bootstrap starter template</h1>

@@ -54,7 +54,7 @@ function __autoload($clase) {
 spl_autoload_register("__autoload",false);
 //</editor-fold>
 //<editor-fold defaultstate="collapsed" desc="cerrar sesión">
-if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+if (isset($_GET['logout']) && $_GET['logout'] == true) {
     $user_logout = new usuario();
     $user_logout->logout();
 }

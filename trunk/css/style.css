@@ -15,3 +15,13 @@ label{
 .table thead th{
     text-transform: capitalize;
 }
+ul.breadcrumb li a{
+    text-transform: capitalize;
+}
+#myModal{
+    display: none;
+}
+tfoot label.help-inline{
+    font-size: x-small;
+    color:red;
+}
