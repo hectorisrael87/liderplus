@@ -34,7 +34,11 @@
                                     <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
                                 {% endfor %}
                             </select>
-                            <label class="help-inline">cantidad</label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">cantidad</label>
+                        <div class="controls">
                             <input type="text" name="cantidad" class="input-mini required number" id="cantidad"/>
                         </div>
                     </div>
@@ -49,18 +53,43 @@
     <div class="well-small">
         <form name="productos_form" id="productos_form" method="post" action="{{ constant('URL_SISTEMA')}}/pedido/guardar">
             <fieldset>
-                <legend>Seleccione el cliente</legend>
-                <div class="control-group">
-                    <label for="cliente" class="control-label">Cliente</label>
-                        <div class="controls">
-                            <select id="cliente_id" name="cliente_id" class="required">
-                                <option value="">Seleccione</option>
-                                {% for cliente in clientes.data%}
-                                    <option value="{{ cliente.id }}">{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                </div>
+                <legend>Datos del pedido</legend>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="control-group">
+                                <label for="cliente" class="control-label">Cliente</label>
+                                <div class="controls">
+                                    <select id="cliente_id" name="cliente_id" class="required"{{ modoLectura?" disabled='true' ":"" }}>
+                                        <option value="">Seleccione</option>
+                                            {% for cliente in clientes.data%}
+                                                <option value="{{ cliente.id }}" {{ cliente.id == pedido.cliente_id ? " selected='selected '" : "" }}>{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
+                                            {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                        {% if accion == "ver" %}
+                        <td>    
+                            <div class="control-group">
+                                <label class="control-label">Numero</label>
+                                <div class="controls">
+                                    {{ form.input("text", "", "numero", "numero", pedido.numero, modoLectura) }}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="control-group">
+                                <label class="control-label">Estatus</label>
+                                    <div class="controls">
+                                        {{ form.input("text", "", "status", "status", pedido.estatus_pedido, modoLectura) }}
+                                    </div>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                </table>
+                
             </fieldset>
             <fieldset>
                 <legend>Productos</legend>
@@ -75,6 +104,29 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% set cantidad = 0%}
+                        {% set subtotal = 0 %}
+                        {% for producto in productosPedido %}
+                            {% set cantidad = cantidad + producto.cantidad_pedido %}
+                            {% set subtotal = subtotal + (producto.precio * producto.cantidad_pedido) %}
+                            <tr>
+                                <td>
+                                    {{ modoLectura == false ? "<span><i class='icon-remove'></i>" : "" }}{{ producto.descripcion }}
+                                    {{ form.input("hidden", "", "", "producto[]", producto.id, false) }}
+                                </td>
+                                <td>
+                                    <span class="pull-right">{{ producto.cantidad_pedido }}</span>
+                                    {{ form.input("hidden", "", "", "cantidad_pedido[]", producto.cantidad_pedido, false) }}
+                                </td>
+                                <td>
+                                    <span class="pull-right">{{ format_number(producto.precio) }} Bsf.</span>
+                                    {{ form.input("hidden", "", "", "precio[]", producto.precio, false) }}
+                                </td>
+                                <td>
+                                    <span class="pull-right">{{ format_number(producto.precio * producto.cantidad_pedido) }} Bsf.</span>
+                                </td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                     <tfoot>
                         <tr>
@@ -82,24 +134,26 @@
                                 <b>Total productos</b>
                                 <input id="valor" type="hidden" name="valor" value=""/>
                             </td>
-                            <td><span class="pull-right" id="total_productos">0</span></td>
+                            <td><span class="pull-right" id="total_productos">{{ cantidad }}</span></td>
                             <td><span class="pull-right"><b>Subtotal</b></span></td>
-                            <td><span class="pull-right" id="subtototal">0 Bsf.</span></td>
+                            <td><span class="pull-right" id="subtototal">{{ format_number(subtotal) }} Bsf.</span></td>
                         </tr>
                         <tr>
                             <td colspan="3"><span class="pull-right"><b>IVA</b></span></td>
-                            <td><span class="pull-right" id="iva">0 Bsf.</span></td>
+                            <td><span class="pull-right" id="iva">{{ format_number(subtotal * 0.1) }} Bsf.</span></td>
                         </tr>
                         <tr>
                             <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
-                            <td><span class="pull-right" id="total">0 Bsf</span></td>
+                            <td><span class="pull-right" id="total">{{ format_number(subtotal * 1.1) }} Bsf.</span></td>
                         </tr>
                     </tfoot>
                 </table>
                 </div>
             </fieldset>
             <div class="form-actions">
-                <a id="agregarProductoBtn" href="#" class="btn btn-info">Agregar Producto</a>
+                {% if accion != "consultar" %}
+                    <a id="agregarProductoBtn" href="#" class="btn btn-info">Agregar Producto</a>
+                {% endif %}
                 <input type="submit" class="btn btn-primary" name="crear" value="Procesar"/>
             </div>
         </form>
