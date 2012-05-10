@@ -51,7 +51,6 @@ class pedido extends db implements crud {
             echo $exc->getTraceAsString();
             //$this->exec_query("rollback");
         }
-
         return $resultado;
     }
 
@@ -68,18 +67,19 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
 
     public function ver($id) {
         return $this->dame_query("select pedido.id, pedido.numero, pedido.fecha,  
-CONCAT(cliente.nombres,' ',cliente.apellidos) cliente, 
-estatus_pedido.descripcion estatus_pedido,
- count(pedido_detalle.id) productos
-from pedido 
-inner join pedido_detalle on pedido.id = pedido_detalle.pedido_id
-inner join cliente on cliente_id = cliente.id 
-inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id where pedido.id = $id");
+        pedido.cliente_id,
+        CONCAT(cliente.nombres,' ',cliente.apellidos) cliente, 
+        estatus_pedido.descripcion estatus_pedido,
+        count(pedido_detalle.id) productos
+        from pedido 
+        inner join pedido_detalle on pedido.id = pedido_detalle.pedido_id
+        inner join cliente on cliente_id = cliente.id 
+        inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id where pedido.id = $id group by pedido.id");
     }
 
     public function ver_productos_pedido($id) {
         return $this->dame_query("select 
-                producto.codigo, producto.descripcion, 
+                producto.id, producto.codigo, producto.descripcion, 
                 pedido_detalle.cantidad_pedido, pedido_detalle.cantidad_despacho, pedido_detalle.precio,
                 estatus_pedido.descripcion estatus_pedido
                 from pedido_detalle

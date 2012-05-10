@@ -31,9 +31,9 @@ function agregarProducto(producto) {
         html: "<span class='precio_producto pull-right'>" + producto.precio.format() + " Bsf. </span>"
     });
     celdaPrecio.append(inputPrecio);
-    
+    tempTotal = producto.precio * producto.cantidad
     celdaTotal = $("<td/>", {
-        html: "<span class='pull-right'>" + producto.precio.format() * producto.cantidad + " Bsf.</span>"
+        html: "<span class='pull-right'>" + tempTotal.format() + " Bsf.</span>"
     });
     filaPedido.append(celdaProducto).append(celdaCantidad).append(celdaPrecio).append(celdaTotal);
     $("#productos tbody").append(filaPedido);
@@ -64,8 +64,7 @@ function actualizarTabla(){
     $("#total").text(total.format() + " Bsf.");
     $("#productos_form").valid();
 }
-$(document).ready(function(){
-    /* Cuadro Modal para agregar productos */
+function cuadromodal(){
     $("#agregarProductoModal").hide();
     $("#agregarProductoModal .close, #agregarProductoModal .btn-danger").click(function(){
         $("#agregarProductoModal").modal('hide');
@@ -86,6 +85,8 @@ $(document).ready(function(){
             $("#cantidad").val("");
         }
     });
+}
+function validacionFormulario(){
     $(document).on("click", ".icon-remove", function(){
         eliminarProducto($(this));
     });
@@ -116,5 +117,10 @@ $(document).ready(function(){
                 error.insertAfter(element);
             }
         }
-    })
+    });
+    
+}
+$(document).ready(function(){
+    cuadromodal();
+    validacionFormulario();
 });
