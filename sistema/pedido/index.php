@@ -41,11 +41,10 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="ver">
         $clientes = $cliente->listar();
         $dato = $pedido->ver($_GET['id']);
-        $productos = $pedido->ver_productos_pedido($_GET['id']);
-        echo $twig->render('sistema/pedido/registrar.html.twig', array(
-            "clientes" => $clientes,
+        $pedidos = $pedido->ver_productos_pedido($_GET['id']);
+        echo $twig->render('sistema/pedido/formulario.html.twig', array(
             "pedido" => $dato['data'][0],
-            "productosPedido" => $productos['data'],
+            "productos" => $pedidos['data'],
             'accion' => 'ver',
             "modoLectura" => true));
         break;

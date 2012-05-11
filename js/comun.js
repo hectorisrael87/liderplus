@@ -34,3 +34,5 @@ $(document).ready(function(){
     $(".alert").alert();
     eventosGlobales();
 });
+
+var iva_rata = 0.12;
