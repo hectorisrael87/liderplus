@@ -78,14 +78,27 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
     }
 
     public function ver_productos_pedido($id) {
-        return $this->dame_query("select 
+        
+        return $this->dame_query("select producto.id, 
                 producto.id, producto.codigo, producto.descripcion, 
                 pedido_detalle.cantidad_pedido, pedido_detalle.cantidad_despacho, pedido_detalle.precio,
-                estatus_pedido.descripcion estatus_pedido
+                estatus_pedido_detalle.descripcion estatus_pedido
                 from pedido_detalle
                 inner join producto on pedido_detalle.producto_id = producto.id
-                inner join estatus_pedido on pedido_detalle.estatus_pedido_id = estatus_pedido.id
+                inner join estatus_pedido_detalle on pedido_detalle.estatus_pedido_id = estatus_pedido_detalle.id
                 where pedido_id = $id ");
+        
+    }
+    
+    public function ver_productos_pedido_por_facturar($id) {
+        return $this->dame_query("select producto.id, 
+                producto.codigo, producto.descripcion, 
+                pedido_detalle.cantidad_pedido, pedido_detalle.cantidad_despacho, pedido_detalle.precio,
+                estatus_pedido_detalle.descripcion estatus_pedido
+                from pedido_detalle
+                inner join producto on pedido_detalle.producto_id = producto.id
+                inner join estatus_pedido_detalle on pedido_detalle.estatus_pedido_id = estatus_pedido_detalle.id
+                where pedido_id = $id and estatus_pedido_id = 2");
     }
 
 }

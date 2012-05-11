@@ -1,0 +1,131 @@
+{# empty Twig template #}
+{% extends 'layout/fluid.html.twig'%}
+{% block titulo 'Registrar Factura' %}
+{% block include%}
+{{ parent() }}
+<script src="{{ constant('ROOT') }}js/formularios.js"></script>
+<script src="{{ constant('ROOT') }}js/jquery-validate/jquery.validate.js"></script>
+<script src="{{ constant('ROOT') }}js/jquery-validate/localization/messages_es.js"></script>
+<script src="{{ constant('ROOT') }}js/registrar-factura.js"></script>
+{% endblock %}
+{% block contenido %}
+    <div class="page-header">
+        <h1>{{ accion|title }} Factura</h1>
+    </div>
+    <ul class="breadcrumb">
+        <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+        <li><a href="{{constant('URL_SISTEMA')}}/factura/listar">Factura</a><span class="divider">&raquo;</span></li>
+        <li>{{ accion|title }}</li>
+    </ul>
+    <div class="modal" id="agregarProductoModal">
+        <div class="modal-header">
+            <a class="close" data-dismiss="modal">×</a>
+            <h3>Agregar Producto</h3>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal well-small" id="buscarProducto" name="buscarProducto">
+                <fieldset>
+                    <legend>Seleccione el producto</legend>
+                    <div class="control-group">
+                        <label class="control-label">Producto</label>
+                        <div class="controls">
+                            <select name="producto_id" id="producto_id" class="required">
+                                {% for producto in productos.data %}
+                                    <option value="{{ producto.id}}">{{ producto.descripcion }} - {{format_number(producto.precio)}} Bsf.</option>
+                                {% endfor %} 
+                            </select>
+                            <label class="help-inline">cantidad</label>
+                            <input type="text" name="cantidad" class="input-mini required number" id="cantidad"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-danger">Cerrar</a>
+            <a id="agregar" href="#" class="btn btn-primary">Agregar</a>
+        </div>
+    </div>
+    <div class="well-small">
+        <form name="productos_form" id="productos_form" method="post" action="{{ constant('URL_SISTEMA')}}/factura/guardar">
+            <fieldset>
+                <legend>Seleccione el cliente y pedido</legend>
+                <div class="control-group">
+                    <label for="cliente" class="control-label">Cliente</label>
+                        <div class="controls">
+                            <select id="cliente_id" name="cliente_id" class="required">
+                                <option value="">Seleccione</option>
+                                {% for cliente in clientes.data%}
+                                    <option value="{{ cliente.id }}">{{ cliente.nombres ~' '~ cliente.apellidos }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                </div>
+                <div class="control-group">
+                    <label for="pedido" class="control-label">Pedido</label>
+                        <div class="controls">
+                            <select id="pedido_id" name="pedido_id" class="required">
+                                <option value="">Seleccione</option>
+                                
+                            </select>
+                        </div>
+                </div>
+                <div class="control-group">
+                    <label for="numero" class="control-label">Factura N&uacute;mero</label>
+                        <div class="controls">
+                            {{ form.input('text','required input-small','numero','numero', factura.numero, modoLectura) }}
+                        </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <legend>Productos</legend>
+                <div class="well-large">
+                    <table class="table table-bordered table-striped" id="productos">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>
+                                <b>Total productos</b>
+                                <input id="valor" type="hidden" name="valor" value=""/>
+                            </td>
+                            <td><span class="pull-right" id="total_productos">0</span></td>
+                            <td><span class="pull-right"><b>Subtotal</b></span></td>
+                            <td><span class="pull-right" id="subtototal">0,00</span>
+                                <input type="hidden" name="subtotal" id="subtototal" value="0" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="3"><span class="pull-right"><b id="label_iva">IVA</b></span>
+                                <input id="porcentaje_iva" name="porcentaje_iva" type="hidden" value="" /></td>
+                            <td><span class="pull-right" id="iva">0,00</span></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
+                            <td><span class="pull-right" id="total">0,00</span>
+                                <input id="monto_total" name="monto_total" type="hidden" value="0" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+            </fieldset>
+            <div class="form-actions">
+                <!--a id="agregarProductoBtn" href="#" class="btn btn-info">Agregar Producto</a-->
+                <input type="submit" class="btn btn-primary" name="crear" value="Procesar"/>
+            </div>
+        </form>
+    </div>
+{% endblock%}

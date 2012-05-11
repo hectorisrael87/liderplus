@@ -1,21 +1,21 @@
 {% extends 'layout/fluid.html.twig'%}
 {# TITULO#}
-{% block titulo 'Listar Pedidos' %}
+{% block titulo 'Listar Facturas' %}
 
 {# JAVASCRIPT #}
 {% block include%}
 {{ parent() }}
-<script type="text/javascript" src="{{constant('ROOT')}}js/listado.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/listado.js"></script>
 {% endblock %}
 
 {# CONTENIDO#}
 {% block contenido%}
 <div class="page-header">
-    <h1>{{ accion|title }} Pedido</h1>
+    <h1>{{ accion|title }} Factura</h1>
 </div>
 <ul class="breadcrumb">
     <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
-    <li><a href="{{constant('URL_SISTEMA')}}/pedido/listar">Pedido</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/factura/listar">Factura</a><span class="divider">&raquo;</span></li>
     <li>{{ accion|title }}</li>
 </ul>
 {%if mensaje is defined%}
@@ -33,25 +33,25 @@
                 <th>numero</th>
                 <th>fecha</th>
                 <th>cliente</th>
-                <th>Productos</th>
+                <th>Monto</th>
                 <th>Status</th>
                 <th>acciones</th>
             </tr>
         </thead>
         <tbody>
-            {% for pedido in registros %}
+            {% for factura in registros %}
                 <tr>
-                    <td>{{ pedido.id}}</td>
-                    <td>{{ pedido.numero }}</td>
-                    <td><span class="pull-right"> {{ format_date(pedido.fecha) }}</span></td>
-                    <td>{{ pedido.cliente }} </td>
-                    <td><span class="pull-right"> {{ pedido.productos }} </span></td>
-                    <td>{{ pedido.estatus_pedido }} </td>
+                    <td>{{ factura.id}}</td>
+                    <td>{{ factura.numero }}</td>
+                    <td><span class="pull-right"> {{ format_date(factura.fecha) }}</span></td>
+                    <td>{{ factura.cliente }} </td>
+                    <td><span class="pull-right"> {{ format_number(factura.monto_total) }} </span></td>
+                    <td>{{ factura.descripcion }} </td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{constant('URL_SISTEMA')}}/Pedido/consultar/{{ pedido.id }}" class="btn">Consultar</a>
-                            <a href="{{constant('URL_SISTEMA')}}/Pedido/editar/{{ pedido.id }}" class="btn btn-info">Editar</a>
-                            <a href="{{constant('URL_SISTEMA')}}/Pedido/borrar/{{ pedido.id }}" class="btn btn-danger">Borrar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/factura/consultar/{{ factura.id }}" class="btn">Consultar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/factura/editar/{{ factura.id }}" class="btn btn-info">Editar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/factura/borrar/{{ factura.id }}" class="btn btn-danger">Borrar</a>
                         </div>
                     </td>
                 </tr>
@@ -66,7 +66,7 @@
         {{ paginacion|raw }}
             </div>
         <div>
-            <a href="{{constant('URL_SISTEMA')}}/Pedido/crear" class="btn btn-primary">Crear Pedido</a>
+            <a href="{{constant('URL_SISTEMA')}}/factura/crear" class="btn btn-primary">Crear Factura</a>
         </div>
     </div>
 {% endblock %}
