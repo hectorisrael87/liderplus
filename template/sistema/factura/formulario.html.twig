@@ -26,14 +26,14 @@
     <a class="btn" href="{{ constant("URL_SISTEMA")}}/Pedido">Volver al listado</a>
 </div>
 {% else %}
-    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/Pedido/guardar" class="well-small form-horizontal">
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/factura/guardar" class="well-small form-horizontal">
     <input type="hidden" name="id" value="{{ factura.id }}"/>
     <fieldset>
         <legend>Detalle de la Factura</legend>
         <div class="control-group">
             <label for="numero" class="control-label">n&uacute;mero</label>
             <div class="controls">
-                {{ form.input('text','required','codigo','codigo', factura.numero, modoLectura) }}
+                {{ form.input('text','required','numero','numero', factura.numero, modoLectura) }}
             </div>
         </div>
         <div class="control-group">
@@ -51,7 +51,7 @@
         <div class="control-group">
             <label for="status_pedido" class="control-label">Status</label>
             <div class="controls">
-                {{ form.input('text','required','status_pedido','status_pedido', factura.estatus_pedido, modoLectura)}}
+                {{ form.input('text','required','status','status', factura.estatus, modoLectura)}}
             </div>
         </div>
     </fieldset>
@@ -60,23 +60,23 @@
             <table class="table table-bordered table-condensed table-striped">
                 <thead>
                     <tr>
-                        <th>codigo</th>
-                        <th>descripcion</th>
-                        <th>cantidad pedido</th>
-                        <th>cantidad despacho</th>
-                        <th>precio</th>
-                        <th>status</th>
+                        <th>C&oacute;digo</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Total</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% set cantidad = 0%}
                     {% for producto in productos %}
+                    {% set cantidad = cantidad + 1 %}
                     <tr>
                         <td>{{ producto.codigo }}</td>
                         <td>{{ producto.descripcion }}</td>
-                        <td><span class="pull-right">{{ producto.cantidad_pedido }}</span></td>
-                        <td><span class="pull-right">{{ producto.cantidad_despacho }}</span></td>
-                        <td><span class="pull-right">{{ format_number(producto.precio) }} Bsf.</span></td>
-                        <td>{{ producto.estatus_pedido }}</td>
+                        <td><span class="pull-right">{{ producto.cantidad }}</span></td>
+                        <td><span class="pull-right">{{ format_number(producto.precio) }} </span></td>
+                        <td><span class="pull-right">{{ format_number(producto.total) }}</span></td>
                     </tr>
                     {% else %}
                     <tr>
@@ -84,6 +84,27 @@
                     </tr>
                     {% endfor %}
                 </tbody>
+                <tfoot>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td><b>Total productos</b></td>
+                            <td><span class="pull-right" id="total_productos">{{ cantidad }}</span></td>
+                            <td><span class="pull-right"><b>Subtotal</b></span></td>
+                            <td><span class="pull-right" id="subtototal">{{ format_number(factura.subtotal) }}</span>
+                                <input type="hidden" name="subtotal" id="subtotal" value="" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="3"><span class="pull-right"><b id="label_iva">IVA({{ format_number(factura.porcentaje_iva) }})</b></span>
+                            <td><span class="pull-right" id="iva">{{ format_number(factura.subtotal * factura.porcentaje_iva / 100 ) }}</span></td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
+                            <td><span class="pull-right" id="total">{{ format_number(factura.monto_total) }}</span></td>
+                        </tr>
+                    </tfoot>
             </table>
         </div>
     {% if accion is defined %}

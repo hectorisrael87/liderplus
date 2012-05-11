@@ -73,12 +73,12 @@ function agregarProducto(producto) {
         val: producto.precio
     });    
     celdaPrecio = $("<td/>", {
-        html: "<span class='precio_producto pull-right'>" + producto.precio + "</span>"
+        html: "<span class='precio_producto pull-right'>" + producto.precio.formatCurrency() + "</span>"
     });
     celdaPrecio.append(inputPrecio);
-    
+    var totalItem = parseFloat(producto.precio * producto.cantidad_despacho);
     celdaTotal = $("<td/>", {
-        html: "<span class='pull-right'>" + producto.precio * producto.cantidad_despacho + "</span>"
+        html: "<span class='pull-right'>" + totalItem.formatCurrency() + "</span>"
     });
     filaPedido.append(celdaCodigo).append(celdaProducto).append(celdaCantidad).append(celdaPrecio).append(celdaTotal);
     $("#productos tbody").append(filaPedido);
@@ -92,20 +92,21 @@ function actualizarTabla(){
     total = 0;
     $("#productos tbody tr").each(function(){
         tempCantidad = parseInt($(this).find(".cantidad_producto").text());
-        tempPrecio = parseFloat($(this).find(".precio_producto").text());
+        tempPrecio = parseFloat($(this).find(".precio_producto").text().replace(".","").replace(",","."));
         cantidad += tempCantidad;
         subtotal += tempPrecio * tempCantidad;
     });
-    iva = parseInt(subtotal * iva_rata * 100)/100;
+    subtotal = parseInt(subtotal * 100)/100;
+    iva = subtotal * iva_rata;
     total = subtotal + iva;
     $("#total_productos").text(cantidad);
-    $("#subtototal").text(parseInt(subtotal * 100)/100);
-    $("#iva").text(iva);
-    $("#porcentaje_iva").text(iva_rata * 100);
+    $("#subtototal").text(subtotal.formatCurrency());
+    $("#iva").text(iva.formatCurrency());
+    $("#porcentaje_iva").val(iva_rata * 100);
     $("#label_iva").text("IVA("+$("#porcentaje_iva").text()+"%)");
-    $("#total").text(parseInt(total * 100)/100);
-    $("#monto_total").val($("#total").text());
-    $("#subtotal").val($("#subtotal").text());
+    $("#total").text(total.formatCurrency());
+    $("#monto_total").val(total);
+    $("#subtotal").val(subtotal);
  
 }
 

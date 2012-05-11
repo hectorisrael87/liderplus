@@ -5,7 +5,12 @@ $usuario = new usuario();
 $producto = new producto();
 $usuario->confirmar_miembro();
 $accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
-
+$queryFacturas = "select f.id, f.numero, f.fecha, f.monto_total, 
+            CONCAT(c.nombres,' ',c.apellidos) cliente, ef.descripcion
+            from factura f
+            join pedido p on p.id = f.pedido_id 
+            join cliente c on c.id = p.cliente_id
+            join estatus_factura ef on ef.id = f.estatus_factura_id";
 switch ($accion) {
     case 'listarPedidosPorFacturarPorCliente':
         $pedidos = new pedido();
@@ -25,27 +30,34 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $facturas = new factura();
         $data = $_POST;
-        unset($data['crear'], $data['modificar'], $data['editar'], $data['valor']);
+        unset($data['crear'], $data['modificar'], $data['editar'], $data['valor'], $data['cliente_id']);
         $exito = $facturas->insertar($data);
+        
         if ($exito['suceed']) {
             $exito['mensaje'] = "factura procesado con exito";
+            // actualizamos el estatus del pedido
+            $pedidos = new pedido();
+            $pedidos->actualizar($data['pedido_id'], Array("estatus_pedido_id"=>4));
         }
+        $pag = new paginacion();
+        $pag->paginar($queryFacturas);
         echo $twig->render('sistema/factura/paginacion.html.twig', array(
-            "resultado" => $exito,
-            "accion" => "guardar"));
+            "registros" => $pag->registros,
+            "accion" => "listar"));
         break; 
         // </editor-fold>
     case "consultar":
     case "ver":
         // <editor-fold defaultstate="collapsed" desc="ver">
-//        $pedido = new pedido();
-//        $dato = $pedido->ver($_GET['id']);
-//        $pedidos = $pedido->ver_pedidos_pedido($_GET['id']);
-//        echo $twig->render('sistema/pedido/formulario.html.twig', array(
-//            "pedido" => $dato['data'][0],
-//            "pedidos" => $pedidos['data'],
-//            'accion' => 'ver',
-//            "modoLectura" => true));
+        $factura = new factura();
+        $dato = $factura->ver($_GET['id']);
+        $detalle = $factura->ver_detalle_factura($_GET['id']);
+        
+        echo $twig->render('sistema/factura/formulario.html.twig', array(
+            "factura" => $dato['data'][0],
+            "productos" => $detalle['data'],
+            'accion' => 'ver',
+            "modoLectura" => true));
         break;
     // </editor-fold>
     case "crear":
@@ -69,11 +81,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="listar">
         $pag = new paginacion();
         // <editor-fold defaultstate="collapsed" desc="query">
-        $pag->paginar("select f.id, f.numero, f.fecha, f.monto_total, CONCAT(c.nombres,' ',c.apellidos) cliente, ef.descripcion
-            from factura f
-            join pedido p on p.id = f.pedido_id 
-            join cliente c on c.id = p.cliente_id
-            join estatus_factura ef on ef.id = f.estatus_factura_id");
+        $pag->paginar($queryFacturas);
 // </editor-fold>
         echo $twig->render('sistema/factura/paginacion.html.twig', array(
             "registros" => $pag->registros,
