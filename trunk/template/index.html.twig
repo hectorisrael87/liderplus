@@ -8,13 +8,16 @@
         <p class="hide">Ultimo acceso el d&iacute;a 07/04/2012.</p>
         <p><a href="modificar" class="btn btn-primary btn-large">Modificar Perfil</a></p>
     </div>
-</div>
-<div class="row">
     <div class="well-small">
         <h1>Modulos Disponibles</h1>
-        {%if session is not defined %}
-            <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
-        {% else %}
+    </div>
+</div>
+{%if session is not defined %}
+<div class="row">
+    <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
+</div>
+{% else %}
+<div class="row">
         <div class="span2">
             <h2> Cliente</h2>
             <p>Administrar clientes</p>
@@ -35,7 +38,13 @@
             <p>Administrar Usuarios</p>
             <a href="{{constant('URL_SISTEMA')}}/usuario/listar" class="btn btn-info">Entrar</a>
         </div>
-    {% endif %}
-    </div>
 </div>
+<div class="row">
+        <div class="span2">
+            <h2>Factura</h2>
+            <p>Administrar Facturas</p>
+            <a href="{{constant('URL_SISTEMA')}}/factura/listar" class="btn btn-info">Entrar</a>
+        </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@ date_default_timezone_set("America/Caracas");
 // <editor-fold defaultstate="collapsed" desc="Acceso a la BD">
 define("HOST", "localhost");
 define("USER", "root");
-define("PASSWORD", "");
+define("PASSWORD", "root");
 define("DB", "liderplus");
 // </editor-fold>
 //<editor-fold defaultstate="collapsed" desc="configuracion de ficheros del sistema">
