@@ -1,0 +1,90 @@
+{% extends 'layout/fluid.html.twig' %}
+{# TITULO #}
+{% block titulo accion|title ~ ' Empresa de Transporte' %}
+
+{# JAVASCRIPT #}
+{% block include %}
+{{ parent() }}
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/jquery.validate.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/jquery-validate/localization/messages_es.js"></script>
+<script type="text/javascript" src="{{constant('ROOT')}}/js/formularios.js"></script>
+{% endblock %}
+
+{# CONTENIDO #}
+{% block contenido %}
+<div class="page-header">
+    <h1>{{ accion|title }} Empresa de Transporte</h1>
+</div>
+<ul class="breadcrumb">
+    <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/cliente/listar">Empesa de Transporte</a><span class="divider">&raquo;</span></li>
+    <li>{{ accion|title }}</li>
+</ul>
+{% if resultado is defined %}
+    {% include 'misc/resultado.html.twig' %}
+<div>
+    <a class="btn" href="{{ constant("URL_SISTEMA")}}/transporte">Volver al listado</a>
+</div>
+{% else %}
+    <form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/transporte/guardar" class="well-small form-horizontal">
+    <input type="hidden" name="id" value="{{ transporte.id }}"/>
+    <fieldset>
+        <legend>Datos de la empresa</legend>
+        <div class="control-group">
+            <label for="nombre" class="control-label">Nombre/Razón Social</label>
+            <div class="controls">
+                {{ form.input('text','required','nombre','nombre', transporte.nombre, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="rif" class="control-label">Rif:</label>
+            <div class="controls">
+                {{ form.input('text','required input-small','rif','rif', transporte.rif, modoLectura) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="estado" class="control-label">Estado:</label>
+            <div class="controls">
+                {{ form.input('text','required','estado','estado', transporte.estado, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="ciudad" class="control-label">Ciudad:</label>
+            <div class="controls">
+                {{ form.input('text','required','ciudad','ciudad', transporte.ciudad, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="direccion" class="control-label">Dirección:</label>
+            <div class="controls">
+                <textarea {{ modoLectura ? "disabled='disabled'" : "" }} name="direccion" class="required">{{ transporte.direccion}}</textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="numero_local" class="control-label">Número local:</label>
+            <div class="controls">
+                {{ form.input('text','required number','numero_local','numero_local', transporte.telefono_oficina, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="numero_celular" class="control-label">Número celular:</label>
+            <div class="controls">
+                {{ form.input('text','required number','numero_celular','numero_celular', transporte.numero_celular, modoLectura)}}
+            </div>
+        </div>
+        <div class="control-group">
+            <label for="contacto" class="control-label">Persona Contacto:</label>
+            <div class="controls">
+                {{ form.input('text','required','persona_contacto','persona_contacto', transporte.persona_contacto, modoLectura)}}
+            </div>
+        </div>
+    </fieldset>
+    {% if accion is defined %}
+    <div class="form-actions">
+        <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+    </div>
+    {% endif %}
+</form>
+{% endif %}
+{% endblock %}
