@@ -15,7 +15,7 @@
 </div>
 <ul class="breadcrumb">
     <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
-    <li><a href="{{constant('URL_SISTEMA')}}/cliente/listar">Empresa Transporte</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/transporte/listar">Empresa Transporte</a><span class="divider">&raquo;</span></li>
     <li>{{ accion|title }}</li>
 </ul>
 {%if mensaje is defined%}
@@ -45,7 +45,7 @@
             {% for transporte in registros %}
                 <tr>
                     <td>{{ transporte.id}}</td>
-                    <td>{{ transporte.nombres}}</td>
+                    <td>{{ transporte.nombre}}</td>
                     <td>{{ transporte.rif}}</td>
                     <td>{{ transporte.estado }} </td>
                     <td>{{ transporte.ciudad }} </td>
@@ -58,7 +58,7 @@
                             <a href="{{constant('URL_SISTEMA')}}/transporte/consultar/{{ transporte.id }}" class="btn">Consultar</a>
                             <a href="{{constant('URL_SISTEMA')}}/transporte/editar/{{ transporte.id }}" class="btn btn-info">Editar</a>
                             <a href="{{constant('URL_SISTEMA')}}/transporte/borrar/{{ transporte.id }}" class="btn btn-danger">Borrar</a>
-                        </div>
+                        </div> 
                     </td>
                 </tr>
             {% else %}

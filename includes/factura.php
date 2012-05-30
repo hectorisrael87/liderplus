@@ -7,7 +7,7 @@
  */
 class factura extends db implements crud {
     
-    const status_pendiente = 2;
+    const status_almacen = 2;
     const status_emitida = 1;
     
     public function actualizar($id, $data) {
@@ -24,7 +24,7 @@ class factura extends db implements crud {
             $factura_detalle['cantidad_pedido'] = $data['cantidad_pedido'];
             $factura_detalle['precio'] = $data['precio'];
             unset($data['producto_id'], $data['cantidad_pedido'], $data['precio']);
-            $data['estatus_factura_id'] = self::status_pendiente;
+            $data['estatus_factura_id'] = self::status_almacen;
             
             $resultado = $this->insert("factura", $data);
 
