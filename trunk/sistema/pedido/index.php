@@ -51,6 +51,7 @@ switch ($accion) {
     // </editor-fold>
     case "editar":
     case "modificar":
+// <editor-fold defaultstate="collapsed" desc="modificar">
         $clientes = $cliente->listar();
         $dato = $pedido->ver($_GET['id']);
         $productos = $producto->listar();
@@ -63,7 +64,8 @@ switch ($accion) {
             'accion' => 'modificar',
             "modoLectura" => false
         ));
-        break;
+        break; // </editor-fold>
+
     case "crear":
     case "registrar":
         // <editor-fold defaultstate="collapsed" desc="crear">

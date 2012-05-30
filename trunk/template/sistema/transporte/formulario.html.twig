@@ -17,7 +17,7 @@
 </div>
 <ul class="breadcrumb">
     <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
-    <li><a href="{{constant('URL_SISTEMA')}}/cliente/listar">Empesa de Transporte</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/transporte/listar">Empesa de Transporte</a><span class="divider">&raquo;</span></li>
     <li>{{ accion|title }}</li>
 </ul>
 {% if resultado is defined %}
@@ -63,13 +63,13 @@
         <div class="control-group">
             <label for="numero_local" class="control-label">Número local:</label>
             <div class="controls">
-                {{ form.input('text','required number','numero_local','numero_local', transporte.telefono_oficina, modoLectura)}}
+                {{ form.input('text','required number','telefono_oficina','telefono_oficina', transporte.telefono_oficina, modoLectura)}}
             </div>
         </div>
         <div class="control-group">
             <label for="numero_celular" class="control-label">Número celular:</label>
             <div class="controls">
-                {{ form.input('text','required number','numero_celular','numero_celular', transporte.numero_celular, modoLectura)}}
+                {{ form.input('text','required number','telefono_celular','telefono_celular', transporte.telefono_celular, modoLectura)}}
             </div>
         </div>
         <div class="control-group">
