@@ -5,9 +5,21 @@
     Description:
         Purpose of the stylesheet follows.
 */
-
+body{
+    background: url('../img/wallpaper_wood_76889.png') repeat-x black;
+    background-size: auto 100%;
+}
+.hero-unit{
+    background: url('../img/wallpaper_wood_76889.png') repeat-x black;
+    color: white;
+    text-shadow: 2px 2px 3px gray;
+}
+.hero-unit h1{
+    margin-bottom: 10px;
+}
 footer{
     text-align: center;
+    color: #e0e0e0;
 }
 label{
     text-transform: capitalize;
@@ -24,4 +36,10 @@ ul.breadcrumb li a{
 tfoot label.help-inline{
     font-size: x-small;
     color:red;
+}
+.row-fluid > .span3 .well{
+    background-color: rgba(245, 245, 245, 0.8);
+}
+.row-fluid > .span9 {
+    
 }

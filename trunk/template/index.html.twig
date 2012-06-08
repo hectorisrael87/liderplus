@@ -2,7 +2,7 @@
 {% extends 'layout/fluid.html.twig'%}
 {% block titulo 'Inicio'%}
 {% block contenido %}
-<div class="row">
+<div class="row-fluid">
     <div class="hero-unit">
         <h1>Bienvenido a LiderPlus</h1>
         <p class="hide">Ultimo acceso el d&iacute;a 07/04/2012.</p>
@@ -10,8 +10,6 @@
     </div>
     <div class="well-small">
         <h1>Modulos Disponibles</h1>
-    </div>
-</div>
 {%if session is not defined %}
 <div class="row">
     <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
@@ -45,6 +43,12 @@
             <p>Administrar Facturas</p>
             <a href="{{constant('URL_SISTEMA')}}/factura/listar" class="btn btn-info">Entrar</a>
         </div>
+        <div class="span2">
+            <h2>Transporte</h2>
+            <a href="{{constant('URL_SISTEMA')}}/transporte/listar" class="btn btn-info">Entrar</a>
+        </div>
 </div>
 {% endif %}
+    </div>
+</div>
 {% endblock %}
