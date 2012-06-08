@@ -2,6 +2,7 @@
 {% extends 'layout/base.html.twig'%}
 {% block titulo 'Iniciar sesion'%}
 {% block contenido %}
+<div class="well">
 <div class="row">
     <div class="span6 offset3">
         {% if mensaje.error is defined %}
@@ -32,4 +33,5 @@
             </form>
         </div>
     </div>
+</div>
 {% endblock %}

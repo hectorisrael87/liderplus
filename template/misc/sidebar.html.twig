@@ -9,7 +9,7 @@
 </form>
 {% else %}
 <div class="well">
-    <h3>Hola, {{ session.usuario.login }}</h3>
+    <h3>Hola, {{ session.usuario.login|capitalize }}</h3>
     <a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true">Cerrar sesion</a>
 </div>
 {% endif %}
