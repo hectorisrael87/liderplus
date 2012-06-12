@@ -44,6 +44,7 @@ class paginacion extends Misc {
         if ($this->query != "") {
             $this->currentPage = $_SERVER["PHP_SELF"];
             $this->pageNum = 0;
+            $this->totalRows = 0;
             if (isset($_GET['pageNum'])) {
                 $this->pageNum = $_GET['pageNum'];
             }
@@ -63,9 +64,13 @@ class paginacion extends Misc {
                 $this->totalRows = $_GET['totalRows'];
             } else {
                 $this->registrosTotales = $this->db->dame_query($this->query);
-                $this->totalRows = $this->registrosTotales['stats']['affected_rows'];
+                if ($this->registrosTotales['suceed']) {
+                    $this->totalRows = $this->registrosTotales['stats']['affected_rows'];
+                }
             }
-            $this->totalPages = ceil($this->totalRows / $this->maxRows) - 1;
+            if ($this->maxRows > 0) {
+                $this->totalPages = ceil($this->totalRows / $this->maxRows) - 1;
+            }
 
             $this->queryString = "";
             if (!empty($_SERVER['QUERY_STRING'])) {
