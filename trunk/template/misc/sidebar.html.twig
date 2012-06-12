@@ -9,30 +9,30 @@
 </form>
 {% else %}
 <div class="well">
-    <h3>Hola, {{ session.usuario.login|capitalize }}</h3>
-    <a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true">Cerrar sesion</a>
+    <p><i class="icon-user"></i> Hola, {{ session.usuario.login|capitalize }}</p>
+    <a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true"><i class="icon-off"></i> Cerrar sesion</a>
 </div>
 {% endif %}
 
 <div class="well sidebar-nav">
     <ul class="nav nav-list">
         <li class="nav-header">Producto</li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/producto/listar">Listar</a></li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/producto/crear">Crear</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/producto/listar"><i class="icon-list-alt"></i> Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/producto/crear"><i class=" icon-edit"></i> Crear</a></li>
         <li class="nav-header">Factura</li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/factura/listar">Listar</a></li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/factura/crear">Emitir</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/factura/listar"><i class="icon-list-alt"></i> Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/factura/crear"><i class=" icon-edit"></i> Emitir</a></li>
         <li class="nav-header">Cliente</li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/cliente/listar">Listar</a></li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/cliente/crear">Crear</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/cliente/listar"><i class="icon-list-alt"></i> Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/cliente/crear"><i class=" icon-edit"></i> Crear</a></li>
         <li class="nav-header">Usuario</li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/usuario/listar">Listar</a></li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/usuario/crear">Crear</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/usuario/listar"><i class="icon-list-alt"></i> Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/usuario/crear"><i class=" icon-edit"></i> Crear</a></li>
         <li class="nav-header">Pedido</li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/pedido/listar">Listar</a></li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/pedido/crear">Crear</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/pedido/listar"><i class="icon-list-alt"></i> Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/pedido/crear"><i class=" icon-edit"></i> Crear</a></li>
         <li class="nav-header">Transporte</li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/transporte/listar">Listar</a></li>
-        <li><a href="{{ constant("URL_SISTEMA")}}/transporte/crear">Crear</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/transporte/listar"><i class="icon-list-alt"></i> Listar</a></li>
+        <li><a href="{{ constant("URL_SISTEMA")}}/transporte/crear"><i class=" icon-edit"></i> Crear</a></li>
     </ul>
 </div><!--/.well -->

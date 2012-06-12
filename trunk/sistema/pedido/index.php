@@ -1,12 +1,15 @@
 <?php
 
+// <editor-fold defaultstate="collapsed" desc="init">
 include '../../includes/constants.php';
 $pedido = new pedido();
 $cliente = new cliente();
 $usuario = new usuario();
 $producto = new producto();
 $usuario->confirmar_miembro();
-$accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
+$accion = isset($_GET['accion']) ? $_GET['accion'] : "listar"; 
+// </editor-fold>
+
 // <editor-fold defaultstate="collapsed" desc="query">
 $queryPedidos = "select pedido.id, pedido.numero, pedido.fecha,  
         CONCAT(cliente.nombres,' ', cliente.apellidos) cliente, 
@@ -36,6 +39,7 @@ switch ($accion) {
         }
         echo $twig->render('sistema/pedido/paginacion.html.twig', array(
             "registros" => $pag->registros,
+            "session"=>$_SESSION,
             "resultado" => $exito,
             "accion" => "guardar"));
         break;
@@ -47,6 +51,7 @@ switch ($accion) {
         $dato = $pedido->ver($_GET['id']);
         $pedidos = $pedido->ver_productos_pedido($_GET['id']);
         echo $twig->render('sistema/pedido/formulario.html.twig', array(
+            "session"=>$_SESSION,
             "pedido" => $dato['data'][0],
             "productos" => $pedidos['data'],
             'accion' => 'ver',
@@ -56,12 +61,13 @@ switch ($accion) {
     case "editar":
     case "modificar":
     case "procesar":
-// <editor-fold defaultstate="collapsed" desc="modificar">
+        // <editor-fold defaultstate="collapsed" desc="modificar">
         $clientes = $cliente->listar();
         $dato = $pedido->ver($_GET['id']);
         $productos = $producto->listar();
         $productosPedido = $pedido->ver_productos_pedido($_GET['id']);
         echo $twig->render('sistema/pedido/registrar.html.twig', array(
+            "session"=>$_SESSION,
             "clientes" => $clientes,
             "pedido" => $dato['data'][0],
             "productos" => $productos,
@@ -70,13 +76,13 @@ switch ($accion) {
             "modoLectura" => false
         ));
         break; // </editor-fold>
-
     case "crear":
     case "registrar":
         // <editor-fold defaultstate="collapsed" desc="crear">
         $productos = $producto->listar();
         $clientes = $cliente->listar();
         $variables = array(
+            "session"=>$_SESSION,
             "accion" => "Registrar",
             "productos" => $productos,
             "clientes" => $clientes);
@@ -93,6 +99,7 @@ switch ($accion) {
         $pag->paginar($queryPedidos);
         echo $twig->render('sistema/pedido/paginacion.html.twig', array(
             "registros" => $pag->registros,
+            "session"=>$_SESSION,
             "accion" => "listar"));
         break;
     // </editor-fold>

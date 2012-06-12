@@ -7,12 +7,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">LiderPlus</a>
+            <a class="brand" href="{{ constant('URL_SISTEMA')}}/usuario">LiderPlus</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li class="active"><a href="#">Inicio</a></li>
-                    <li><a href="#about">Acerca</a></li>
-                    <li><a href="#contact">Contacto</a></li>
+                    <li class="active"><a href="{{ constant('URL_SISTEMA')}}/usuario">Inicio</a></li>
+
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
@@ -24,8 +23,8 @@
             </form>
             {% else %}
             <div class="pull-right">
-                <span class="navbar-text"> Bienvenido(a) <a href="{{ constant('URL_SISTEMA')}}/usuario">{{ session.usuario.login }}</a></span>
-                | <span class="navbar-text"><a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true">Cerrar Sesion</a></span>
+                <span class="navbar-text"> Bienvenido(a) <a href="{{ constant('URL_SISTEMA')}}/usuario"><i class="icon-white icon-user"></i> {{ session.usuario.login }}</a></span>
+                | <span class="navbar-text"><a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true"><i class="icon-white icon-off"></i> Cerrar Sesion</a></span>
             </div>
             {% endif %}
         </div>
