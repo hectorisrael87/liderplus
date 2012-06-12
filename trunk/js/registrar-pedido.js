@@ -106,6 +106,23 @@ function validacionFormulario(){
             required:"Debe agregar al menos un producto para realizar una orden de compra."
         }
     });
+    $("[id*='status_pedido_detalle']").rules("add",{
+        required:true,
+        messages:{
+            required:"Seleccione un status para este producto"
+        }
+    });
+    $("[id*='cantidad_despacho']").rules("add",{
+        required:true,
+        min:0,
+        max:function(){
+            return 0;
+        },
+        messages:{
+            required:"Introduzca la cantidad disponible en despacho"
+        }
+    });
+    
     $("#buscarProducto").validate({
         groups: {
             agregarProducto: "producto_id cantidad"

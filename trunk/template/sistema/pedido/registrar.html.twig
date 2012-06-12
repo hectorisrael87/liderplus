@@ -100,6 +100,9 @@
                             <th>Producto</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
+                            {%if accion == "procesar" %}
+                            <th>procesar</th>
+                            {% endif%}
                             <th>Total</th>
                         </tr>
                     </thead>
@@ -112,7 +115,7 @@
                             <tr>
                                 <td>
                                     {{ modoLectura == false ? "<span><i class='icon-remove'></i>" : "" }}{{ producto.descripcion }}
-                                    {{ form.input("hidden", "", "", "producto[]", producto.id, false) }}
+                                    {{ form.input("hidden", "", "", "producto_id[]", producto.id, false) }}
                                 </td>
                                 <td>
                                     <span class="pull-right">{{ producto.cantidad_pedido }}</span>
@@ -122,6 +125,18 @@
                                     <span class="pull-right">{{ format_number(producto.precio) }} Bsf.</span>
                                     {{ form.input("hidden", "", "", "precio[]", producto.precio, false) }}
                                 </td>
+                                {% if accion == "procesar"%}
+                                <td class="form-inline">
+                                    <select id="status_pedido_detalle_{{loop.index}}" name="status_pedido_detalle[]" class="required input-medium">
+                                        <option value="">Seleccione</option>
+                                        <option value="1">Pendiente</option>
+                                        <option value="2">Procesado</option>
+                                        <option value="3">Rechazado</option>
+                                    </select>
+                                        <label>Cantidad Despacho</label>
+                                        <input id="cantidad_despacho_{{ loop.index }}" type="text" name="cantidad_despacho[]" class="required input-mini"/>
+                                </td>
+                                {% endif %}
                                 <td>
                                     <span class="pull-right">{{ format_number(producto.precio * producto.cantidad_pedido) }} Bsf.</span>
                                 </td>
@@ -136,14 +151,17 @@
                             </td>
                             <td><span class="pull-right" id="total_productos">{{ cantidad }}</span></td>
                             <td><span class="pull-right"><b>Subtotal</b></span></td>
+                            {% if accion == "procesar"%}
+                                <td>&nbsp;</td>
+                                {% endif %}
                             <td><span class="pull-right" id="subtototal">{{ format_number(subtotal) }} Bsf.</span></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><span class="pull-right"><b>IVA</b></span></td>
+                            <td colspan="{{accion=="procesar"?4:3}}"><span class="pull-right"><b>IVA</b></span></td>
                             <td><span class="pull-right" id="iva">{{ format_number(subtotal * 0.1) }} Bsf.</span></td>
                         </tr>
                         <tr>
-                            <td colspan="3"><span class="pull-right"><b>Total</b></span></td>
+                            <td colspan="{{accion=="procesar"?4:3}}"><span class="pull-right"><b>Total</b></span></td>
                             <td><span class="pull-right" id="total">{{ format_number(subtotal * 1.1) }} Bsf.</span></td>
                         </tr>
                     </tfoot>

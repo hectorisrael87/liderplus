@@ -9,12 +9,16 @@ $usuario->confirmar_miembro();
 $accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
 // <editor-fold defaultstate="collapsed" desc="query">
 $queryPedidos = "select pedido.id, pedido.numero, pedido.fecha,  
-        CONCAT(cliente.nombres,' ',cliente.apellidos) cliente, 
+        CONCAT(cliente.nombres,' ', cliente.apellidos) cliente, 
         estatus_pedido.descripcion estatus_pedido,
-        COUNT(pedido_detalle.id) productos
+        COUNT(pedido_detalle.id) productos,
+        (select fase.nombre 
+            from fase 
+            inner join pedido_fase on pedido_fase.fase_id = fase.id
+            where pedido_fase.pedido_id = pedido.id  order by pedido_fase.id desc limit 1) fase
         from pedido 
         inner join pedido_detalle on pedido.id = pedido_detalle.pedido_id
-        inner join cliente on cliente_id = cliente.id 
+        inner join cliente on pedido.cliente_id = cliente.id 
         inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id
         group by pedido.id";
 // </editor-fold>
@@ -51,6 +55,7 @@ switch ($accion) {
     // </editor-fold>
     case "editar":
     case "modificar":
+    case "procesar":
 // <editor-fold defaultstate="collapsed" desc="modificar">
         $clientes = $cliente->listar();
         $dato = $pedido->ver($_GET['id']);
@@ -61,7 +66,7 @@ switch ($accion) {
             "pedido" => $dato['data'][0],
             "productos" => $productos,
             "productosPedido" => $productosPedido['data'],
-            'accion' => 'modificar',
+            'accion' => $accion,
             "modoLectura" => false
         ));
         break; // </editor-fold>
