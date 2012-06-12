@@ -35,6 +35,7 @@
                 <th>cliente</th>
                 <th>Productos</th>
                 <th>Status</th>
+                <th>Fase</th>
                 <th>acciones</th>
             </tr>
         </thead>
@@ -47,9 +48,13 @@
                     <td>{{ pedido.cliente }} </td>
                     <td><span class="pull-right"> {{ pedido.productos }} </span></td>
                     <td>{{ pedido.estatus_pedido }} </td>
+                    <td>{{ pedido.fase }} </td>
                     <td>
                         <div class="btn-group">
                             <a href="{{constant('URL_SISTEMA')}}/Pedido/consultar/{{ pedido.id }}" class="btn">Consultar</a>
+                            {%if pedido.fase == "Pedido" and pedido.estatus_pedido == "Pendiente" %}
+                                <a href="{{constant('URL_SISTEMA')}}/Pedido/procesar/{{ pedido.id }}" class="btn btn-warning">Procesar</a>
+                            {% endif %}
                             <a href="{{constant('URL_SISTEMA')}}/Pedido/editar/{{ pedido.id }}" class="btn btn-info">Editar</a>
                             <a href="{{constant('URL_SISTEMA')}}/Pedido/borrar/{{ pedido.id }}" class="btn btn-danger">Borrar</a>
                         </div>

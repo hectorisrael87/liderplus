@@ -43,3 +43,7 @@ tfoot label.help-inline{
 .row-fluid > .span9 {
     
 }
+td.form-inline label.help-inline{
+    color: red;
+    font-size: x-small;
+}
