@@ -28,10 +28,16 @@ $queryPedidos = "select pedido.id, pedido.numero, pedido.fecha,
 
 switch ($accion) {
     case "guardar":
+        var_dump($_POST);
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar'], $data['valor']);
-        $exito = $pedido->insertar($data);
+        if (isset($_POST['crear']) && $_POST['crear'] == "Procesar") {
+            $exito['suceed'] = $pedido->procesar($data);
+        } else {
+            unset($data['id']);
+            $exito = $pedido->insertar($data);
+        }
         $pag = new paginacion();
         $pag->paginar($queryPedidos);
         if ($exito['suceed']) {
@@ -61,7 +67,7 @@ switch ($accion) {
     case "editar":
     case "modificar":
     case "procesar":
-        // <editor-fold defaultstate="collapsed" desc="modificar">
+    // <editor-fold defaultstate="collapsed" desc="modificar">
         $clientes = $cliente->listar();
         $dato = $pedido->ver($_GET['id']);
         $productos = $producto->listar();
@@ -72,6 +78,7 @@ switch ($accion) {
             "pedido" => $dato['data'][0],
             "productos" => $productos,
             "productosPedido" => $productosPedido['data'],
+            "status_pedido_detalles" => $pedido->listar_status_pedido_detalle(),
             'accion' => $accion,
             "modoLectura" => false
         ));

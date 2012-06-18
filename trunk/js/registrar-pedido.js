@@ -87,9 +87,15 @@ function cuadromodal(){
     });
 }
 function validacionFormulario(){
-    $(document).on("click", ".icon-remove", function(){
-        eliminarProducto($(this));
-    });
+    if(accion=="procesar"){
+        $("#cliente_id").attr("disabled", true);
+    }
+    else
+    {
+        $(document).on("click", ".icon-remove", function(){
+            eliminarProducto($(this));
+        });
+    }
     $("#cantidad").rules("add",{
         required: true,
         min: 1,
@@ -115,11 +121,12 @@ function validacionFormulario(){
     $("[id*='cantidad_despacho']").rules("add",{
         required:true,
         min:0,
-        max:function(){
-            return 0;
+        max: function(element) {
+            return $(element).parents("tr").eq(0).find("input[name='cantidad_pedido[]']").val();   
         },
         messages:{
-            required:"Introduzca la cantidad disponible en despacho"
+            required: "Introduzca la cantidad disponible en despacho",
+            max: "Introduzca un valor no mayor a la cantidad solicitada ({0})"
         }
     });
     
