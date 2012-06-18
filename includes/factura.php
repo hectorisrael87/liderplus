@@ -62,7 +62,8 @@ class factura extends db implements crud {
     
     public function ver($id) {
         
-        $query  = "select f.*, concat(c.nombres, ' ', c.apellidos) as cliente, ef.descripcion as estatus
+        $query  = "select f.*, concat(c.nombres, ' ', c.apellidos) as cliente, ef.descripcion as estatus,
+            p.id as pedido_id 
             from factura f join pedido p on f.pedido_id = p.id
             join cliente c on p.cliente_id = c.id
             join estatus_factura ef on f.estatus_factura_id = ef.id
