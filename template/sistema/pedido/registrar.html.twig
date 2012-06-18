@@ -7,6 +7,9 @@
 <script src="{{ constant('ROOT') }}js/jquery-validate/jquery.validate.js"></script>
 <script src="{{ constant('ROOT') }}js/jquery-validate/localization/messages_es.js"></script>
 <script src="{{ constant('ROOT') }}js/registrar-pedido.js"></script>
+<script type="text/javascript">
+    var accion = "{{accion}}";
+</script>
 {% endblock %}
 {% block contenido %}
     <div class="page-header">
@@ -52,6 +55,7 @@
     </div>
     <div class="well-small">
         <form name="productos_form" id="productos_form" method="post" action="{{ constant('URL_SISTEMA')}}/pedido/guardar">
+            <input type="hidden=" name="id" value="{{pedido.id}}"/>
             <fieldset>
                 <legend>Datos del pedido</legend>
                 <table>
@@ -115,6 +119,7 @@
                             <tr>
                                 <td>
                                     {{ modoLectura == false ? "<span><i class='icon-remove'></i>" : "" }}{{ producto.descripcion }}
+                                    {{ form.input("hidden", "", "", "pedido_detalle_id", producto.pedido_detalle_id, false) }}
                                     {{ form.input("hidden", "", "", "producto_id[]", producto.id, false) }}
                                 </td>
                                 <td>
@@ -128,13 +133,12 @@
                                 {% if accion == "procesar"%}
                                 <td class="form-inline">
                                     <select id="status_pedido_detalle_{{loop.index}}" name="status_pedido_detalle[]" class="required input-medium">
-                                        <option value="">Seleccione</option>
-                                        <option value="1">Pendiente</option>
-                                        <option value="2">Procesado</option>
-                                        <option value="3">Rechazado</option>
+                                        {% for status_pedido_detalle in status_pedido_detalles.data %}
+                                            <option value="{{status_pedido_detalle.id }}">{{status_pedido_detalle.descripcion|title }}</option>
+                                        {% endfor %}
                                     </select>
                                         <label>Cantidad Despacho</label>
-                                        <input id="cantidad_despacho_{{ loop.index }}" type="text" name="cantidad_despacho[]" class="required input-mini"/>
+                                        <input id="cantidad_despacho_{{ loop.index }}" type="text" name="cantidad_despacho[]" value="{{producto.cantidad_despacho}}" class="required input-mini"/>
                                 </td>
                                 {% endif %}
                                 <td>

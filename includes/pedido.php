@@ -11,7 +11,6 @@ class pedido extends db implements crud {
     const status_procesado = 2;
     const status_almacen = 3;
     const status_cancelado = 3;
-    
     const fase_pedido = 1;
     const fase_almacen = 2;
     const fase_facturacion = 3;
@@ -96,7 +95,7 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
 
     public function ver_productos_pedido($id) {
 
-        return $this->dame_query("select producto.id, 
+        return $this->dame_query("select pedido_detalle.id pedido_detalle_id,  producto.id, 
                 producto.id, producto.codigo, producto.descripcion, 
                 pedido_detalle.cantidad_pedido, pedido_detalle.cantidad_despacho, pedido_detalle.precio,
                 estatus_pedido_detalle.descripcion estatus_pedido
@@ -117,13 +116,45 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
                 where pedido_id = $id and estatus_pedido_id = 2");
     }
 
+    public function procesar($data) {
+        $uno = $this->update("pedido", array(
+            "estatus_pedido_id" => self::status_procesado
+                ), array(
+            "id" => $data['id']));
+        $dos = $this->insert("pedido_fase", array(
+            "pedido_id" => $data['id'],
+            "fase_id" => self::fase_almacen,
+            "usuario_id" => $_SESSION['usuario']['id']));
+        if ($uno['suceed'] && $dos['suceed']) {
+            for ($i = 0; $i <= sizeof($data); $i++) {
+                $tres = $this->update("pedido_detalle", array(
+                    "status_pedido_id" => $data['status_pedido_detalle'][$i],
+                    "cantidad_despacho" => $data['cantidad_despacho'][$i]
+                        ), array(
+                    "id" => $data['pedido_detalle_id'][$i]
+                        ));
+                if (!$tres['suceed']) {
+                    break;
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function listar_status_pedido_detalle() {
+        return $this->select("*", "estatus_pedido_detalle");
+    }
+
     public function listar_pedido_chequeado() {
         $query = "select p.id as pedido_id, f.id as factura_id, f.numero  
             from pedido p join factura f on p.id = f.pedido_id 
             where p.estatus_pedido_id = 4";
         return $this->dame_query($query);
     }
-    
+
 }
 
 ?>
