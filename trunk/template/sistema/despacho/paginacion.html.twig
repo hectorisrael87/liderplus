@@ -42,7 +42,7 @@
                     <td>{{ despacho.id }}</td>
                     <td>{{ despacho.numero }}
                     <td>{{ despacho.nombre }}</td>
-                    <td>{{ format_date(despacho.fecha) }}</td>
+                    <td>{{ despacho.fecha | date("d/m/Y h:m:s a") }}</td>
                     <td>
                         <div class="btn-group">
                             <a href="{{constant('URL_SISTEMA')}}/despacho/consultar/{{ despacho.id }}" class="btn">Consultar</a>
