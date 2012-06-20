@@ -15,7 +15,7 @@
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->
-            {% if session.usuario is not defined %}
+            {% if session.usuario.login is not defined %}
             <form class="navbar-form pull-right" method="post" action="{{ constant('ROOT')}}login.php">
                 <input name="login" type="text" class="input-small" placeholder="Login"/>
                 <input name="password" type="password" class="input-small" placeholder="Password"/>

@@ -10,9 +10,11 @@
     </div>
     <div class="well-small">
         <h1>Modulos Disponibles</h1>
-{%if session is not defined %}
+{%if session.usuario.login is not defined %}
 <div class="row">
-    <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
+    <div class="span6">
+        <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
+    </div>
 </div>
 {% else %}
 <div class="row">
