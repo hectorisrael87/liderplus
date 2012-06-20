@@ -25,6 +25,7 @@ switch ($accion) {
             }
         }
         echo $twig->render('sistema/producto/formulario.html.twig', array(
+            "session"=>$_SESSION,
             "resultado" => $exito,
             "accion" => "guardar"));
         break;
@@ -32,6 +33,7 @@ switch ($accion) {
     case "crear":
         // <editor-fold defaultstate="collapsed" desc="crear">
         echo $twig->render('sistema/producto/formulario.html.twig', array(
+            "session"=>$_SESSION,
             "accion" => "crear",
             "modoLectura" => false
         ));
@@ -42,6 +44,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="ver">
         $dato = $producto->ver($_GET['id']);
         echo $twig->render('sistema/producto/formulario.html.twig', array(
+            "session"=>$_SESSION,
             "producto" => $dato['data'][0],
             "modoLectura" => true,
             "accion" => $accion));
@@ -52,6 +55,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="modificar">
         $dato = $producto->ver($_GET['id']);
         echo $twig->render('sistema/producto/formulario.html.twig', array(
+            "session"=>$_SESSION,
             "producto" => $dato['data'][0],
             "modoLectura" => false,
             "accion" => $accion));
@@ -71,6 +75,7 @@ switch ($accion) {
         $paginacion->paginar("select * from producto");
         $registros = $paginacion->registros;
         echo $twig->render('sistema/producto/paginacion.html.twig', array(
+            "session"=>$_SESSION,
             "registros" => $registros,
             "accion" => "Listar",
             "tipoMensaje" => $tipoMensaje,
@@ -82,6 +87,7 @@ switch ($accion) {
         $paginacion = new paginacion();
         $paginacion->paginar("select * from producto");
         echo $twig->render('sistema/producto/paginacion.html.twig', array(
+            "session"=>$_SESSION,
             "accion" => "Listar",
             "registros" => $paginacion->registros,
             "paginacion" => $paginacion->mostrar_paginado_lista()));
