@@ -42,6 +42,7 @@ switch ($accion) {
         $pag = new paginacion();
         $pag->paginar($queryFacturas);
         echo $twig->render('sistema/factura/paginacion.html.twig', array(
+            "session"=>$_SESSION,
             "registros" => $pag->registros,
             "accion" => "listar"));
         break; 
@@ -54,6 +55,7 @@ switch ($accion) {
         $detalle = $factura->ver_detalle_factura($_GET['id']);
         
         echo $twig->render('sistema/factura/formulario.html.twig', array(
+            "session"=>$_SESSION,
             "factura" => $dato['data'][0],
             "productos" => $detalle['data'],
             'accion' => 'ver',
@@ -67,6 +69,7 @@ switch ($accion) {
         $productos = $producto->listar();
         $clientes = $cliente->listarConPedidoProcesado();
         $variables = array(
+            "session"=>$_SESSION,
             "accion" => "Registrar",
             "productos" => $productos,
             "clientes" => $clientes);
@@ -84,6 +87,7 @@ switch ($accion) {
         $pag->paginar($queryFacturas);
 // </editor-fold>
         echo $twig->render('sistema/factura/paginacion.html.twig', array(
+            "session"=>$_SESSION,
             "registros" => $pag->registros,
             "accion" => "listar"));
         break;
