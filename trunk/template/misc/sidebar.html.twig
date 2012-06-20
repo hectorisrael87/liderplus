@@ -1,5 +1,5 @@
 {# Barra lateral #}
-{% if session.usuario is not defined%}
+{% if session.usuario.login is not defined%}
 <form class="well" method="post" action="{{ constant('ROOT')}}login.php">
     <label for="login">Login</label>
     <input name="login" id="login" type="text" class="input-medium"/>

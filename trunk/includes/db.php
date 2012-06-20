@@ -96,7 +96,7 @@ Class db {
             $r['stats']['error'] = $this->mysqli->error;
             $r['data'] = $exc->getTraceAsString();
         }
-
+        $this->log("select", $r['suceed'], $r['query'], isset($r['stats']['error'])?$r['stats']['error']:"");
         return $r;
     }
 
@@ -109,6 +109,7 @@ Class db {
         try {
             $r = array();
             $r['suceed'] = true;
+            $r['query'] = $query;
             $r['data'] = $this->mysqli->query($query);
             $r['stats']['affected_rows'] = $this->mysqli->affected_rows;
             $r['stats']['errno'] = $this->mysqli->errno;
@@ -119,6 +120,7 @@ Class db {
             $r['stats']['error'] = $this->mysqli->error;
             $r['data'] = $exc->getTraceAsString();
         }
+        $this->log("exec", $r['suceed'], $r['query'], isset($r['stats']['error'])?$r['stats']['error']:"");
         return $r;
     }
 
@@ -207,7 +209,7 @@ Class db {
             $r['stats']['error'] = $this->mysqli->error;
             $r['data'] = $exc->getTraceAsString();
         }
-
+        $this->log("select", $r['suceed'], $r['query'], isset($r['stats']['error'])?$r['stats']['error']:"");
         return $r;
     }
 
@@ -261,6 +263,7 @@ Class db {
             $r['stats']['error'] = $this->mysqli->error;
             $r['data'] = $exc->getTraceAsString();
         }
+        $this->log("insert", $r['suceed'], $r['query'], isset($r['stats']['error'])?$r['stats']['error']:"");
         return $r;
     }
 
@@ -318,6 +321,7 @@ Class db {
             $r['suceed'] = false;
             $r['data'] = $exc->getTraceAsString();
         }
+        $this->log("update", $r['suceed'], $r['query'], isset($r['stats']['error'])?$r['stats']['error']:"");
         return $r;
     }
 
@@ -368,6 +372,7 @@ Class db {
             $r['stats']['error'] = $this->mysqli->error;
             $r['data'] = $exc->getTraceAsString();
         }
+        $this->log("delete", $r['suceed'], $r['query'], isset($r['stats']['error'])?$r['stats']['error']:"");
         return $r;
     }
 
@@ -382,6 +387,13 @@ Class db {
     public static function query($consulta) {
         $a = new db();
         return $a->dame_query($consulta);
+    }
+
+    public function log($tipo, $status, $query, $error) {
+        $consulta = "
+            insert into log_db(tipo,status,query,error) values(
+            '$tipo',$status,'$query','$error')";
+        $this->mysqli->query($consulta);
     }
 
 }
