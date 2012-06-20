@@ -97,7 +97,7 @@ switch ($accion) {
     default:
         // <editor-fold defaultstate="collapsed" desc="listado">
         $paginacion = new paginacion();
-        $paginacion->paginar("select * from usuario");
+        $paginacion->paginar("select * from usuarios");
         echo $twig->render('sistema/usuario/paginacion.html.twig', array(
             "session" => $session,
             "accion" => "Listar",
