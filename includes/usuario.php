@@ -7,7 +7,7 @@
  */
 class usuario extends db implements crud {
 
-    const tabla = "usuario";
+    const tabla = "usuarios";
 
     public function insertar($data) {
         return $this->insert(self::tabla, $data);
@@ -27,10 +27,8 @@ class usuario extends db implements crud {
      * @return array arreglo de datos
      */
     public function ver($id) {
-        return $result = $this->dame_query("
-                select * 
-                from usuario 
-                where usuario.id=$id");
+        $result = $this->select("*", self::tabla, array("id"=>$id));
+        return $result;
     }
 
     /**
@@ -50,7 +48,7 @@ class usuario extends db implements crud {
     public function login($usuario, $password, $empresa) {
         $result = array();
         try {
-            $result = $this->dame_query("select * from usuario where login='$usuario' and password='$password'");
+            $result = $this->dame_query("select * from " . self::tabla . " where login='$usuario' and password='$password'");
             if ($result['suceed'] == 'true' && count($result['data']) > 0) {
                 session_start();
                 $_SESSION['usuario'] = $result['data'][0];

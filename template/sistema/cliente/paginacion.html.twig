@@ -32,7 +32,7 @@
                 <th>id</th>
                 <th>Nombre</th>
                 <th>Cedula</th>
-                <th>Status</th>
+                <!--<th>Status</th>-->
                 <th>acciones</th>
             </tr>
         </thead>
@@ -42,7 +42,7 @@
                     <td>{{ cliente.id}}</td>
                     <td>{{ cliente.nombres ~ ' ' ~ cliente.apellidos }}</td>
                     <td>{{ cliente.tipo_documento ~ ' ' ~ cliente.numero_documento }}</td>
-                    <td>{{ cliente.status }} </td>
+                    <!--<td>{{ cliente.status }} </td>-->
                     <td>
                         <div class="btn-group">
                             <a href="{{constant('URL_SISTEMA')}}/cliente/consultar/{{ cliente.id }}" class="btn">Consultar</a>

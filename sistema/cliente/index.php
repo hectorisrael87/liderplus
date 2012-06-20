@@ -6,10 +6,8 @@ $usuario = new usuario();
 $usuario->confirmar_miembro();
 // <editor-fold defaultstate="collapsed" desc="query listado">
 $query_paginado = "select cliente.*, 
-            status_cliente.nombre status,
             tipo_documento.nombre tipo_documento
             from cliente 
-            inner join status_cliente on cliente.status_cliente_id = status_cliente.id
             inner join tipo_documento on cliente.tipo_documento_id = tipo_documento.id ";
 // </editor-fold>
 

@@ -28,7 +28,6 @@ $queryPedidos = "select pedido.id, pedido.numero, pedido.fecha,
 
 switch ($accion) {
     case "guardar":
-        var_dump($_POST);
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar'], $data['valor']);
