@@ -154,6 +154,13 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
             where p.estatus_pedido_id = 4";
         return $this->dame_query($query);
     }
+    
+    public function listar_pedido_despacho() {
+        $query = "select p.id as pedido_id, f.id as factura_id, f.numero  
+            from pedido p join factura f on p.id = f.pedido_id 
+            where p.estatus_pedido_id = 5";
+        return $this->dame_query($query);
+    }
 
 }
 

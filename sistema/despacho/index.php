@@ -51,7 +51,7 @@ switch ($accion) {
         $empresa = new transporte();
         $empresas = $empresa->listar();
         $pedido = new pedido();
-        $facturas = $pedido->listar_pedido_chequeado();
+        $facturas = $pedido->listar_pedido_despacho();
         echo $twig->render('sistema/despacho/formulario.html.twig', array(
             "session" => $session,
             "despacho" => $dato['data'][0],

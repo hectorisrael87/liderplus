@@ -17,38 +17,50 @@
     </div>
 </div>
 {% else %}
+<br/>
 <div class="row">
-        <div class="span2">
+    <a href="{{constant('URL_SISTEMA')}}/cliente">    
+        <div class="span2 menu-cliente">    
             <h2> Cliente</h2>
             <p>Administrar clientes</p>
-            <a href="{{constant('URL_SISTEMA')}}/cliente" class="btn btn-info">Entrar</a>
         </div>
-        <div class="span2">
+    </a>
+    <a href="{{constant('URL_SISTEMA')}}/producto" >
+        <div class="span2 menu-producto">
             <h2>Producto</h2>
             <p>Administrar Productos</p>
-            <a href="{{constant('URL_SISTEMA')}}/producto" class="btn btn-info">Entrar</a>
         </div>
-        <div class="span2">
-            <h2>Pedidos</h2>
+    </a>
+    <a href="{{constant('URL_SISTEMA')}}/pedido" >
+        <div class="span2 menu-pedido">
+            <h2>Pedido</h2>
             <p>Administrar Pedidos</p>
-            <a href="{{constant('URL_SISTEMA')}}/pedido" class="btn btn-info">Entrar</a>
         </div>
-        <div class="span2">
+    </a>
+    <a href="{{constant('URL_SISTEMA')}}/usuario/listar" >
+        <div class="span2 menu-usuario">
             <h2>Usuarios</h2>
             <p>Administrar Usuarios</p>
-            <a href="{{constant('URL_SISTEMA')}}/usuario/listar" class="btn btn-info">Entrar</a>
         </div>
+    </a>
 </div>
+<br/>
 <div class="row">
-        <div class="span2">
+    <a href="{{constant('URL_SISTEMA')}}/factura/listar" >
+        <div class="span2 menu-factura">
             <h2>Factura</h2>
             <p>Administrar Facturas</p>
-            <a href="{{constant('URL_SISTEMA')}}/factura/listar" class="btn btn-info">Entrar</a>
         </div>
-        <div class="span2">
+    </a>
+        <a href="{{constant('URL_SISTEMA')}}/transporte/listar" >
+        <div class="span2 menu-transporte">
             <h2>Transporte</h2>
-            <a href="{{constant('URL_SISTEMA')}}/transporte/listar" class="btn btn-info">Entrar</a>
+            <p>Administrar Empresas de Transporte</p>
         </div>
+        </a>
+        <a href="{{constant('URL_SISTEMA')}}/transporte/despacho" >
+        <div class="span2 menu-despacho"><h2>Despacho</h2><p>Administrar Despachos</p></div>
+        </a>
 </div>
 {% endif %}
     </div>

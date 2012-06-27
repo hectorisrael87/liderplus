@@ -31,7 +31,7 @@
     <fieldset>
         <legend>Datos del Despacho</legend>
         <div class="control-group">
-            <label for="nombre" class="control-label">Factura</label>
+            <label for="nombre" class="control-label">Factura: </label>
             <div class="controls">
                 <select class="required" name="factura_id" {{ modoLectura ? "disabled='disabled'" : "" }}>
                 {% for factura in facturas %}
