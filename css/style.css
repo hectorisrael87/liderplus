@@ -47,3 +47,35 @@ td.form-inline label.help-inline{
     color: red;
     font-size: x-small;
 }
+[class^="menu-"],
+[class*=" menu-"]{
+    padding-left: 40px;
+    background-position: 0 10px;
+    background-repeat: no-repeat;
+}
+.menu-cliente {
+    background-image: url("../img/clientes.png");
+    
+}
+.menu-producto {
+    background-image: url("../img/productos.png");
+    
+}
+.menu-pedido {
+    background-image: url("../img/pedidos.png");
+}
+.menu-usuario {
+    background-image: url("../img/usuarios.png");
+}
+.menu-factura {
+    background-image: url("../img/facturas.png");
+}
+.menu-transporte {
+    background-image: url("../img/transportes.png");
+}
+.menu-despacho {
+    background-image: url("../img/despachos.png");
+}
+.container-fluid .span2{
+    width: 150px;
+}
