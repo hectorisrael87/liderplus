@@ -95,5 +95,4 @@ class usuario extends db implements crud {
     }
 
 }
-
 ?>

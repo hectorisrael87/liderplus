@@ -128,7 +128,7 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
         if ($uno['suceed'] && $dos['suceed']) {
             for ($i = 0; $i <= sizeof($data); $i++) {
                 $tres = $this->update("pedido_detalle", array(
-                    "status_pedido_id" => $data['status_pedido_detalle'][$i],
+                    "estatus_pedido_id" => $data['status_pedido_detalle'][$i],
                     "cantidad_despacho" => $data['cantidad_despacho'][$i]
                         ), array(
                     "id" => $data['pedido_detalle_id'][$i]
