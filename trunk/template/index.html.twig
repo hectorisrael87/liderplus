@@ -5,14 +5,16 @@
 <div class="row-fluid">
     <div class="hero-unit">
         <h1>Bienvenido a LiderPlus</h1>
-        <p class="hide">Ultimo acceso el d&iacute;a 07/04/2012.</p>
-        <p><a href="modificar" class="btn btn-primary btn-large"><i class="icon-white icon-user"></i> Modificar Perfil</a></p>
+        {%if session.usuario.login is defined %}
+            <p class="hide">Ultimo acceso el d&iacute;a 07/04/2012.</p>
+            <p><a href="modificar" class="btn btn-primary btn-large"><i class="icon-white icon-user"></i> Modificar Perfil</a></p>
+        {% endif %}
     </div>
     <div class="well-small">
         <h1>Modulos Disponibles</h1>
 {%if session.usuario.login is not defined %}
 <div class="row">
-    <div class="span6">
+    <div class="span10">
         <p>Por favor inicie sesi&oacute;n para ingresar al sistema.</p>
     </div>
 </div>

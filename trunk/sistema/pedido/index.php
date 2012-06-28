@@ -72,6 +72,7 @@ switch ($accion) {
         $productos = $producto->listar();
         $productosPedido = $pedido->ver_productos_pedido($_GET['id']);
         echo $twig->render('sistema/pedido/registrar.html.twig', array(
+            "agregarProducto"=>false,
             "session"=>$_SESSION,
             "clientes" => $clientes,
             "pedido" => $dato['data'][0],
@@ -88,6 +89,7 @@ switch ($accion) {
         $productos = $producto->listar();
         $clientes = $cliente->listar();
         $variables = array(
+            "agregarProducto"=>true,
             "session"=>$_SESSION,
             "accion" => "Registrar",
             "productos" => $productos,

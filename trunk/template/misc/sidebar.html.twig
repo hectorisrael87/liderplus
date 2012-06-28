@@ -5,14 +5,13 @@
     <input name="login" id="login" type="text" class="input-medium"/>
     <label for="password">Password</label>
     <input name="password" type="password" class="input-medium"/>
-    <input type="submit" class="btn" value="Entrar"/>
+    <input name="submit" type="submit" class="btn" value="Entrar"/>
 </form>
 {% else %}
 <div class="well">
     <p><i class="icon-user"></i> Hola, {{ session.usuario.login|capitalize }}</p>
     <a href="{{ constant("URL_SISTEMA") }}/usuario?logout=true"><i class="icon-off"></i> Cerrar sesion</a>
 </div>
-{% endif %}
 
 <div class="well sidebar-nav">
     <ul class="nav nav-list">
@@ -39,3 +38,4 @@
         <li><a href="{{ constant("URL_SISTEMA")}}/despacho/crear"><i class=" icon-edit"></i>Crear</a></li>
     </ul>
 </div><!--/.well -->
+{% endif %}
