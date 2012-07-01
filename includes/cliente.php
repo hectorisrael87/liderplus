@@ -8,7 +8,6 @@
 class cliente extends db implements crud {
 
     const tabla = "cliente";
-    const pedido_procesado = 3;
 
     public function actualizar($id, $data) {
         return $this->update(self::tabla, $data, array("id" => $id));
@@ -40,7 +39,7 @@ class cliente extends db implements crud {
     public function listarConPedidoProcesado() {
         $query = "select c.*
             from cliente c
-            where id in (select cliente_id from pedido where estatus_pedido_id=" . self::pedido_procesado . ")
+            where id in (select cliente_id from pedido where estatus_pedido_id=" . STATUS_PEDIDO_PROCESADO . ")
             order by c.nombres";
         return $this->dame_query($query);
     }

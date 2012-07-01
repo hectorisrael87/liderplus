@@ -31,7 +31,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar'], $data['valor']);
-        if (isset($_POST['crear']) && $_POST['crear'] == "Procesar") {
+        if (isset($_POST['crear']) && $_POST['crear'] == "Procesar Pedido") {
             $exito['suceed'] = $pedido->procesar($data);
         } else {
             unset($data['id']);
