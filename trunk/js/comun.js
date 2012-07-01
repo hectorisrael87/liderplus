@@ -54,4 +54,5 @@ Number.prototype.formatCurrency = function() {
     }
     return splitLef + splitRig;
 };
+
 var iva_rata = 0.12;

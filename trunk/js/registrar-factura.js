@@ -1,38 +1,32 @@
 function listarPedidosPorFacturarPorCliente() {
-        
-        $("#productos tbody tr").remove();
-        $("#pedido_id option").remove();
-        $("<option value=\"\">Seleccione</option>").appendTo("#pedido_id");
-        if (!$("#cliente_id").val()=='') {
-            $.getJSON('listarPedidosPorFacturarPorCliente/'+$("#cliente_id").val(), 
-
+    $("#productos tbody tr").remove();
+    $("#pedido_id option").remove();
+    $("<option value=\"\">Seleccione</option>").appendTo("#pedido_id");
+    if (!$("#cliente_id").val()=='') {
+        $.getJSON('listarPedidosPorFacturarPorCliente/'+$("#cliente_id").val(), 
             function(data){
-                
                 for(var elemento in data.data){
                     if( typeof data.data[elemento] == "object"){
-                        $("<option value='"+ data.data[elemento].id + "'>"+ data.data[elemento].numero  +"</option>")
-                        .appendTo("#pedido_id");
-                        //alert(data.data[elemento].id);
+                        $("<option value='"+ data.data[elemento].id + "'>"+ data.data[elemento].numero  +"</option>").appendTo("#pedido_id");
                     }
                 }
             });
-        } else {
-            actualizarTabla();
-        }
+    } else {
+        actualizarTabla();
+    }
 }
 
 function verDetallePedidoPorFacturar() {
     $("#productos tbody tr").remove();
     if (!$("#pedido_id").val()=='') {
-    $.getJSON('listarDetalleFactura/'+$("#pedido_id").val(), 
-        
-        function(data){
-            for(var elemento in data.data){
-                if( typeof data.data[elemento] == "object"){
-                    agregarProducto(data.data[elemento]);
+        $.getJSON('listarDetalleFactura/'+$("#pedido_id").val(), 
+            function(data){
+                for(var elemento in data.data){
+                    if( typeof data.data[elemento] == "object"){
+                        agregarProducto(data.data[elemento]);
+                    }
                 }
-            }
-        });
+            });
     } else {
         actualizarTabla();
     }
@@ -111,14 +105,12 @@ function actualizarTabla(){
 }
 
 $(document).ready(function() {
-   $("#agregarProductoModal").hide(); 
-   
-   $("#cliente_id").change(function(){
-      listarPedidosPorFacturarPorCliente(); 
-   });
-   
-   $("#pedido_id").change(function() {
-      verDetallePedidoPorFacturar(); 
-   });
+    $("#agregarProductoModal").hide(); 
+    $("#cliente_id").change(function(){
+        listarPedidosPorFacturarPorCliente(); 
+    });
+    $("#pedido_id").change(function() {
+        verDetallePedidoPorFacturar(); 
+    });
 });
 

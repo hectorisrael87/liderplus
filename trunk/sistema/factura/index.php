@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include '../../includes/constants.php';
 $usuario = new usuario();
@@ -14,48 +14,43 @@ $queryFacturas = "select f.id, f.numero, f.fecha, f.monto_total,
 switch ($accion) {
     case 'listarPedidosPorFacturarPorCliente':
         $pedidos = new pedido();
-        $query = "select * from pedido where cliente_id=".$_GET['id']. 
-            " and estatus_pedido_id=3";
-        $result = $pedidos->dame_query($query);
+        $result = $pedidos->json_pedidos_por_facturar_cliente($_GET['id']);
         echo json_encode($result);
         break;
-    
+
     case 'listarDetalleFactura':
         $pedidos = new pedido();
         $result = $pedidos->ver_productos_pedido_por_facturar($_GET['id']);
         echo json_encode($result);
         break;
-    
+
     case "guardar":
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $facturas = new factura();
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar'], $data['valor'], $data['cliente_id']);
         $exito = $facturas->insertar($data);
-        
+
         if ($exito['suceed']) {
             $exito['mensaje'] = "factura procesado con exito";
-            // actualizamos el estatus del pedido
-            $pedidos = new pedido();
-            $pedidos->actualizar($data['pedido_id'], Array("estatus_pedido_id"=>4));
         }
         $pag = new paginacion();
         $pag->paginar($queryFacturas);
         echo $twig->render('sistema/factura/paginacion.html.twig', array(
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "registros" => $pag->registros,
             "accion" => "listar"));
-        break; 
-        // </editor-fold>
+        break;
+    // </editor-fold>
     case "consultar":
     case "ver":
         // <editor-fold defaultstate="collapsed" desc="ver">
         $factura = new factura();
         $dato = $factura->ver($_GET['id']);
         $detalle = $factura->ver_detalle_factura($_GET['id']);
-        
+
         echo $twig->render('sistema/factura/formulario.html.twig', array(
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "factura" => $dato['data'][0],
             "productos" => $detalle['data'],
             'accion' => 'ver',
@@ -69,7 +64,7 @@ switch ($accion) {
         $productos = $producto->listar();
         $clientes = $cliente->listarConPedidoProcesado();
         $variables = array(
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "accion" => "Registrar",
             "productos" => $productos,
             "clientes" => $clientes);
@@ -87,7 +82,7 @@ switch ($accion) {
         $pag->paginar($queryFacturas);
 // </editor-fold>
         echo $twig->render('sistema/factura/paginacion.html.twig', array(
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "registros" => $pag->registros,
             "accion" => "listar"));
         break;

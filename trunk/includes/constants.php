@@ -3,10 +3,13 @@
 // <editor-fold defaultstate="collapsed" desc="configuracion regional">
 date_default_timezone_set("America/Caracas");
 // </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="init">
 $debug = true;
 $sistema = "/liderplus/";
-$email_error= false;
+$email_error = false;
 $mostrar_error = true;
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="Cheqeuo servidor">
 if ($_SERVER['SERVER_NAME'] == "www.liderplus.co.ve" | $_SERVER['SERVER_NAME'] == "liderplus.co.ve") {
     $user = "asgmu_user";
     $password = "32ltiplex32";
@@ -20,6 +23,7 @@ if ($_SERVER['SERVER_NAME'] == "www.liderplus.co.ve" | $_SERVER['SERVER_NAME'] =
     $password = "root";
     $db = "liderplus";
 }
+// </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="Acceso a la BD">
 define("HOST", "localhost");
 define("USER", $user);
@@ -79,3 +83,24 @@ if (isset($_GET['logout']) && $_GET['logout'] == true) {
     $user_logout->logout();
 }
 //</editor-fold>
+
+// <editor-fold defaultstate="collapsed" desc="STATUS DEL SISTEMA">
+define("STATUS_PEDIDO_PENDIENTE", 1);
+define("STATUS_PEDIDO_PROCESADO", 2);
+define("STATUS_PEDIDO_ALMACEN", 3);
+define("STATUS_PEDIDO_CANCELADO", 4);
+
+define("STATUS_PEDIDO_DETALLE_PENDIENTE", 1);
+define("STATUS_PEDIDO_DETALLE_PROCESADO", 2);
+define("STATUS_PEDIDO_DETALLE_RECHAZADO", 3);
+
+define("STATUS_FACTURA_EMITIDA", 1);
+define("STATUS_FACTURA_ALMACEN", 2);
+
+define("FASE_PEDIDO", 1);
+define("FASE_ALMACEN", 2);
+define("FASE_FACTURACION", 3);
+define("FASE_CHEQUEO", 4);
+define("FASE_TRANSPORTE", 5);
+define("FASE_CONFIRMACION", 6); 
+// </editor-fold>
