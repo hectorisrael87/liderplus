@@ -22,7 +22,7 @@ switch ($accion) {
     case "guardar":
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
-        unset($data['crear'], $data['modificar'], $data['editar']);
+        unset($data['crear'], $data['modificar'], $data['editar'], $data['password2']);
         if ($_POST['id'] == '') {
             unset($data['id']);
             $exito = $usuario->insertar($data);
