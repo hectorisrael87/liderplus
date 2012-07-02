@@ -31,8 +31,8 @@
             <tr>
                 <th>id</th>
                 <th>login</th>
-                <th>password</th>
                 <th>email</th>
+                <th>grupo</th>
                 <th>acciones</th>
             </tr>
         </thead>
@@ -41,8 +41,8 @@
                 <tr>
                     <td>{{ usuario.id}}</td>
                     <td>{{ usuario.login }}</td>
-                    <td>{{ usuario.password}}</td>
                     <td>{{ usuario.email }} </td>
+                    <td>{{ usuario.grupo }}</td>
                     <td>
                         <div class="btn-group">
                             <a href="{{constant('URL_SISTEMA')}}/usuario/consultar/{{ usuario.id }}" class="btn">Consultar</a>

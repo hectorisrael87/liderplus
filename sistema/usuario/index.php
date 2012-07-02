@@ -17,7 +17,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="index">
         echo $twig->render('index.html.twig', array(
             "session" => $session));
-        break; 
+        break;
     // </editor-fold>
     case "guardar":
         // <editor-fold defaultstate="collapsed" desc="guardar">
@@ -43,8 +43,10 @@ switch ($accion) {
     // </editor-fold>
     case "crear":
         // <editor-fold defaultstate="collapsed" desc="crear">
+        $grupos = $usuario->listar_grupos();
         echo $twig->render('sistema/usuario/formulario.html.twig', array(
             "session" => $session,
+            "grupos" => $grupos,
             "accion" => "crear",
             "modoLectura" => false
         ));
@@ -57,6 +59,7 @@ switch ($accion) {
         echo $twig->render('sistema/usuario/formulario.html.twig', array(
             "session" => $session,
             "usuario" => $dato['data'][0],
+            "grupos" => $usuario->listar_grupos(),
             "modoLectura" => true,
             "accion" => $accion));
         break;
@@ -68,6 +71,7 @@ switch ($accion) {
         echo $twig->render('sistema/usuario/formulario.html.twig', array(
             "session" => $session,
             "usuario" => $dato['data'][0],
+            "grupos" => $usuario->listar_grupos(),
             "modoLectura" => false,
             "accion" => $accion));
         break;

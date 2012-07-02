@@ -27,7 +27,8 @@ class usuario extends db implements crud {
      * @return array arreglo de datos
      */
     public function ver($id) {
-        $result = $this->select("*", self::tabla, array("id"=>$id));
+        $result = $this->dame_query("select usuarios.*, grupo.descripcion grupo from " . self::tabla .
+        " inner join grupo on grupo.id = usuarios.grupo_id where usuarios.id = " . $id);
         return $result;
     }
 
@@ -36,7 +37,7 @@ class usuario extends db implements crud {
      * @return Array
      */
     public function listar() {
-        return $this->dame_query("select id, nombre from " . self::tabla);
+        return $this->dame_query("select id, nombre, grupo.descripcion grupo from " . self::tabla. " inner join grupo on grupo.id = usuarios.grupo_id ");
     }
 
     /**
@@ -94,5 +95,10 @@ class usuario extends db implements crud {
         }
     }
 
+    public function listar_grupos() {
+        return $this->select("*", "grupo");
+    }
+
 }
+
 ?>

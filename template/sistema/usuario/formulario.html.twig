@@ -61,6 +61,17 @@
         </div>
         {% endif %}
         <div class="control-group">
+            <label for="grupo" class="control-label">Grupo</label>
+            <div class="controls">
+                <select name="grupo_id" class="required" {{ modoLectura == true ?" disabled='disabled' ": " " }}>
+                    <option value="" >Seleccione</option>
+                    {% for grupo in grupos.data %}
+                        <option value="{{ grupo.id }}" {{ usuario.grupo_id == grupo.id ? "selected='selected'" : "" }}>{{ grupo.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="control-group">
             <label for="email" class="control-label">email</label>
             <div class="controls">
                 {{ form.input('text','required email','email','email', usuario.email, modoLectura)}}
@@ -70,6 +81,9 @@
     {% if accion is defined %}
     <div class="form-actions">
         <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+        {%if accion == "consultar"%}
+        <a href="../modificar/{{usuario.id}}" class="btn btn-info">Modificar</a>
+        {% endif %}
         <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
     </div>
     {% endif %}
