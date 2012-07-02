@@ -23,7 +23,7 @@ class factura extends db implements crud {
             $factura_detalle['cantidad_pedido'] = $data['cantidad_pedido'];
             $factura_detalle['precio'] = $data['precio'];
             unset($data['producto_id'], $data['cantidad_pedido'], $data['precio']);
-            $data['estatus_factura_id'] = STATUS_FACTURA_ALMACEN;
+            $data['estatus_factura_id'] = STATUS_FACTURA_PENDIENTE;
 
             $resultado = $this->insert("factura", $data);
 
