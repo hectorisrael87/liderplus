@@ -147,12 +147,20 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
     public function listar_pedido_despacho() {
         $query = "select p.id as pedido_id, f.id as factura_id, f.numero  
             from pedido p join factura f on p.id = f.pedido_id 
-            where p.estatus_pedido_id =".STATUS_PEDIDO_ALMACEN;
+            where p.estatus_pedido_id =".STATUS_PEDIDO_TRANSPORTE;
         return $this->dame_query($query);
     }
 
     public function json_pedidos_por_facturar_cliente($cliente) {
         return $this->dame_query("select * from pedido where cliente_id= $cliente and estatus_pedido_id=" . STATUS_PEDIDO_PROCESADO);
+    }
+    
+    public function listar_seguimiento_pedido($id) {
+        $query = "SELECT d.*, e.descripcion 
+            FROM `despacho` d join `estatus_seguimiento_despacho` e
+            on d.estatus_seguimiento_despacho_id = e.id
+            where factura_empresa_transporte_id=".$id;
+        return $this->dame_query($query);
     }
 }
 ?>
