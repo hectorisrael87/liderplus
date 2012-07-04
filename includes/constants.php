@@ -20,7 +20,7 @@ if ($_SERVER['SERVER_NAME'] == "www.liderplus.co.ve" | $_SERVER['SERVER_NAME'] =
     $sistema = "/";
 } else {
     $user = "root";
-    $password = "root";
+    $password = "";
     $db = "liderplus";
 }
 // </editor-fold>
@@ -89,6 +89,7 @@ define("STATUS_PEDIDO_PENDIENTE", 1);
 define("STATUS_PEDIDO_PROCESADO", 2);
 define("STATUS_PEDIDO_ALMACEN", 3);
 define("STATUS_PEDIDO_CANCELADO", 4);
+define("STATUS_PEDIDO_TRANSPORTE", 5);
 
 define("STATUS_PEDIDO_DETALLE_PENDIENTE", 1);
 define("STATUS_PEDIDO_DETALLE_PROCESADO", 2);

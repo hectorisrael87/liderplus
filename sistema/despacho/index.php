@@ -95,15 +95,34 @@ switch ($accion) {
             "modoLectura" => false
         ));
         break;
+    case "seguimientodetalle":
+        $dato = $despacho->ver($_GET['id']);
+        $empresa = new transporte();
+        $empresas = $empresa->listar();
+        $pedido = new pedido();
+        $facturas = $pedido->listar_pedido_despacho();
+        $seguimiento = $pedido->listar_seguimiento_pedido($_GET['id']);
+        echo $twig->render('sistema/despacho/formulario.html.twig', array(
+            "session" => $session,
+            "despacho" => $dato['data'][0],
+            "empresas" => $empresas['data'],
+            "facturas" => $facturas['data'],
+            "modoLectura" => true,
+            "accion" => "Seguimiento",
+            "seguimiento" => $seguimiento['data']));
+        break;
     case "listar":
+    case "seguimiento":
     default:
+        $titulo = ($accion=='listar') ? "Listar": "Seguimiento";
         $paginacion = new paginacion();
         $paginacion->paginar($query_paginado);
         echo $twig->render('sistema/despacho/paginacion.html.twig', array(
             "session" => $session,
-            "accion" => "Listar",
+            "accion" => $titulo,
             "registros" => $paginacion->registros,
             "paginacion" => $paginacion->mostrar_paginado_lista()));
         break;
+    
 }
 ?>

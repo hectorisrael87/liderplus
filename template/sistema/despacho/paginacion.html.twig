@@ -15,7 +15,7 @@
 </div>
 <ul class="breadcrumb">
     <li><a href="{{constant('URL_SISTEMA')}}/usuario">Sistema</a><span class="divider">&raquo;</span></li>
-    <li><a href="{{constant('URL_SISTEMA')}}/transporte/listar">Despacho</a><span class="divider">&raquo;</span></li>
+    <li><a href="{{constant('URL_SISTEMA')}}/despacho/listar">Despacho</a><span class="divider">&raquo;</span></li>
     <li>{{ accion|title }}</li>
 </ul>
 {%if mensaje is defined%}
@@ -45,9 +45,11 @@
                     <td>{{ despacho.fecha | date("d/m/Y h:m:s a") }}</td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{constant('URL_SISTEMA')}}/despacho/consultar/{{ despacho.id }}" class="btn">Consultar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/despacho/{{ accion == 'Listar' ? 'consultar':'seguimientodetalle' }}/{{ despacho.id }}" class="btn">Consultar</a>
                             <a href="{{constant('URL_SISTEMA')}}/despacho/editar/{{ despacho.id }}" class="btn btn-info">Editar</a>
+                            {% if accion=='Listar' %}
                             <a href="{{constant('URL_SISTEMA')}}/despacho/borrar/{{ despacho.id }}" class="btn btn-danger">Borrar</a>
+                            {% endif %}
                         </div> 
                     </td>
                 </tr>
@@ -61,8 +63,10 @@
         <div>
         {{ paginacion|raw }}
             </div>
-        <div>
-            <a href="{{constant('URL_SISTEMA')}}/despacho/crear" class="btn btn-primary">Crear Despacho</a>
+        {% if accion == 'Listar'%}
+            <div>
+                <a href="{{constant('URL_SISTEMA')}}/despacho/crear" class="btn btn-primary">Crear Despacho</a>
+            </div>
+        {% endif %}
         </div>
-    </div>
 {% endblock %}
