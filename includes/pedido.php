@@ -156,11 +156,13 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
     }
     
     public function listar_seguimiento_pedido($id) {
-        $query = "SELECT d.*, e.descripcion 
-            FROM `despacho` d join `estatus_seguimiento_despacho` e
+        $query = "select d.*, e.descripcion 
+            from `despacho` d join `estatus_seguimiento_despacho` e
             on d.estatus_seguimiento_despacho_id = e.id
             where factura_empresa_transporte_id=".$id;
         return $this->dame_query($query);
     }
+    
 }
+
 ?>

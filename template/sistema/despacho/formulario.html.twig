@@ -26,7 +26,7 @@
     <a class="btn" href="{{ constant("URL_SISTEMA")}}/despacho">Volver al listado</a>
 </div>
 {% else %}
-<form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/despacho/guardar" class="well-small form-horizontal">
+<form id="formulario" method="post" action="{{ constant('URL_SISTEMA')}}/despacho/{{(esSeguimiento==true) ? "actualizarseguimiento/"~ despacho.id :"guardar"}}" class="well-small form-horizontal">
     <input type="hidden" name="id" value="{{ transporte.id }}"/>
     <fieldset>
         <legend>Datos del Despacho</legend>
@@ -53,6 +53,7 @@
 
             </fieldset>
         {% if seguimiento is defined %}
+            <input type='hidden' name='factura_empresa_transporte_id' value={{despacho.id}} />
             <div class="well-small">
                 <table class="table table-bordered table-condensed table-striped">
                     <thead>
@@ -74,11 +75,19 @@
                     {% endfor %}
                         </tbody>
                     </table>
+                    {% for item in proximo_estatus %}
+                    <div class="alert alert-info">
+                        <a data-dismiss="alert" class="close" data-dismiss="alert">×</a>
+                        <p>Próximo estatus: <strong>{{item.descripcion}}</strong>.</p>
+                        <input type="hidden" name="estatus_seguimiento_despacho_id" value="{{ item.id }}"/>
+                    </div>
+                    {% endfor %}
+                    
                 </div>
     {% endif %}
     {% if accion is defined %}
                 <div class="form-actions">
-                    <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
+                    <input type="submit" name="{{ esSeguimiento==true ? "actualizarseguimiento": accion }}" value="{{ esSeguimiento==true ? 'Actualizar Estatus':accion | title }}" class="btn btn-primary"/>
                     <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
                 </div>
     {% endif %}

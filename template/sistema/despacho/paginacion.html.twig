@@ -45,7 +45,7 @@
                     <td>{{ despacho.fecha | date("d/m/Y h:m:s a") }}</td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{constant('URL_SISTEMA')}}/despacho/{{ accion == 'Listar' ? 'consultar':'seguimientodetalle' }}/{{ despacho.id }}" class="btn">Consultar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/despacho/{{ esSeguimiento ==true ? 'seguimientodetalle': 'consultar' }}/{{ despacho.id }}" class="btn">Consultar</a>
                             <a href="{{constant('URL_SISTEMA')}}/despacho/editar/{{ despacho.id }}" class="btn btn-info">Editar</a>
                             {% if accion=='Listar' %}
                             <a href="{{constant('URL_SISTEMA')}}/despacho/borrar/{{ despacho.id }}" class="btn btn-danger">Borrar</a>
@@ -63,7 +63,7 @@
         <div>
         {{ paginacion|raw }}
             </div>
-        {% if accion == 'Listar'%}
+        {% if esSeguimiento == false %}
             <div>
                 <a href="{{constant('URL_SISTEMA')}}/despacho/crear" class="btn btn-primary">Crear Despacho</a>
             </div>
