@@ -37,6 +37,7 @@ switch ($accion) {
         $paginacion->paginar($query_paginado);
         $registros = $paginacion->registros;
         echo $twig->render('sistema/despacho/paginacion.html.twig', array(
+            "esSeguimiento"=>false,
             "session" => $session,
             "accion" => "Guardar",
             "registros" => $registros,
@@ -53,12 +54,13 @@ switch ($accion) {
         $pedido = new pedido();
         $facturas = $pedido->listar_pedido_despacho();
         echo $twig->render('sistema/despacho/formulario.html.twig', array(
-            "session" => $session,
+            "session"  => $session,
             "despacho" => $dato['data'][0],
             "empresas" => $empresas['data'],
             "facturas" => $facturas['data'],
             "modoLectura" => ($accion=='consultar' || $accion=='ver'),
-            "accion" => $accion));
+            "accion" => $accion,
+            "esSeguimiento"=>false));
         break;
      case "borrar":
         // <editor-fold defaultstate="collapsed" desc="borrar">
@@ -96,21 +98,32 @@ switch ($accion) {
         ));
         break;
     case "seguimientodetalle":
+    case "actualizarseguimiento":
+        if ($accion == "actualizarseguimiento") {
+            $data = $_POST;
+            unset($data['actualizarseguimiento']);
+            unset($data['id']);
+            $res = $despacho->actualizar_seguimiento($data);
+        }
         $dato = $despacho->ver($_GET['id']);
         $empresa = new transporte();
         $empresas = $empresa->listar();
         $pedido = new pedido();
         $facturas = $pedido->listar_pedido_despacho();
         $seguimiento = $pedido->listar_seguimiento_pedido($_GET['id']);
+        $prox_estatus = $despacho->obtener_proximo_estatus_despacho($_GET['id']);
         echo $twig->render('sistema/despacho/formulario.html.twig', array(
+            "esSeguimiento" => true,
             "session" => $session,
             "despacho" => $dato['data'][0],
             "empresas" => $empresas['data'],
             "facturas" => $facturas['data'],
             "modoLectura" => true,
             "accion" => "Seguimiento",
-            "seguimiento" => $seguimiento['data']));
+            "seguimiento" => $seguimiento['data'],
+            "proximo_estatus" => $prox_estatus['data']));
         break;
+    
     case "listar":
     case "seguimiento":
     default:
@@ -118,6 +131,7 @@ switch ($accion) {
         $paginacion = new paginacion();
         $paginacion->paginar($query_paginado);
         echo $twig->render('sistema/despacho/paginacion.html.twig', array(
+            "esSeguimiento" => ($accion == 'seguimiento'),
             "session" => $session,
             "accion" => $titulo,
             "registros" => $paginacion->registros,
