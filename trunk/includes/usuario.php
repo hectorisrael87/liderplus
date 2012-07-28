@@ -18,7 +18,7 @@ class usuario extends db implements crud {
     }
 
     public function borrar($id) {
-        return $this->delete(self::tabla, $id);
+        return $this->delete(self::tabla, array("id" => $id));
     }
 
     /**
@@ -49,7 +49,9 @@ class usuario extends db implements crud {
     public function login($usuario, $password, $empresa) {
         $result = array();
         try {
-            $result = $this->dame_query("select * from " . self::tabla . " where login='$usuario' and password='$password'");
+            $result = $this->dame_query("select ".self::tabla.".*, grupo.id grupo_id, grupo.descripcion grupo from " . self::tabla . " 
+                inner join grupo on grupo.id = ".self::tabla.".grupo_id 
+                    where login='$usuario' and password='$password'");
             if ($result['suceed'] == 'true' && count($result['data']) > 0) {
                 session_start();
                 $_SESSION['usuario'] = $result['data'][0];
@@ -98,7 +100,13 @@ class usuario extends db implements crud {
     public function listar_grupos() {
         return $this->select("*", "grupo");
     }
-
+    public function listar_fases_usuario($usuario_id){
+        return $this->dame_query("select fase.* from fase 
+    inner join fase_grupo on fase.id = fase_grupo.fase_id
+    inner join grupo on grupo.id = fase_grupo.grupo_id
+    inner join usuarios on usuarios.grupo_id = grupo.id
+    where usuarios.id = $usuario_id order by fase.nombre");
+    }
 }
 
 ?>

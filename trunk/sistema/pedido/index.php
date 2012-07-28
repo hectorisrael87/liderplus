@@ -42,10 +42,14 @@ switch ($accion) {
         if ($exito['suceed']) {
             $exito['mensaje'] = "pedido procesado con exito";
         }
+        else{
+            $exito['mensaje'] = "Ha ocurrido un error al procesar el pedido";
+        }
         echo $twig->render('sistema/pedido/paginacion.html.twig', array(
             "registros" => $pag->registros,
             "session"=>$_SESSION,
             "resultado" => $exito,
+            "mensaje"=>$exito['mensaje'],
             "accion" => "guardar"));
         break;
     // </editor-fold>

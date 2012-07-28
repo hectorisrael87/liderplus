@@ -7,7 +7,7 @@ $accion = isset($_GET['accion']) ? $_GET['accion'] : "index";
 $session = $_SESSION;
 $id = 0;
 if (isset($_GET['id'])) {
-    $id = $session['usuario']['id'];
+    $id = $_GET['id'];
 } else {
     $id = $session['usuario']['id'];
 }
@@ -16,7 +16,9 @@ switch ($accion) {
     case "index":
         // <editor-fold defaultstate="collapsed" desc="index">
         echo $twig->render('index.html.twig', array(
-            "session" => $session));
+            "session" => $session,
+            "fases" => $usuario->listar_fases_usuario($id)
+            ));
         break;
     // </editor-fold>
     case "guardar":
@@ -78,7 +80,7 @@ switch ($accion) {
     // </editor-fold>
     case "borrar":
         // <editor-fold defaultstate="collapsed" desc="borrar">
-        $exito = $usuario->borrar($id);
+        $exito = $usuario->borrar($_GET['id']);
         if ($exito['suceed']) {
             $tipoMensaje = "success";
             $mensaje = "usuario borrado con exito";
@@ -87,7 +89,7 @@ switch ($accion) {
             $mensaje = "No se pudo borrar el registro, por favor intente de nuevo o comuniquese con el administrador del sistema";
         }
         $paginacion = new paginacion(true);
-        $paginacion->paginar("select * from usuario");
+        $paginacion->paginar("select * from usuarios");
         $registros = $paginacion->registros;
         echo $twig->render('sistema/usuario/paginacion.html.twig', array(
             "session" => $session,

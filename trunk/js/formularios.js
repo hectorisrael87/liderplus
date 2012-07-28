@@ -10,7 +10,8 @@ $(document).ready(function(){
         }
     });
 
-    $(".row-fluid div:eq(2) form").each(function(){
+    $(".row-fluid form").each(function(){
+        //console.log("Formulario "+$(this).attr("name"));
         $(this).validate({
             showErrors: function(errorMap, errorList){
                 $(".alert").html("No se puede procesar este formulario porque tiene "

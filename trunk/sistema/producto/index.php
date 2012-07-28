@@ -17,6 +17,8 @@ switch ($accion) {
             $exito = $producto->insertar($data);
             if ($exito['suceed']) {
                 $exito['mensaje'] = "Producto creado con exito";
+            } else{
+                $exito['mensaje'] = "No se pudo crear el producto. Intente de nuevo o comuniquese con el administrador del sistema";
             }
         } else {
             $exito = $producto->actualizar($data['id'], $data);

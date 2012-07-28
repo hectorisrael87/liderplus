@@ -112,23 +112,27 @@ function validacionFormulario(){
             required:"Debe agregar al menos un producto para realizar una orden de compra."
         }
     });
-    $("[id*='status_pedido_detalle']").rules("add",{
-        required:true,
-        messages:{
-            required:"Seleccione un status para este producto"
-        }
-    });
-    $("[id*='cantidad_despacho']").rules("add",{
-        required:true,
-        min:0,
-        max: function(element) {
-            return $(element).parents("tr").eq(0).find("input[name='cantidad_pedido[]']").val();   
-        },
-        messages:{
-            required: "Introduzca la cantidad disponible en despacho",
-            max: "Introduzca un valor no mayor a la cantidad solicitada ({0})"
-        }
-    });
+    if($("[id*='status_pedido_detalle']").length>0){
+        $("[id*='status_pedido_detalle']").rules("add",{
+            required:true,
+            messages:{
+                required:"Seleccione un status para este producto"
+            }
+        });
+    }
+    if($("[id*='cantidad_despacho']").length>0){
+        $("[id*='cantidad_despacho']").rules("add",{
+            required:true,
+            min:0,
+            max: function(element) {
+                return $(element).parents("tr").eq(0).find("input[name='cantidad_pedido[]']").val();   
+            },
+            messages:{
+                required: "Introduzca la cantidad disponible en despacho",
+                max: "Introduzca un valor no mayor a la cantidad solicitada ({0})"
+            }
+        });
+    }
     
     $("#buscarProducto").validate({
         groups: {
