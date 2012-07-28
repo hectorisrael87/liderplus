@@ -20,9 +20,6 @@ START TRANSACTION;
 --
 -- Base de datos: `liderplus`
 --
---CREATE DATABASE `liderplus` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `liderplus`;
-
 -- --------------------------------------------------------
 
 --
