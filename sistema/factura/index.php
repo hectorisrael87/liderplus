@@ -30,7 +30,6 @@ switch ($accion) {
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar'], $data['valor'], $data['cliente_id']);
         $exito = $facturas->insertar($data);
-
         if ($exito['suceed']) {
             $exito['mensaje'] = "factura procesado con exito";
         }

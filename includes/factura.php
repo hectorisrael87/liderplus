@@ -28,6 +28,7 @@ class factura extends db implements crud {
             $resultado = $this->insert("factura", $data);
 
             if ($resultado['suceed']) {
+                $resultado['detalles'] = array();
                 for ($i = 0; $i < sizeof($factura_detalle['producto_id']); $i++) {
                     $subtotal = $factura_detalle['precio'][$i] / (1 + $data['porcentaje_iva']);
                     $result_detalle = $this->insert("factura_detalle", array(
@@ -38,13 +39,14 @@ class factura extends db implements crud {
                         "monto_iva" => $subtotal * $data['porcentaje_iva'],
                         "subtotal" => $subtotal
                             ));
+                    array_push($resultado['detalles'], $result_detalle);
                     if (!$result_detalle['suceed']) {
                         $resultado['suceed'] = $result_detalle['suceed'];
-                        $resultado['mensaje'] = "Ha ocurrido un error al procesar el pedido";
+                        $resultado['mensaje'] = "Ha ocurrido un error al procesar la factura";
                     }
                 }
                 $pedidos = new pedido();
-                $pedidos->actualizar($data['pedido_id'], Array("estatus_pedido_id" => 3));
+                $pedidos->actualizar($data['pedido_id'], Array("estatus_pedido_id" => STATUS_PEDIDO_ALMACEN));
             }
         } catch (Exception $exc) {
             echo $exc->getTraceAsString();

@@ -44,6 +44,21 @@ class cliente extends db implements crud {
         return $this->dame_query($query);
     }
 
+    public function verificar_cliente($cliente) {
+        $cliente = $this->dame_query("select cliente.id, 
+            status_cliente.nombre status_cliente,
+            count(estatus_pedido_id) pedidos, estatus_pedido.descripcion status,
+            (select fase.nombre 
+                from fase 
+                    inner join pedido_fase on pedido_fase.fase_id = fase.id
+                    where pedido_fase.pedido_id = pedido.id  order by pedido_fase.id desc limit 1) fase
+            from pedido
+            inner join ciente on pedido.cliente_id = cliente.id
+            inner join estatus_pedido on estatus_pedido_id = estatus_pedido.id
+            inner join status_cliente on status_cliente.id = cliente.status_cliente_id
+            group by cliente.id, status, fase, status_cliente
+            where cliente.id = $cliente");
+    }
 }
 
 ?>
