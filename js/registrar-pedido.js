@@ -28,12 +28,12 @@ function agregarProducto(producto) {
         val: producto.precio
     });    
     celdaPrecio = $("<td/>", {
-        html: "<span class='precio_producto pull-right'>" + producto.precio.format() + " Bsf. </span>"
+        html: "<span class='precio_producto pull-right'>" + producto.precio.formatCurrency() + " Bsf. </span>"
     });
     celdaPrecio.append(inputPrecio);
     tempTotal = producto.precio * producto.cantidad
     celdaTotal = $("<td/>", {
-        html: "<span class='pull-right'>" + tempTotal.format() + " Bsf.</span>"
+        html: "<span class='pull-right'>" + tempTotal.formatCurrency() + " Bsf.</span>"
     });
     filaPedido.append(celdaProducto).append(celdaCantidad).append(celdaPrecio).append(celdaTotal);
     $("#productos tbody").append(filaPedido);
@@ -52,16 +52,16 @@ function actualizarTabla(){
     total = 0;
     $("#productos tbody tr").each(function(){
         tempCantidad = parseInt($(this).find(".cantidad_producto").text());
-        tempPrecio = parseFloat($(this).find(".precio_producto").text().replace(".","").replace(",","."));
+        tempPrecio = parseFloat($(this).find("input[name='precio[]']").val());
         cantidad += tempCantidad;
         subtotal += tempPrecio * tempCantidad;
     });
     iva = subtotal * 0.10;
     total = subtotal + iva;
     $("#total_productos").text(cantidad);
-    $("#subtototal").text(subtotal.format() + " Bsf.");
-    $("#iva").text(iva.format() + " Bsf. ");
-    $("#total").text(total.format() + " Bsf.");
+    $("#subtototal").text(subtotal.formatCurrency() + " Bsf.");
+    $("#iva").text(iva.formatCurrency() + " Bsf. ");
+    $("#total").text(total.formatCurrency() + " Bsf.");
     $("#productos_form").valid();
 }
 function cuadromodal(){
