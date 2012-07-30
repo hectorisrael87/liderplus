@@ -7,9 +7,8 @@ $cliente = new cliente();
 $usuario = new usuario();
 $producto = new producto();
 $usuario->confirmar_miembro();
-$accion = isset($_GET['accion']) ? $_GET['accion'] : "listar"; 
+$accion = isset($_GET['accion']) ? $_GET['accion'] : "listar";
 // </editor-fold>
-
 // <editor-fold defaultstate="collapsed" desc="query">
 $queryPedidos = "select pedido.id, pedido.numero, pedido.fecha,  
         CONCAT(cliente.nombres,' ', cliente.apellidos) cliente, 
@@ -27,12 +26,20 @@ $queryPedidos = "select pedido.id, pedido.numero, pedido.fecha,
 // </editor-fold>
 
 switch ($accion) {
+    case "verificar_cliente":
+        // <editor-fold defaultstate="collapsed" desc="verificar cliente">
+        echo json_encode($cliente->verificar_cliente($_GET['id']));
+        break; 
+    // </editor-fold>
     case "guardar":
         // <editor-fold defaultstate="collapsed" desc="guardar">
         $data = $_POST;
         unset($data['crear'], $data['modificar'], $data['editar'], $data['valor']);
         if (isset($_POST['crear']) && $_POST['crear'] == "Procesar Pedido") {
             $exito['suceed'] = $pedido->procesar($data);
+        } elseif ($_POST['crear'] && $_POST['crear'] == "Modificar Pedido") {
+            $data = array("cliente_id" => $_POST['cliente_id'], "numero" => $_POST['numero']);
+            $exito = $pedido->actualizar($_POST['id'], $data);
         } else {
             unset($data['id']);
             $exito = $pedido->insertar($data);
@@ -41,15 +48,14 @@ switch ($accion) {
         $pag->paginar($queryPedidos);
         if ($exito['suceed']) {
             $exito['mensaje'] = "pedido procesado con exito";
-        }
-        else{
+        } else {
             $exito['mensaje'] = "Ha ocurrido un error al procesar el pedido";
         }
         echo $twig->render('sistema/pedido/paginacion.html.twig', array(
             "registros" => $pag->registros,
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "resultado" => $exito,
-            "mensaje"=>$exito['mensaje'],
+            "mensaje" => $exito['mensaje'],
             "accion" => "guardar"));
         break;
     // </editor-fold>
@@ -60,7 +66,7 @@ switch ($accion) {
         $dato = $pedido->ver($_GET['id']);
         $pedidos = $pedido->ver_productos_pedido($_GET['id']);
         echo $twig->render('sistema/pedido/formulario.html.twig', array(
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "pedido" => $dato['data'][0],
             "productos" => $pedidos['data'],
             'accion' => 'ver',
@@ -70,14 +76,14 @@ switch ($accion) {
     case "editar":
     case "modificar":
     case "procesar":
-    // <editor-fold defaultstate="collapsed" desc="modificar">
+        // <editor-fold defaultstate="collapsed" desc="modificar">
         $clientes = $cliente->listar();
         $dato = $pedido->ver($_GET['id']);
         $productos = $producto->listar();
         $productosPedido = $pedido->ver_productos_pedido($_GET['id']);
         echo $twig->render('sistema/pedido/registrar.html.twig', array(
-            "agregarProducto"=>false,
-            "session"=>$_SESSION,
+            "agregarProducto" => false,
+            "session" => $_SESSION,
             "clientes" => $clientes,
             "pedido" => $dato['data'][0],
             "productos" => $productos,
@@ -93,8 +99,8 @@ switch ($accion) {
         $productos = $producto->listar();
         $clientes = $cliente->listar();
         $variables = array(
-            "agregarProducto"=>true,
-            "session"=>$_SESSION,
+            "agregarProducto" => true,
+            "session" => $_SESSION,
             "accion" => "Registrar",
             "productos" => $productos,
             "clientes" => $clientes);
@@ -111,7 +117,7 @@ switch ($accion) {
         $pag->paginar($queryPedidos);
         echo $twig->render('sistema/pedido/paginacion.html.twig', array(
             "registros" => $pag->registros,
-            "session"=>$_SESSION,
+            "session" => $_SESSION,
             "accion" => "listar"));
         break;
     // </editor-fold>

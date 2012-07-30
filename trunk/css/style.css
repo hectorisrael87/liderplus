@@ -34,6 +34,9 @@ ul.breadcrumb li a{
 #myModal{
     display: none;
 }
+.alert p:first-letter{
+    text-transform: capitalize;
+}
 tfoot label.help-inline{
     font-size: x-small;
     color:red;
@@ -42,7 +45,7 @@ tfoot label.help-inline{
     background-color: rgba(245, 245, 245, 0.8);
 }
 .row-fluid > .span9 {
-    
+
 }
 td.form-inline label.help-inline{
     color: red;
@@ -56,11 +59,11 @@ td.form-inline label.help-inline{
 }
 .menu-cliente {
     background-image: url("../img/clientes.png");
-    
+
 }
 .menu-producto {
     background-image: url("../img/productos.png");
-    
+
 }
 .menu-pedido {
     background-image: url("../img/pedidos.png");

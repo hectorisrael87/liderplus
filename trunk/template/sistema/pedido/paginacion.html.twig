@@ -22,6 +22,9 @@
 <div class="alert alert-{{tipoMensaje}}">
     <a data-dismiss="alert" class="close" data-dismiss="alert">×</a>
     <p>{{ mensaje }}</p>
+    {% if constant('DEBUG') %}
+        {{ dump(exito) }}
+    {% endif %}
 </div>
 {% endif %}
 
@@ -51,12 +54,12 @@
                     <td>{{ pedido.fase }} </td>
                     <td>
                         <div class="btn-group">
-                            <a href="{{constant('URL_SISTEMA')}}/Pedido/consultar/{{ pedido.id }}" class="btn">Consultar</a>
-                            {%if pedido.fase == "Pedido" and pedido.estatus_pedido == "Pendiente" %}
-                                <a href="{{constant('URL_SISTEMA')}}/Pedido/procesar/{{ pedido.id }}" class="btn btn-warning">Procesar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/pedido/consultar/{{ pedido.id }}" class="btn">Consultar</a>
+                            {%if pedido.fase == "Pedido" and pedido.estatus_pedido == "PENDIENTE" %}
+                                <a href="{{constant('URL_SISTEMA')}}/pedido/procesar/{{ pedido.id }}" class="btn btn-warning">Procesar</a>
                             {% endif %}
-                            <a href="{{constant('URL_SISTEMA')}}/Pedido/editar/{{ pedido.id }}" class="btn btn-info">Editar</a>
-                            <a href="{{constant('URL_SISTEMA')}}/Pedido/borrar/{{ pedido.id }}" class="btn btn-danger">Borrar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/pedido/editar/{{ pedido.id }}" class="btn btn-info">Editar</a>
+                            <a href="{{constant('URL_SISTEMA')}}/pedido/borrar/{{ pedido.id }}" class="btn btn-danger">Borrar</a>
                         </div>
                     </td>
                 </tr>
