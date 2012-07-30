@@ -23,15 +23,14 @@ class pedido extends db implements crud {
         $resultado = array();
         try {
             $pedido_detalle = array();
-
             $pedido_detalle['producto_id'] = $data['producto_id'];
             $pedido_detalle['cantidad_pedido'] = $data['cantidad_pedido'];
             $pedido_detalle['precio'] = $data['precio'];
             unset($data['producto_id'], $data['cantidad_pedido'], $data['precio']);
             $data['estatus_pedido_id'] = STATUS_PEDIDO_PENDIENTE;
             $resultado['pedido'] = $this->insert("pedido", $data);
-
             if ($resultado['pedido']['suceed']) {
+                
                 $resultado['suceed'] = true;
                 //<editor-fold defaultstate="collapsed" desc="detalles del pedido">
                 $resultado['pedido_detalle'] = array();
@@ -127,7 +126,7 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
             "fase_id" => FASE_ALMACEN,
             "usuario_id" => $_SESSION['usuario']['id']));
         if ($uno['suceed'] && $dos['suceed']) {
-            for ($i = 0; $i <= sizeof($data); $i++) {
+            for ($i = 0; $i < sizeof($data['producto_id']); $i++) {
                 $tres = $this->update("pedido_detalle", array(
                     "estatus_pedido_detalle_id" => $data['status_pedido_detalle'][$i],
                     "cantidad_despacho" => $data['cantidad_despacho'][$i]
