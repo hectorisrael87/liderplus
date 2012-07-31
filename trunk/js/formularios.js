@@ -1,4 +1,17 @@
 $(document).ready(function(){
+    $(".row-fluid form").each(function(){
+        if(typeof console.log=="function"){
+            console.log("Activando validación Formulario "+$(this).attr("name"));
+        }
+        $(this).validate({
+            showErrors: function(){
+                $(".alert").html("No se puede procesar este formulario porque tiene "
+                    + this.numberOfInvalids() 
+                    + " errores.");
+                this.defaultShowErrors();
+            }
+        });
+    });
     $.validator.methods.range = function (value, element, param) {
         var globalizedValue = value.replace(",", ".");
         return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
@@ -19,17 +32,6 @@ $(document).ready(function(){
         }
     });
 
-    $(".row-fluid form").each(function(){
-        //console.log("Formulario "+$(this).attr("name"));
-        $(this).validate({
-            showErrors: function(errorMap, errorList){
-                $(".alert").html("No se puede procesar este formulario porque tiene "
-                    + this.numberOfInvalids() 
-                    + " errores.");
-                this.defaultShowErrors();
-            }
-        });
-    });
     
     $("input[type='submit']").click(function() {
         if ($(this).parents("form").eq(0).valid()) {
