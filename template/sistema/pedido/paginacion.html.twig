@@ -22,7 +22,7 @@
 <div class="alert alert-{{tipoMensaje}}">
     <a data-dismiss="alert" class="close" data-dismiss="alert">×</a>
     <p>{{ mensaje }}</p>
-    {% if constant('DEBUG') %}
+    {% if constant('DEBUG') == true %}
         {{ dump(exito) }}
     {% endif %}
 </div>
