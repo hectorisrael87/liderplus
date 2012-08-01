@@ -31,7 +31,7 @@
     <fieldset>
         <legend>Datos del cliente</legend>
         <div class="control-group">
-            <label for="nombres" class="control-label">nombres</label>
+            <label for="nombres" class="control-label">nombres/ raz&oacute;n social</label>
             <div class="controls">
                 {{ form.input('text','required','nombres','nombres', cliente.nombres, modoLectura) }}
             </div>
@@ -39,7 +39,7 @@
         <div class="control-group">
             <label for="apellidos" class="control-label">apellidos</label>
             <div class="controls">
-                {{ form.input('text','required','apellidos','apellidos', cliente.apellidos, modoLectura) }}
+                {{ form.input('text','','apellidos','apellidos', cliente.apellidos, modoLectura) }}
             </div>
         </div>
         <div class="control-group">
@@ -51,7 +51,7 @@
                 {% endfor %}
                 </select>
                     <label for="numero_documento" class="help-inline">Nro.</label>
-                {{ form.input('text','required number input-small','numero_documento','numero_documento', cliente.numero_documento, modoLectura)}}
+                {{ form.input('text','required alphanumeric input-small','numero_documento','numero_documento', cliente.numero_documento, modoLectura)}}
             </div>
         </div>
         <div class="control-group">

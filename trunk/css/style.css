@@ -57,6 +57,9 @@ td.form-inline label.help-inline{
     background-position: 0 10px;
     background-repeat: no-repeat;
 }
+.menu{
+    margin: 10px 0;
+}
 .menu-cliente {
     background-image: url("../img/clientes.png");
 
@@ -79,6 +82,9 @@ td.form-inline label.help-inline{
 }
 .menu-despacho {
     background-image: url("../img/despachos.png");
+}
+.menu-configuracion{
+    background-image: url("../img/configuracion.png");
 }
 .container-fluid .span2{
     width: 150px;

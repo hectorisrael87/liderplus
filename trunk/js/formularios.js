@@ -12,6 +12,9 @@ $(document).ready(function(){
             }
         });
     });
+    $.validator.addMethod("alphanumeric", function(value, element) {
+        return this.optional(element) || /^[a-z0-9\-]+$/i.test(value);
+    }, "Este campo debe tener solo letras numeros y guiones.");
     $.validator.methods.range = function (value, element, param) {
         var globalizedValue = value.replace(",", ".");
         return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);

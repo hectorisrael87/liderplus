@@ -148,6 +148,19 @@ function validacionFormulario(){
     });
     
 }
+
+function verificar_cliente(cliente) {
+    $("#cliente_id").change(function(){
+        if($(this).val()!=""){
+            data = {
+                cliente_id:cliente
+            };
+            $.getJSON("../cliente/verificarCliente", data, function(){
+                
+            });
+        }
+    });
+}
 $(document).ready(function(){
     cuadromodal();
     validacionFormulario();
