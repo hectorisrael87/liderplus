@@ -71,9 +71,15 @@ switch ($accion) {
     case "editar":
     case "modificar":
         // <editor-fold defaultstate="collapsed" desc="modificar">
+        $tipo_documento = new tipodocumento();
+        $tipos_documento = $tipo_documento->listar();
+        $status_cliente = new statuscliente();
+        $lista_status_cliente = $status_cliente->listar();
         $dato = $cliente->ver($_GET['id']);
         echo $twig->render('sistema/cliente/formulario.html.twig', array(
             "session" => $session,
+            "tipoDocumentos"=>$tipos_documento['data'],
+            "statusCliente" => $lista_status_cliente['data'],
             "cliente" => $dato['data'][0],
             "modoLectura" => false,
             "accion" => $accion));
