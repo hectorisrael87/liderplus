@@ -1,115 +1,1 @@
-<?php
-
-include '../../includes/constants.php';
-$usuario = new usuario();
-$usuario->confirmar_miembro();
-$accion = isset($_GET['accion']) ? $_GET['accion'] : "index";
-$session = $_SESSION;
-$id = 0;
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
-} else {
-    $id = $session['usuario']['id'];
-}
-
-switch ($accion) {
-    case "index":
-        // <editor-fold defaultstate="collapsed" desc="index">
-        echo $twig->render('index.html.twig', array(
-            "session" => $session,
-            "fases" => $usuario->listar_fases_usuario($id)
-            ));
-        break;
-    // </editor-fold>
-    case "guardar":
-        // <editor-fold defaultstate="collapsed" desc="guardar">
-        $data = $_POST;
-        unset($data['crear'], $data['modificar'], $data['editar'], $data['password2']);
-        if ($_POST['id'] == '') {
-            unset($data['id']);
-            $exito = $usuario->insertar($data);
-            if ($exito['suceed']) {
-                $exito['mensaje'] = "usuario creado con exito";
-            }
-        } else {
-            $exito = $usuario->actualizar($data['id'], $data);
-            if ($exito['suceed']) {
-                $exito['mensaje'] = "usuario modificado con exito";
-            }
-        }
-        echo $twig->render('sistema/usuario/formulario.html.twig', array(
-            "session" => $session,
-            "resultado" => $exito,
-            "accion" => "guardar"));
-        break;
-    // </editor-fold>
-    case "crear":
-        // <editor-fold defaultstate="collapsed" desc="crear">
-        $grupos = $usuario->listar_grupos();
-        echo $twig->render('sistema/usuario/formulario.html.twig', array(
-            "session" => $session,
-            "grupos" => $grupos,
-            "accion" => "crear",
-            "modoLectura" => false
-        ));
-        break;
-    // </editor-fold>
-    case "consultar":
-    case "ver":
-        // <editor-fold defaultstate="collapsed" desc="ver">
-        $dato = $usuario->ver($id);
-        echo $twig->render('sistema/usuario/formulario.html.twig', array(
-            "session" => $session,
-            "usuario" => $dato['data'][0],
-            "grupos" => $usuario->listar_grupos(),
-            "modoLectura" => true,
-            "accion" => $accion));
-        break;
-    // </editor-fold>
-    case "editar":
-    case "modificar":
-        // <editor-fold defaultstate="collapsed" desc="modificar">
-        $dato = $usuario->ver($id);
-        echo $twig->render('sistema/usuario/formulario.html.twig', array(
-            "session" => $session,
-            "usuario" => $dato['data'][0],
-            "grupos" => $usuario->listar_grupos(),
-            "modoLectura" => false,
-            "accion" => $accion));
-        break;
-    // </editor-fold>
-    case "borrar":
-        // <editor-fold defaultstate="collapsed" desc="borrar">
-        $exito = $usuario->borrar($_GET['id']);
-        if ($exito['suceed']) {
-            $tipoMensaje = "success";
-            $mensaje = "usuario borrado con exito";
-        } else {
-            $tipoMensaje = "alert";
-            $mensaje = "No se pudo borrar el registro, por favor intente de nuevo o comuniquese con el administrador del sistema";
-        }
-        $paginacion = new paginacion(true);
-        $paginacion->paginar("select * from usuarios");
-        $registros = $paginacion->registros;
-        echo $twig->render('sistema/usuario/paginacion.html.twig', array(
-            "session" => $session,
-            "registros" => $registros,
-            "accion" => "Listar",
-            "tipoMensaje" => $tipoMensaje,
-            "mensaje" => $mensaje));
-        break;
-    // </editor-fold>
-    case "listar":
-    default:
-        // <editor-fold defaultstate="collapsed" desc="listado">
-        $paginacion = new paginacion();
-        $paginacion->paginar("select * from usuarios");
-        echo $twig->render('sistema/usuario/paginacion.html.twig', array(
-            "session" => $session,
-            "accion" => "Listar",
-            "registros" => $paginacion->registros,
-            "paginacion" => $paginacion->mostrar_paginado_lista()));
-        break;
-    //</editor-fold>
-}
-?>
+<?phpinclude '../../includes/constants.php';$usuario = new usuario();$usuario->confirmar_miembro();$accion = isset($_GET['accion']) ? $_GET['accion'] : "index";$session = $_SESSION;$funcionalidad = new funcionalidad;$menu = $funcionalidad->funcionalidad_grupo($_SESSION['usuario']['grupo_id']);$id = 0;if (isset($_GET['id'])) {    $id = $_GET['id'];} else {    $id = $session['usuario']['id'];}switch ($accion) {    case "index":        // <editor-fold defaultstate="collapsed" desc="index">        echo $twig->render('index.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "fases" => $usuario->listar_fases_usuario($id)        ));        break;    // </editor-fold>    case "guardar":        // <editor-fold defaultstate="collapsed" desc="guardar">        $data = $_POST;        unset($data['crear'], $data['modificar'], $data['editar'], $data['password2']);        if ($_POST['id'] == '') {            unset($data['id']);            $exito = $usuario->insertar($data);            if ($exito['suceed']) {                $exito['mensaje'] = "usuario creado con exito";            }        } else {            $exito = $usuario->actualizar($data['id'], $data);            if ($exito['suceed']) {                $exito['mensaje'] = "usuario modificado con exito";            }        }        echo $twig->render('sistema/usuario/formulario.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "resultado" => $exito,            "accion" => "guardar"));        break;    // </editor-fold>    case "crear":        // <editor-fold defaultstate="collapsed" desc="crear">        $grupos = $usuario->listar_grupos();        echo $twig->render('sistema/usuario/formulario.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "grupos" => $grupos,            "accion" => "crear",            "modoLectura" => false        ));        break;    // </editor-fold>    case "consultar":    case "ver":        // <editor-fold defaultstate="collapsed" desc="ver">        $dato = $usuario->ver($id);        echo $twig->render('sistema/usuario/formulario.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "usuario" => $dato['data'][0],            "grupos" => $usuario->listar_grupos(),            "modoLectura" => true,            "accion" => $accion));        break;    // </editor-fold>    case "editar":    case "modificar":        // <editor-fold defaultstate="collapsed" desc="modificar">        $dato = $usuario->ver($id);        echo $twig->render('sistema/usuario/formulario.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "usuario" => $dato['data'][0],            "grupos" => $usuario->listar_grupos(),            "modoLectura" => false,            "accion" => $accion));        break;    // </editor-fold>    case "borrar":        // <editor-fold defaultstate="collapsed" desc="borrar">        $exito = $usuario->borrar($_GET['id']);        if ($exito['suceed']) {            $tipoMensaje = "success";            $mensaje = "usuario borrado con exito";        } else {            $tipoMensaje = "alert";            $mensaje = "No se pudo borrar el registro, por favor intente de nuevo o comuniquese con el administrador del sistema";        }        $paginacion = new paginacion(true);        $paginacion->paginar("select * from usuarios");        $registros = $paginacion->registros;        echo $twig->render('sistema/usuario/paginacion.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "registros" => $registros,            "accion" => "Listar",            "tipoMensaje" => $tipoMensaje,            "mensaje" => $mensaje));        break;    // </editor-fold>    case "listar":    default:        // <editor-fold defaultstate="collapsed" desc="listado">        $paginacion = new paginacion();        $paginacion->paginar("select * from usuarios");        echo $twig->render('sistema/usuario/paginacion.html.twig', array(            "menu" => $menu['data'],            "session" => $session,            "accion" => "Listar",            "registros" => $paginacion->registros,            "paginacion" => $paginacion->mostrar_paginado_lista()));        break;    //</editor-fold>}?>

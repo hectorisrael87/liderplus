@@ -36,6 +36,24 @@ class funcionalidad extends db implements crud {
             where grupo_id= $grupo");
     }
 
+    public function guardar_funcionalidad($data) {
+        $exito['delete'] = $this->delete(self::tabla_grupo_funcionalidad, array("grupo_id" => $data['grupo_id']));
+        $exito['funcionalidad'] = array();
+        if ($exito) {
+            foreach ($data['funcionalidad_id']as $funcionlidad) {
+                $exito_f = $this->insert(self::tabla_grupo_funcionalidad, array(
+                    "funcionalidad_id" => $funcionlidad,
+                    "grupo_id" => $data['grupo_id']
+                        ));
+                array_push($exito, $exito_f);
+                if (!$exito) {
+                    break;
+                    $exito['suceed'] = FALSE;
+                }
+            }
+            $exito['suceed'] = TRUE;
+        }
+        return $exito;
+    }
 }
-
 ?>
