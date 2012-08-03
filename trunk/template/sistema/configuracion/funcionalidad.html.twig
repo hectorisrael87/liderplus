@@ -1,5 +1,5 @@
-{% extends 'layout/fluid.html.twig'%}
-{% block titulo 'Inicio'%}
+{% extends 'layout/fluid.html.twig' %}
+{% block titulo 'cnfigurar funcionalidad' %}
 {% block contenido %}
 <div class="page-header">
     <h1>Configuracion</h1>
@@ -9,34 +9,36 @@
     <li><a href="{{constant('URL_SISTEMA')}}/configuracion/listar">Configuraci&oacute;n</a><span class="divider">&raquo;</span></li>
     <li>{{ accion }}</li>
 </ul>
-{% if resultado is defined %}
+{% if resultado is not null %}
     {% include 'misc/resultado.html.twig' %}
 {% else %}
 <div class="row">
     <div class="span9">
-        <form action="{{ constant('URL_SISTEMA')}}/configuracion/guardar" class="well-small form-horizontal">
-    <fieldset>
-        <legend>{{ rol|capitalize }} </legend>
-        <p class="help-inline">Marque las casillas de los m&oacute;dulos disponibles para este rol</p>
+        <form action="guardar" class="well-small form-horizontal" method="post">
+            {{form.input('hidden', ' ', 'flag', 'flag', 'funcionalidad', false) }}
+            {{form.input('hidden', ' ', 'flag', 'grupo_id', grupo_id, false) }}
+             <fieldset>
+                <legend>{{ grupo_id ~ ' - ' ~ rol|capitalize }} </legend>
+                <p class="help-inline">Marque las casillas de los m&oacute;dulos disponibles para este rol</p>
                 {% for funcionalidad in funcionalidades %}
                  <div class="control-group">
-                 <label class="control-label" for="{{ funcionalidad.nombre }}">{{ funcionalidad.nombre|capitalize }}</label>
-                 <div class="controls">
-                     <input type="checkbox" name="funcionalidad_id[]" value="{{funcionalidad.id}}"
+                     <label class="control-label" for="{{ funcionalidad.nombre }}">{{ funcionalidad.nombre|capitalize }}</label>
+                     <div class="controls">
+                         <input type="checkbox" name="funcionalidad_id[]" value="{{funcionalidad.id}}"
                             {% for mi_func in mi_funcionalidad %}
                                  {{(mi_func.id==funcionalidad.id)?" checked='checked' ":"" }}   
                             {% endfor %}
                             />
-                 </div>
+                     </div>
                 </div>
                 {% endfor%}
-        <div class="form-actions">
-        <input type="submit" name="guardar" value="Guardar" class="btn btn-primary"/>
-        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+                <div class="form-actions">
+                    <input type="submit" name="guardar" value="Guardar" class="btn btn-primary"/>
+                    <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+                </div>
+            </fieldset>
+        </form>
     </div>
-    </fieldset>
-</form>
-</div>
 </div>
 {% endif %}
 {% endblock %}

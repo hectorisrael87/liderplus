@@ -1,5 +1,5 @@
-{% extends 'layout/fluid.html.twig'%}
-{% block titulo 'Inicio'%}
+{% extends 'layout/fluid.html.twig' %}
+{% block titulo 'Configurar Fase' %}
 {% block contenido %}
 <div class="page-header">
     <h1>Configuracion</h1>
@@ -9,30 +9,32 @@
     <li><a href="{{constant('URL_SISTEMA')}}/configuracion/listar">Configuraci&oacute;n</a><span class="divider">&raquo;</span></li>
     <li>{{ accion }}</li>
 </ul>
-{% if resultado is defined %}
+{% if resultado is not null %}
     {% include 'misc/resultado.html.twig' %}
 {% else %}
 <div class="row">
     <div class="span9">
-        <form class="form-horizontal" method="post">
-    <fieldset>
-        <legend>Fases </legend>
-                {% for fase in fases%}
-                 <div class="control-group">
-                 <label class="control-label" for="{{ fase.nombre }}">{{ fase.nombre|capitalize }}</label>
-                 <div class="controls">
-                {{ form.input('text','required number','duracion','duracion', fase.duracion, modoLectura) }}
-                         <span class="help-inline">(duraci&oacute;n en horas)</span>
-                 </div>
-                </div>
-                {% endfor%}
-        <div class="form-actions">
-        <input type="submit" name="guardar" value="Guardar" class="btn btn-primary"/>
-        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+        <form class="form-horizontal" method="post" action="guardar">
+        {{form.input('hidden', ' ', 'flag', 'flag', 'fase', false) }}
+            <fieldset>
+                <legend>Fases </legend>
+                        {% for fase in fases%}
+                        <div class="control-group">
+                        <label class="control-label" for="{{ fase.nombre }}">{{ fase.nombre|capitalize }}</label>
+                        <div class="controls">
+                        {{form.input('hidden', ' ', fase.id, 'id[]', fase.id, false) }}
+                        {{ form.input('text', 'required number input-mini', fase.id ,  'duracion[]', fase.duracion, modoLectura) }}
+                                <span class="help-inline">(duraci&oacute;n en horas)</span>
+                        </div>
+                        </div>
+                        {% endfor%}
+                        <div class="form-actions">
+                            <input type="submit" name="guardar" value="Guardar" class="btn btn-primary"/>
+                            <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+                        </div>
+            </fieldset>
+        </form>
     </div>
-    </fieldset>
-</form>
-</div>
 </div>
 {% endif %}
 {% endblock %}

@@ -3,7 +3,9 @@
 include '../../includes/constants.php';
 $cliente = new cliente();
 $usuario = new usuario();
+$funcionalidad = new funcionalidad;
 $usuario->confirmar_miembro();
+$menu = $funcionalidad->funcionalidad_grupo($_SESSION['usuario']['grupo_id']);
 // <editor-fold defaultstate="collapsed" desc="query listado">
 $query_paginado = "select cliente.*, 
             tipo_documento.nombre tipo_documento
@@ -31,6 +33,7 @@ switch ($accion) {
             }
         }
         echo $twig->render('sistema/cliente/formulario.html.twig', array(
+            "menu" => $menu['data'],
             "session" => $session,
             "resultado" => $exito,
             "accion" => "guardar"));
@@ -43,6 +46,7 @@ switch ($accion) {
         $lista_status_cliente = $status_cliente->listar();
         // <editor-fold defaultstate="collapsed" desc="crear">
         echo $twig->render('sistema/cliente/formulario.html.twig', array(
+            "menu" => $menu['data'],
             "session" => $session,
             "accion" => "crear",
             "tipoDocumentos" => $tipos_documento['data'],
@@ -60,6 +64,7 @@ switch ($accion) {
         // <editor-fold defaultstate="collapsed" desc="ver">
         $dato = $cliente->ver($_GET['id']);
         echo $twig->render('sistema/cliente/formulario.html.twig', array(
+            "menu" => $menu['data'],
             "session" => $session,
             "cliente" => $dato['data'][0],
             "tipoDocumentos" => $tipos_documento['data'],
@@ -77,6 +82,7 @@ switch ($accion) {
         $lista_status_cliente = $status_cliente->listar();
         $dato = $cliente->ver($_GET['id']);
         echo $twig->render('sistema/cliente/formulario.html.twig', array(
+            "menu" => $menu['data'],
             "session" => $session,
             "tipoDocumentos"=>$tipos_documento['data'],
             "statusCliente" => $lista_status_cliente['data'],
@@ -99,6 +105,7 @@ switch ($accion) {
         $paginacion->paginar($query_paginado);
         $registros = $paginacion->registros;
         echo $twig->render('sistema/cliente/paginacion.html.twig', array(
+            "menu" => $menu['data'],
             "session" => $session,
             "registros" => $registros,
             "accion" => "Listar",
@@ -112,6 +119,7 @@ switch ($accion) {
         $paginacion = new paginacion();
         $paginacion->paginar($query_paginado);
         echo $twig->render('sistema/cliente/paginacion.html.twig', array(
+            "menu" => $menu['data'],
             "session" => $session,
             "accion" => "Listar",
             "registros" => $paginacion->registros,
