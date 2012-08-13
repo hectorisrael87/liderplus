@@ -1,4 +1,10 @@
 {% extends 'layout/fluid.html.twig' %}
+{%set permiso = false %}
+{% for func in menu %}
+    {% if func.nombre == "usuario" %}
+        {% set permiso  = true %}
+    {% endif %}
+{% endfor %}
 {# TITULO#}
 {% block titulo 'Listar usuarios' %}
 
@@ -24,7 +30,6 @@
     <p>{{ mensaje }}</p>
 </div>
 {% endif %}
-
 <div>
     <table class="table table-bordered table-condensed table-striped">
         <thead>
@@ -46,8 +51,10 @@
                     <td>
                         <div class="btn-group">
                             <a href="{{constant('URL_SISTEMA')}}/usuario/consultar/{{ usuario.id }}" class="btn">Consultar</a>
+                            {% if permiso == true %}
                             <a href="{{constant('URL_SISTEMA')}}/usuario/editar/{{ usuario.id }}" class="btn btn-info">Editar</a>
                             <a href="{{constant('URL_SISTEMA')}}/usuario/borrar/{{ usuario.id }}" class="btn btn-danger">Borrar</a>
+                        {% endif %}
                         </div>
                     </td>
                 </tr>
@@ -62,7 +69,9 @@
         {{ paginacion|raw }}
             </div>
         <div>
+            {% if permiso == true %}
             <a href="{{constant('URL_SISTEMA')}}/usuario/crear" class="btn btn-primary">Crear usuario</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

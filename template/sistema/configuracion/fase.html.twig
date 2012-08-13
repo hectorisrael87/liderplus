@@ -14,7 +14,7 @@
 {% else %}
 <div class="row">
     <div class="span9">
-        <form class="form-horizontal" method="post" action="guardar">
+        <form class="form-horizontal" method="post" action="{{constant('URL_SISTEMA')}}/configuracion/guardar">
         {{form.input('hidden', ' ', 'flag', 'flag', 'fase', false) }}
             <fieldset>
                 <legend>Fases </legend>

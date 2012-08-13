@@ -31,7 +31,7 @@
         <li><a href="{{ constant("URL_SISTEMA")}}/cliente/listar"><i class="icon-list-alt"></i> Listar</a></li>
         <li><a href="{{ constant("URL_SISTEMA")}}/cliente/crear"><i class=" icon-edit"></i> Crear</a></li>
             {% endif %}
-            {%if func.nombre == "usuarios" %}
+            {%if func.nombre == "usuario" %}
         <li class="nav-header">Usuario</li>
         <li><a href="{{ constant("URL_SISTEMA")}}/usuario/listar"><i class="icon-list-alt"></i> Listar</a></li>
         <li><a href="{{ constant("URL_SISTEMA")}}/usuario/crear"><i class=" icon-edit"></i> Crear</a></li>
@@ -52,7 +52,7 @@
         <li><a href="{{ constant("URL_SISTEMA")}}/despacho/crear"><i class="icon-edit"></i>Crear</a></li>
         <li><a href="{{ constant("URL_SISTEMA")}}/despacho/seguimiento"><i class="icon-map-marker"></i>Seguimiento</a></li>
             {% endif %}
-            {%if func.nombre == "configuración" %}
+            {%if func.nombre == "configuracion" %}
         <li class="nav-header">Configuracion</li>
         <li><a href="{{ constant("URL_SISTEMA")}}/configuracion/listar"><i class="icon-list-alt"></i>Listar</a></li>
         <li><a href="{{ constant("URL_SISTEMA")}}/configuracion/fase"><i class="icon-edit"></i>fases</a></li>

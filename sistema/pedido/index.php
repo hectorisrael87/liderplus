@@ -53,6 +53,7 @@ switch ($accion) {
             "registros" => $pag->registros,
             "session" => $_SESSION,
             "resultado" => $exito,
+            "exito" => $exito,
             "mensaje" => $exito['mensaje'],
             "accion" => "guardar"));
         break;
