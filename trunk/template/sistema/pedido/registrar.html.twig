@@ -119,7 +119,7 @@
                             <tr>
                                 <td>
                                     {{ modoLectura == false ? "<span><i class='icon-remove'></i>" : "" }}{{ producto.descripcion }}
-                                    {{ form.input("hidden", "", "", "pedido_detalle_id", producto.pedido_detalle_id, false) }}
+                                    {{ form.input("hidden", "", "", "pedido_detalle_id[]", producto.pedido_detalle_id, false) }}
                                     {{ form.input("hidden", "", "", "producto_id[]", producto.id, false) }}
                                 </td>
                                 <td>

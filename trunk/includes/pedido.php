@@ -117,30 +117,47 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
     }
 
     public function procesar($data) {
-        $uno = $this->update("pedido", array(
+        $result = array();
+        $result['suceed'] = false;
+        
+        // <editor-fold defaultstate="collapsed" desc="actualizar pedido">
+        $resultado_pedido = $this->update("pedido", array(
             "estatus_pedido_id" => STATUS_PEDIDO_PROCESADO
                 ), array(
-            "id" => $data['id']));
-        $dos = $this->insert("pedido_fase", array(
+            "id" => $data['id'])); 
+        $result['pedido'] = $resultado_pedido;
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="actualizar fase">
+        $resultado_pedido_fase = $this->insert("pedido_fase", array(
             "pedido_id" => $data['id'],
             "fase_id" => FASE_ALMACEN,
-            "usuario_id" => $_SESSION['usuario']['id']));
-        if ($uno['suceed'] && $dos['suceed']) {
+            "usuario_id" => $_SESSION['usuario']['id'])); 
+        $result['fase'] = $resultado_pedido_fase;
+        // </editor-fold>
+
+        if ($resultado_pedido['suceed'] && $resultado_pedido_fase['suceed']) {
+            $result['pedido_detalle'] = array();
             for ($i = 0; $i < sizeof($data['producto_id']); $i++) {
-                $tres = $this->update("pedido_detalle", array(
+                // <editor-fold defaultstate="collapsed" desc="actualizar pedido detalle">
+                $resultado_pedido_detalle = $this->update("pedido_detalle", array(
                     "estatus_pedido_detalle_id" => $data['status_pedido_detalle'][$i],
                     "cantidad_despacho" => $data['cantidad_despacho'][$i]
                         ), array(
                     "id" => $data['pedido_detalle_id'][$i]
-                        ));
-                if (!$tres['suceed']) {
+                        )); 
+                array_push($result['pedido_detalle'], $resultado_pedido_detalle);
+                // </editor-fold>
+
+                if (!$resultado_pedido_detalle['suceed']) {
                     break;
-                    return false;
+                    return $result;
                 }
             }
-            return true;
+            $result['suceed'] = true;
+            return $result;
         } else {
-            return false;
+            return $result;
         }
     }
 
@@ -163,7 +180,9 @@ inner join estatus_pedido on pedido.estatus_pedido_id = estatus_pedido.id");
     }
 
     public function json_pedidos_por_facturar_cliente($cliente) {
-        return $this->dame_query("select * from pedido where cliente_id= $cliente and estatus_pedido_id=" . STATUS_PEDIDO_PROCESADO);
+        return $this->dame_query("select * from pedido 
+                where cliente_id= $cliente 
+                and estatus_pedido_id=" . STATUS_PEDIDO_PROCESADO);
     }
 
     public function listar_seguimiento_pedido($id) {

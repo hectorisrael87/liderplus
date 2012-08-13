@@ -3,7 +3,7 @@
 include_once 'includes/constants.php';
 $db = new db();
 $funcionalidad = new funcionalidad;
-$menu = array();
+$menu['data'] = array();
 session_start();
 if (isset($_SESSION['usuario'])) {
     $menu = $funcionalidad->funcionalidad_grupo($_SESSION['usuario']['grupo_id']);

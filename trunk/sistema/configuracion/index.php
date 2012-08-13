@@ -28,6 +28,8 @@ function mostrar_funcionalidad($twig, $menu, $accion, $resultado = NULL) {
         echo "<h1>hay un id</h1>";
         $id = $_GET['id'];
     }
+    $grupo = new grupo();
+    $grupos = $grupo->listar();
     $funcionalidad = new funcionalidad();
     $funcionalidades = $funcionalidad->listar();
     $funcionalidad_grupo = $funcionalidad->funcionalidad_grupo($id);
@@ -35,6 +37,7 @@ function mostrar_funcionalidad($twig, $menu, $accion, $resultado = NULL) {
         "menu" => $menu['data'],
         "session" => $_SESSION,
         "grupo_id" => $id,
+        "grupos" => $grupos['data'],
         "funcionalidades" => $funcionalidades['data'],
         "mi_funcionalidad" => $funcionalidad_grupo['data'],
         "modoLectura" => false,
