@@ -82,7 +82,7 @@
     {% if accion is defined %}
     <div class="form-actions">
         <input type="submit" name="{{ accion }}" value="{{ accion|title }}" class="btn btn-primary"/>
-        <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+       <a hfref="{{constant('URL_SISTEMA')}}/transporte/listar" class="btn btn-danger">Atr&aacute;s</a>
     </div>
     {% endif %}
 </form>
