@@ -87,7 +87,7 @@
             {%if accion == "consultar"%}
             <a href="../modificar/{{usuario.id}}" class="btn btn-info">Modificar</a>
             {% endif %}
-            <input type="button" name="atras" class="btn btn-danger" value="Atras"/>
+            <a hfref="{{constant('URL_SISTEMA')}}/usuario/listar" class="btn btn-danger">Atr&aacute;s</a>
         </div>
     {% endif %}
 </form>
